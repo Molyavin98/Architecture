@@ -1,12 +1,17 @@
 package com.molyavin.mvvm.presenter
 
-import com.molyavin.mvvm.MainContract
+import com.molyavin.mvvm.domain.models.UserInfo
+import com.molyavin.mvvm.domain.repository.UserRepository
+import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 
-class AuthorizationPresenter (var view: MainContract.View?, private val model: MainContract.Model) :
+class AuthorizationPresenter(var view: MainContract.View?, var userRepository: UserRepository) :
     MainContract.Authorization {
 
     private var phoneUser: String = ""
     private var passwordUser: String = ""
+
+    private lateinit var readUserInfoUseCase: ReadUserInfoUseCase
+    private lateinit var userInfo: UserInfo
 
     override fun setUserData(phoneNumber: String, password: String) {
         phoneUser = phoneNumber
@@ -15,11 +20,16 @@ class AuthorizationPresenter (var view: MainContract.View?, private val model: M
 
     override fun validateUserData(): Boolean {
 
-        if (phoneUser == model.getData("phone") && passwordUser == model.getData("password")) {
+        if (phoneUser == userInfo.phone && passwordUser == userInfo.password) {
             return true
         }
         view?.setErrorUserData()
         return false
+    }
+    fun readDataUser() {
+        readUserInfoUseCase = ReadUserInfoUseCase(userRepository)
+        userInfo = readUserInfoUseCase.execute()
+
     }
 
     override fun onDestroy() {

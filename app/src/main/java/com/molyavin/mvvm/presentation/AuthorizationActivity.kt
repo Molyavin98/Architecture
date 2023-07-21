@@ -1,27 +1,31 @@
-package com.molyavin.mvvm.view
+package com.molyavin.mvvm.presentation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.molyavin.mvvm.presenter.AuthorizationPresenter
-import com.molyavin.mvvm.MainContract
+import androidx.appcompat.app.AppCompatActivity
+import com.molyavin.mvvm.presenter.MainContract
+import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.databinding.ActivityAuthorizationBinding
-import com.molyavin.mvvm.model.DBSharedPreference
+import com.molyavin.mvvm.presenter.AuthorizationPresenter
 
 class AuthorizationActivity : AppCompatActivity(), MainContract.View {
 
     private lateinit var binding: ActivityAuthorizationBinding
     private lateinit var presenter: AuthorizationPresenter
+    private lateinit var userRepositoryImpl: UserRepositoryImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthorizationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = AuthorizationPresenter(this, DBSharedPreference(this))
+        userRepositoryImpl = UserRepositoryImpl(this)
+        presenter = AuthorizationPresenter(this, userRepositoryImpl)
+        presenter.readDataUser()
 
         onClickListener()
+
     }
 
     private fun onClickListener() {
@@ -35,7 +39,7 @@ class AuthorizationActivity : AppCompatActivity(), MainContract.View {
 
             if (presenter.validateUserData()) {
                 startActivity(Intent(this, MenuActivity::class.java))
-            }else{
+            } else {
                 Toast.makeText(this, "Data user is not correct!", Toast.LENGTH_SHORT).show()
             }
         }
