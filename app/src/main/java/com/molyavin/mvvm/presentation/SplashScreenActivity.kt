@@ -1,4 +1,4 @@
-package com.molyavin.mvvm
+package com.molyavin.mvvm.presentation
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.molyavin.mvvm.databinding.ActivitySplashScreenBinding
-import com.molyavin.mvvm.view.AuthorizationActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {

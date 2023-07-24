@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.MenuActivity">
+    tools:context=".presentation.MenuActivity">
 
     <TextView
         android:id="@+id/textFullName"
@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="30sp"
-        android:drawableStart="@drawable/phone_24"/>
+        android:drawableStart="@drawable/phone_24"
+        tools:ignore="UseCompatTextViewDrawableXml" />
 
     <TextView
         android:id="@+id/textPassword"
@@ -30,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="30sp"
-        android:drawableStart="@drawable/lock_24"/>
+        android:drawableStart="@drawable/lock_24"
+        tools:ignore="UseCompatTextViewDrawableXml" />
 
 </LinearLayout>

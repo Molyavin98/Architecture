@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MVVM</string>
+    <string name="architecture_log_in">Architecture Log in</string>
+    <string name="phone">Phone</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="registration">Registration</string>
+    <string name="architecture_registration">Architecture Registration</string>
+    <string name="full_name">Full name</string>
+    <string name="architecture">Architecture</string>
 </resources>

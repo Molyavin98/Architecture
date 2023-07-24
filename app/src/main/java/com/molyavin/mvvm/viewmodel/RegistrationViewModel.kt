@@ -1,47 +1,32 @@
 package com.molyavin.mvvm.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import com.molyavin.mvvm.model.DBSharedPreference
+import com.molyavin.mvvm.domain.models.UserInfo
+import com.molyavin.mvvm.data.repositories.UserRepository
+import com.molyavin.mvvm.domain.usecase.SaveUserInfoUseCase
 
-class RegistrationViewModel : ViewModel() {
+class RegistrationViewModel(private val saveUserInfoUseCase: SaveUserInfoUseCase) : ViewModel() {
 
-    private lateinit var db: DBSharedPreference
     private var fullName = MutableLiveData<String>()
     private var phone = MutableLiveData<String>()
     private var password = MutableLiveData<String>()
 
-    fun initDB(context: Context) {
-        db = DBSharedPreference(context)
+    fun checkField(fullName: String?, phone: String?, password: String?): Boolean {
+        return !fullName.isNullOrEmpty() && !phone.isNullOrEmpty() && !password.isNullOrEmpty()
     }
 
-    fun setFullName(userFullName: String) {
+    fun saveData(userFullName: String, userPhone: String, userPassword: String) {
         fullName.value = userFullName
-    }
-
-    fun setPhone(userPhone: String) {
         phone.value = userPhone
-    }
-
-    fun setPassword(userPassword: String) {
         password.value = userPassword
+
+        saveUserInfoUseCase.execute(
+            UserInfo(
+                fullName.value.toString(),
+                phone.value.toString(),
+                password.value.toString()
+            )
+        )
     }
-
-    fun checkField(fullName:String,phone:String, password:String) : Boolean{
-
-        if (fullName.isNotEmpty() && phone.isNotEmpty() && password.isNotEmpty()) {
-            return true
-        }
-        return false
-    }
-
-    fun saveDataUser() {
-        db.saveData("fullName", fullName.value.toString())
-        db.saveData("phone", phone.value.toString())
-        db.saveData("password", password.value.toString())
-    }
-
 }
