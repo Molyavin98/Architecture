@@ -8,4 +8,6 @@
     <string name="architecture_registration">Architecture Registration</string>
     <string name="full_name">Full name</string>
     <string name="architecture">Architecture</string>
+    <string name="show_all_user_information">Show all user information</string>
+    <string name="text_btn_setting">Setting</string>
 </resources>
