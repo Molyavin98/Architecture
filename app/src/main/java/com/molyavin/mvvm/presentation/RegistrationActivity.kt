@@ -9,24 +9,19 @@ import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.databinding.ActivityRegistrationBinding
 import com.molyavin.mvvm.domain.models.UserInfo
 import com.molyavin.mvvm.viewmodel.RegistrationViewModel
+import com.molyavin.mvvm.viewmodel.RegistrationViewModelFactory
 
 class RegistrationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegistrationBinding
-    private lateinit var viewModel: RegistrationViewModel
-    private lateinit var userRepositoryImpl: UserRepositoryImpl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userRepositoryImpl = UserRepositoryImpl(this)
-        viewModel = ViewModelProvider(this)[RegistrationViewModel::class.java]
-
-        onCLickListener()
-    }
-
-    private fun onCLickListener(){
+        val userRepositoryImpl = UserRepositoryImpl(this)
+        val viewModelFactory = RegistrationViewModelFactory(userRepositoryImpl)
+        val viewModel = ViewModelProvider(this, viewModelFactory)[RegistrationViewModel::class.java]
 
         binding.btnRegistration.setOnClickListener {
 
@@ -39,7 +34,7 @@ class RegistrationActivity : AppCompatActivity() {
             if (viewModel.checkField(userInfo.fullName, userInfo.phone, userInfo.password)) {
 
                 viewModel.setUserData(userInfo.fullName, userInfo.phone, userInfo.password)
-                viewModel.saveData(userRepositoryImpl)
+                viewModel.saveData()
 
                 startActivity(Intent(this, AuthorizationActivity::class.java))
             } else {

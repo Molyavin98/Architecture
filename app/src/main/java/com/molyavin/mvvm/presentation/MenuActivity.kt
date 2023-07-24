@@ -4,11 +4,16 @@ import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.databinding.ActivityMenuBinding
+import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
+import com.molyavin.mvvm.viewmodel.MenuViewModel
+import com.molyavin.mvvm.viewmodel.MenuViewModelFactory
+
 class MenuActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMenuBinding
-    private lateinit var sharedPreferences: SharedPreferences
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,10 +21,20 @@ class MenuActivity : AppCompatActivity() {
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreferences = getSharedPreferences("DataBase", MODE_PRIVATE)
+        val userRepository = UserRepositoryImpl(this)
+        val readUserInfoUseCase = ReadUserInfoUseCase(userRepository)
+        val viewModel = ViewModelProvider(
+            this,
+            MenuViewModelFactory(readUserInfoUseCase)
+        )[MenuViewModel::class.java]
 
-        binding.textFullName.text = "Full name: ${sharedPreferences.getString("FullName", "")}"
-        binding.textPhone.text = "Phone ${sharedPreferences.getString("Phone", "")}"
-        binding.textPassword.text = "Password ${sharedPreferences.getString("Password", "")}"
+        viewModel.userInfoLiveData.observe(this) { userInfo ->
+
+            binding.textFullName.text = "Full name: ${userInfo.fullName}"
+            binding.textPhone.text = "Phone ${userInfo.phone}"
+            binding.textPassword.text = "Password ${userInfo.password}"
+        }
+
+        viewModel.readUserData()
     }
 }

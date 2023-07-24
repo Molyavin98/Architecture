@@ -7,21 +7,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.molyavin.mvvm.presenter.MainContract
 import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.databinding.ActivityAuthorizationBinding
+import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 import com.molyavin.mvvm.presenter.AuthorizationPresenter
 
 class AuthorizationActivity : AppCompatActivity(), MainContract.View {
 
     private lateinit var binding: ActivityAuthorizationBinding
     private lateinit var presenter: AuthorizationPresenter
-    private lateinit var userRepositoryImpl: UserRepositoryImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthorizationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userRepositoryImpl = UserRepositoryImpl(this)
-        presenter = AuthorizationPresenter(this, userRepositoryImpl)
+        val userRepositoryImpl = UserRepositoryImpl(this)
+        presenter = AuthorizationPresenter(this, ReadUserInfoUseCase(userRepositoryImpl))
         presenter.readDataUser()
 
         onClickListener()
@@ -32,12 +32,11 @@ class AuthorizationActivity : AppCompatActivity(), MainContract.View {
 
         binding.btnLogin.setOnClickListener {
 
-            presenter.setUserData(
-                binding.textFieldPhone.editText?.text.toString(),
-                binding.textFieldPass.editText?.text.toString()
-            )
-
-            if (presenter.validateUserData()) {
+            if (presenter.validateUserData(
+                    binding.textFieldPhone.editText?.text.toString(),
+                    binding.textFieldPass.editText?.text.toString()
+                )
+            ) {
                 startActivity(Intent(this, MenuActivity::class.java))
             } else {
                 Toast.makeText(this, "Data user is not correct!", Toast.LENGTH_SHORT).show()

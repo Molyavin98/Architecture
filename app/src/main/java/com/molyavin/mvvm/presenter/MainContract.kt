@@ -7,8 +7,7 @@ interface MainContract {
     }
 
     interface Authorization {
-        fun setUserData(phoneNumber: String, password: String)
-        fun validateUserData(): Boolean
+        fun validateUserData(phoneUser: String, passwordUser: String): Boolean
         fun onDestroy()
     }
 
