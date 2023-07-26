@@ -26,22 +26,6 @@ class MenuActivity : AppCompatActivity() {
         if (!router.hasRootController()) {
             router.setRoot(RouterTransaction.with(MenuController()))
         }
-
-       /* val userRepository = UserRepositoryImpl(DBSharedPreference(this))
-        val readUserInfoUseCase = ReadUserInfoUseCase(userRepository)
-        val viewModel = ViewModelProvider(
-            this,
-            MenuViewModelFactory(readUserInfoUseCase)
-        )[MenuViewModel::class.java]*/
-
-       /* viewModel.userInfoLiveData.observe(this) { userInfo ->
-
-            binding.textFullName.text = "Full name: ${userInfo.fullName}"
-            binding.textPhone.text = "Phone ${userInfo.phone}"
-            binding.textPassword.text = "Password ${userInfo.password}"
-        }
-
-        viewModel.readUserData()*/
     }
 
     override fun onBackPressed() {
