@@ -4,20 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.molyavin.mvvm.databinding.ActivityRegistrationBinding
-import com.molyavin.mvvm.domain.di.MyApplication
+import com.molyavin.mvvm.domain.di.component.DaggerRegistrationComponent
+import com.molyavin.mvvm.domain.di.component.Injector
+import com.molyavin.mvvm.domain.di.component.RegistrationComponent
+import com.molyavin.mvvm.domain.di.modules.RegistrationModule
 import com.molyavin.mvvm.utils.getTextString
 import com.molyavin.mvvm.viewmodel.RegistrationViewModel
-import com.molyavin.mvvm.viewmodel.RegistrationViewModelFactory
 import javax.inject.Inject
 
 class RegistrationActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: RegistrationViewModelFactory
+    private lateinit var component: RegistrationComponent
 
-    private lateinit var viewModel: RegistrationViewModel
+    @Inject
+    lateinit var viewModel: RegistrationViewModel
 
     private lateinit var binding: ActivityRegistrationBinding
 
@@ -26,12 +27,11 @@ class RegistrationActivity : AppCompatActivity() {
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        component = DaggerRegistrationComponent.builder()
+            .registrationModule(RegistrationModule(Injector.INSTANCE.getUserRepository(), this))
+            .build()
 
-        val myApplication = application as MyApplication
-        myApplication.appComponent.inject(this)
-
-        viewModel = ViewModelProvider(this, viewModelFactory)[RegistrationViewModel::class.java]
-
+        component.inject(this)
 
         binding.btnRegistration.setOnClickListener {
             val fullName = binding.textFieldFullName.getTextString()

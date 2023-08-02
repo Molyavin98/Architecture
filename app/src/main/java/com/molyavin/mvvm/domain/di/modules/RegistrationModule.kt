@@ -1,23 +1,31 @@
 package com.molyavin.mvvm.domain.di.modules
 
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.domain.di.scope.ActivityScope
 import com.molyavin.mvvm.domain.usecase.SaveUserInfoUseCase
+import com.molyavin.mvvm.viewmodel.RegistrationViewModel
 import com.molyavin.mvvm.viewmodel.RegistrationViewModelFactory
 import dagger.Module
 import dagger.Provides
 
 @Module
-class RegistrationModule{
+class RegistrationModule(
+    private val userRepository: UserRepository,
+    private val viewModelLifecycleOwner: ViewModelStoreOwner,
+) {
 
     @Provides
     @ActivityScope
-    fun provideSaveUserInfoUseCase(userRepository: UserRepository): SaveUserInfoUseCase =
-        SaveUserInfoUseCase(userRepository)
+    fun provideSaveUserInfoUseCase(): SaveUserInfoUseCase = SaveUserInfoUseCase(userRepository)
 
     @Provides
     @ActivityScope
-    fun provideRegistrationViewModelFactory(saveUserInfoUseCase: SaveUserInfoUseCase): RegistrationViewModelFactory =
-        RegistrationViewModelFactory(saveUserInfoUseCase)
+    fun provideRegistrationViewModel(viewModelFactory: RegistrationViewModelFactory): RegistrationViewModel =
+        ViewModelProvider(
+            viewModelLifecycleOwner,
+            viewModelFactory
+        )[RegistrationViewModel::class.java]
 
 }

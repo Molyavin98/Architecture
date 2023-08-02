@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.molyavin.mvvm"
-        minSdk 29
+        minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -26,11 +26,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_19
+        targetCompatibility JavaVersion.VERSION_19
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '19'
     }
 
     buildFeatures {
@@ -57,4 +57,5 @@ dependencies {
 
     implementation 'com.google.dagger:dagger:2.47'
     kapt 'com.google.dagger:dagger-compiler:2.47'
+    kapt 'com.google.dagger:dagger-android-processor:2.47'
 }

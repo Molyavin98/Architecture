@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.molyavin.mvvm.databinding.ActivityAuthorizationBinding
-import com.molyavin.mvvm.domain.di.MyApplication
+import com.molyavin.mvvm.domain.di.component.AuthorizationComponent
+import com.molyavin.mvvm.domain.di.component.DaggerAuthorizationComponent
+import com.molyavin.mvvm.domain.di.component.Injector
+import com.molyavin.mvvm.domain.di.modules.AuthorizationModule
 import com.molyavin.mvvm.presenter.AuthorizationPresenter
 import com.molyavin.mvvm.utils.getTextString
 import javax.inject.Inject
@@ -13,7 +16,7 @@ import javax.inject.Inject
 class AuthorizationActivity : AppCompatActivity(), View.AuthorizationViewView {
 
     private lateinit var binding: ActivityAuthorizationBinding
-
+    private lateinit var component: AuthorizationComponent
 
     @Inject
     lateinit var presenter: AuthorizationPresenter
@@ -24,8 +27,10 @@ class AuthorizationActivity : AppCompatActivity(), View.AuthorizationViewView {
         binding = ActivityAuthorizationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val myApplication = application as MyApplication
-        myApplication.appComponent.inject(this)
+        component = DaggerAuthorizationComponent.builder()
+            .authorizationModule(AuthorizationModule(Injector.INSTANCE.getUserRepository()))
+            .build()
+        component.inject(this)
 
         presenter.onAttach(this)
         presenter.readDataUser()

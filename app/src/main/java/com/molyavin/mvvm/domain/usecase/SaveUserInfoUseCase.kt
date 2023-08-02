@@ -4,7 +4,7 @@ import com.molyavin.mvvm.domain.models.UserInfo
 import com.molyavin.mvvm.data.repositories.UserRepository
 import javax.inject.Inject
 
-class SaveUserInfoUseCase @Inject constructor(private val userRepository: UserRepository) :
+class SaveUserInfoUseCase(private val userRepository: UserRepository) :
     IUseCase.ISaveUserInfoUseCase {
 
     override fun execute(income: UserInfo) {

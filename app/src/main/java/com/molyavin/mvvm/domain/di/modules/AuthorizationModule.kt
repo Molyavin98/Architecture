@@ -9,16 +9,15 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class AuthorizationModule {
+class AuthorizationModule(private val userRepository: UserRepository) {
 
     @Provides
     @ActivityScope
-    fun provideReadUserInfoUseCase(userRepository: UserRepository): ReadUserInfoUseCase =
-        ReadUserInfoUseCase(userRepository)
+    fun provideReadUserInfoUseCase(): ReadUserInfoUseCase = ReadUserInfoUseCase(userRepository)
 
     @Provides
     @ActivityScope
-    fun provideAuthorizationPresenter(userRepository: UserRepository): Presenter.Authorization =
-        AuthorizationPresenter(ReadUserInfoUseCase(userRepository))
+    fun provideAuthorizationPresenter(useCase: ReadUserInfoUseCase): Presenter.Authorization =
+        AuthorizationPresenter(useCase)
 
 }
