@@ -10,18 +10,17 @@ import com.molyavin.mvvm.databinding.ActivitySplashScreenBinding
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
 
-    private lateinit var binding:ActivitySplashScreenBinding
+    private lateinit var binding: ActivitySplashScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Handler().postDelayed(Runnable { //This method will be executed once the timer is over
-            // Start your app main activity
+        Handler().postDelayed(Runnable {
+
             val i = Intent(this@SplashScreenActivity, AuthorizationActivity::class.java)
             startActivity(i)
-            // close this activity
             finish()
         }, 3000)
     }

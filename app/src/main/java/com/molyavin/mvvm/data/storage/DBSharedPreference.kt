@@ -3,7 +3,7 @@ package com.molyavin.mvvm.data.storage
 import android.content.Context
 import android.content.SharedPreferences
 
-class DBSharedPreference(context: Context) {
+class DBSharedPreference (context: Context) {
 
     private var sharedPreferences: SharedPreferences
     private var editor: SharedPreferences.Editor

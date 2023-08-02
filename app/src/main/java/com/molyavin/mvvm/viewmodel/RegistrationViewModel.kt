@@ -3,10 +3,11 @@ package com.molyavin.mvvm.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.molyavin.mvvm.domain.models.UserInfo
-import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.domain.usecase.SaveUserInfoUseCase
+import javax.inject.Inject
 
-class RegistrationViewModel(private val saveUserInfoUseCase: SaveUserInfoUseCase) : ViewModel() {
+class RegistrationViewModel @Inject constructor(private val saveUserInfoUseCase: SaveUserInfoUseCase) :
+    ViewModel() {
 
     private var fullName = MutableLiveData<String>()
     private var phone = MutableLiveData<String>()

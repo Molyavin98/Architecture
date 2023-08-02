@@ -4,30 +4,33 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
-import com.molyavin.mvvm.data.storage.DBSharedPreference
 import com.molyavin.mvvm.databinding.ActivityAuthorizationBinding
-import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
+import com.molyavin.mvvm.domain.di.MyApplication
 import com.molyavin.mvvm.presenter.AuthorizationPresenter
 import com.molyavin.mvvm.utils.getTextString
+import javax.inject.Inject
 
 class AuthorizationActivity : AppCompatActivity(), View.AuthorizationViewView {
 
     private lateinit var binding: ActivityAuthorizationBinding
-    private lateinit var presenter: AuthorizationPresenter
+
+
+    @Inject
+    lateinit var presenter: AuthorizationPresenter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthorizationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userRepositoryImpl = UserRepositoryImpl(DBSharedPreference(this))
-        presenter = AuthorizationPresenter(ReadUserInfoUseCase(userRepositoryImpl))
+        val myApplication = application as MyApplication
+        myApplication.appComponent.inject(this)
+
         presenter.onAttach(this)
         presenter.readDataUser()
 
         onClickListener()
-
     }
 
     private fun onClickListener() {

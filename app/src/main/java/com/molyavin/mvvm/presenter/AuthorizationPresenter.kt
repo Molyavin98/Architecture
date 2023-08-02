@@ -3,8 +3,9 @@ package com.molyavin.mvvm.presenter
 import com.molyavin.mvvm.domain.models.UserInfo
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 import com.molyavin.mvvm.presentation.View
+import javax.inject.Inject
 
-class AuthorizationPresenter(
+class AuthorizationPresenter @Inject constructor(
     private var readUserInfoUseCase: ReadUserInfoUseCase
 ) : Presenter.Authorization {
 
