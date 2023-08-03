@@ -6,7 +6,7 @@ import com.molyavin.mvvm.domain.models.UserInfo
 import com.molyavin.mvvm.domain.usecase.SaveUserInfoUseCase
 import javax.inject.Inject
 
-class RegistrationViewModel @Inject constructor(private val saveUserInfoUseCase: SaveUserInfoUseCase) :
+class RegistrationViewModel (private val saveUserInfoUseCase: SaveUserInfoUseCase) :
     ViewModel() {
 
     private var fullName = MutableLiveData<String>()

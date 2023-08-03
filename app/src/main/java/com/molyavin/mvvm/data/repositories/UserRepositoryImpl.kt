@@ -9,7 +9,7 @@ private const val KEY_PHONE = "Phone"
 private const val KEY_PASSWORD = "Password"
 private const val DEFAULT = "null"
 
-class UserRepositoryImpl @Inject constructor(private val sharedPreferences: DBSharedPreference) :
+class UserRepositoryImpl(private val sharedPreferences: DBSharedPreference) :
     UserRepository {
     override fun saveData(userInfo: UserInfo) {
         sharedPreferences.saveData(KEY_FULL_NAME, userInfo.fullName)
