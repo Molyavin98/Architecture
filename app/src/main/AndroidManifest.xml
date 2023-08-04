@@ -22,15 +22,6 @@
             android:label="@string/title_activity_auth"
             android:theme="@style/Theme.MVVM" />
         <activity
-            android:name=".presentation.MenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.RegistrationActivity"
-            android:exported="false" />
-       <!-- <activity
-            android:name=".presentation.AuthorizationActivity"
-            android:exported="false" />-->
-        <activity
             android:name=".presentation.SplashScreenActivity"
             android:exported="true">
             <intent-filter>

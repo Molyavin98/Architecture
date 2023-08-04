@@ -36,4 +36,5 @@ class MenuController : Controller() {
 
         return view
     }
+
 }

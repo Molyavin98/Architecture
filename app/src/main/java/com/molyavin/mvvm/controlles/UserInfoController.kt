@@ -9,11 +9,11 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bluelinelabs.conductor.Controller
+import com.molyavin.mvvm.MainActivity
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.data.storage.DBSharedPreference
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
-import com.molyavin.mvvm.presentation.MenuActivity
 import com.molyavin.mvvm.viewmodel.MenuViewModel
 import com.molyavin.mvvm.viewmodel.MenuViewModelFactory
 
@@ -38,14 +38,14 @@ class UserInfoController : Controller() {
         val userRepository = UserRepositoryImpl(DBSharedPreference(view.context))
         val readUserInfoUseCase = ReadUserInfoUseCase(userRepository)
 
-        val viewModelStoreOwner: ViewModelStoreOwner = (activity) as MenuActivity
+        val viewModelStoreOwner: ViewModelStoreOwner = (activity) as MainActivity
 
         val viewModel = ViewModelProvider(
             viewModelStoreOwner,
             MenuViewModelFactory (readUserInfoUseCase)
         )[MenuViewModel::class.java]
 
-        viewModel.userInfoLiveData.observe(activity as MenuActivity) { userInfo ->
+        viewModel.userInfoLiveData.observe(activity as MainActivity) { userInfo ->
 
             textFullName.text = "Full name: ${userInfo.fullName}"
             textPhone.text = "Phone ${userInfo.phone}"

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bluelinelabs.conductor.Controller
+import com.bluelinelabs.conductor.RouterTransaction
 import com.google.android.material.textfield.TextInputLayout
 import com.molyavin.mvvm.MainActivity
 import com.molyavin.mvvm.R
@@ -51,20 +52,21 @@ class RegistrationController : Controller() {
         textFieldPhone = view.findViewById(R.id.textFieldPhone)
         textFieldPass = view.findViewById(R.id.textFieldPass)
 
-      /*  component = DaggerRegistrationComponent.builder()
+        val viewModelStoreOwner: ViewModelStoreOwner = (activity) as MainActivity
+
+        component = DaggerRegistrationComponent.builder()
             .registrationModule(
                 RegistrationModule(
-                    Injector.INSTANCE.getUserRepository(), )
+                    Injector.INSTANCE.getUserRepository(), viewModelStoreOwner
+                )
             ).build()
-        component.inject(this)*/
+        component.inject(this)
 
 
         onClickListener()
 
         return view
     }
-
-
     private fun onClickListener() {
 
         btnRegistration.setOnClickListener {
@@ -73,7 +75,7 @@ class RegistrationController : Controller() {
             val password = textFieldPass.getTextString()
             if (viewModel.checkField(fullName, phone, password)) {
                 viewModel.saveData(fullName!!, phone!!, password!!)
-                startActivity(Intent(view.context, MainActivity::class.java))
+                router.pushController(RouterTransaction.with(AuthorizationController()))
             } else {
                 Toast.makeText(view.context, "Fields cannot be empty!", Toast.LENGTH_SHORT).show()
             }
