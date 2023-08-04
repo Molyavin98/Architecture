@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.molyavin.mvvm.MainActivity
 import com.molyavin.mvvm.databinding.ActivityRegistrationBinding
 import com.molyavin.mvvm.domain.di.component.DaggerRegistrationComponent
 import com.molyavin.mvvm.domain.di.component.Injector
@@ -31,7 +32,7 @@ class RegistrationActivity : AppCompatActivity() {
             .registrationModule(RegistrationModule(Injector.INSTANCE.getUserRepository(), this))
             .build()
 
-        component.inject(this)
+      //  component.inject(this)
 
         binding.btnRegistration.setOnClickListener {
             val fullName = binding.textFieldFullName.getTextString()
@@ -39,7 +40,7 @@ class RegistrationActivity : AppCompatActivity() {
             val password = binding.textFieldPass.getTextString()
             if (viewModel.checkField(fullName, phone, password)) {
                 viewModel.saveData(fullName!!, phone!!, password!!)
-                startActivity(Intent(this, AuthorizationActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
             } else {
                 Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_SHORT).show()
             }

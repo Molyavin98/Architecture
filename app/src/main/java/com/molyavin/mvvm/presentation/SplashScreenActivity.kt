@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.molyavin.mvvm.MainActivity
 import com.molyavin.mvvm.databinding.ActivitySplashScreenBinding
 
 @SuppressLint("CustomSplashScreen")
@@ -19,7 +20,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         Handler().postDelayed(Runnable {
 
-            val i = Intent(this@SplashScreenActivity, AuthorizationActivity::class.java)
+            val i = Intent(this@SplashScreenActivity, MainActivity::class.java)
             startActivity(i)
             finish()
         }, 3000)

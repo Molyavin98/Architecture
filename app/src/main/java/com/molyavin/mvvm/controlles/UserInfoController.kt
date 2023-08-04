@@ -22,8 +22,7 @@ class UserInfoController : Controller() {
     private lateinit var textFullName: TextView
     private lateinit var textPhone: TextView
     private lateinit var textPassword: TextView
-
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NewApi")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup,

@@ -10,4 +10,5 @@
     <string name="architecture">Architecture</string>
     <string name="show_all_user_information">Show all user information</string>
     <string name="text_btn_setting">Setting</string>
+    <string name="title_activity_auth">AuthActivity</string>
 </resources>

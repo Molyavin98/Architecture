@@ -2,6 +2,7 @@ package com.molyavin.mvvm.domain.di.modules
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import com.molyavin.mvvm.controlles.RegistrationController
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.domain.di.scope.ActivityScope
 import com.molyavin.mvvm.domain.usecase.SaveUserInfoUseCase
