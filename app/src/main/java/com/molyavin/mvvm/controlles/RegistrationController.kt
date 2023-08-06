@@ -1,19 +1,17 @@
 package com.molyavin.mvvm.controlles
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
 import com.google.android.material.textfield.TextInputLayout
-import com.molyavin.mvvm.MainActivity
+import com.molyavin.mvvm.ComponentActivity
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.DaggerRegistrationComponent
 import com.molyavin.mvvm.domain.di.component.Injector
@@ -52,7 +50,7 @@ class RegistrationController : Controller() {
         textFieldPhone = view.findViewById(R.id.textFieldPhone)
         textFieldPass = view.findViewById(R.id.textFieldPass)
 
-        val viewModelStoreOwner: ViewModelStoreOwner = (activity) as MainActivity
+        val viewModelStoreOwner: ViewModelStoreOwner = (activity) as ComponentActivity
 
         component = DaggerRegistrationComponent.builder()
             .registrationModule(
