@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
-import com.molyavin.mvvm.controlles.AuthorizationController
+import com.molyavin.mvvm.controlles.SplashScreenController
 import com.molyavin.mvvm.databinding.ActivityMainBinding
 
 class ComponentActivity : AppCompatActivity() {
@@ -21,12 +21,13 @@ class ComponentActivity : AppCompatActivity() {
             .setPopRootControllerMode(Router.PopRootControllerMode.NEVER)
 
         if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(AuthorizationController()))
+            router.setRoot(RouterTransaction.with(SplashScreenController()))
         }
 
     }
 
     override fun onBackPressed() {
+
         if (!router.handleBack()) {
             super.onBackPressed()
         }

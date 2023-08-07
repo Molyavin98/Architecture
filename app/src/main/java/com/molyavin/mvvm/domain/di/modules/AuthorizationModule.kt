@@ -3,8 +3,8 @@ package com.molyavin.mvvm.domain.di.modules
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.domain.di.scope.ActivityScope
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
-import com.molyavin.mvvm.presenter.AuthorizationPresenter
-import com.molyavin.mvvm.presenter.Presenter
+import com.molyavin.mvvm.presentation.screens.login.presenter.AuthorizationPresenter
+import com.molyavin.mvvm.presentation.screens.login.presenter.Presenter
 import dagger.Module
 import dagger.Provides
 

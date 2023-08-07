@@ -18,7 +18,7 @@ import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.domain.di.component.RegistrationComponent
 import com.molyavin.mvvm.domain.di.modules.RegistrationModule
 import com.molyavin.mvvm.utils.getTextString
-import com.molyavin.mvvm.viewmodel.RegistrationViewModel
+import com.molyavin.mvvm.presentation.screens.registration.viewmodel.RegistrationViewModel
 import javax.inject.Inject
 
 class RegistrationController : Controller() {

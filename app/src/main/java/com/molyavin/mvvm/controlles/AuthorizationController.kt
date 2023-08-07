@@ -11,20 +11,20 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
 import com.google.android.material.textfield.TextInputLayout
 import com.molyavin.mvvm.R
-import com.molyavin.mvvm.databinding.ControllerAuthorizationBinding
 import com.molyavin.mvvm.domain.di.component.AuthorizationComponent
 import com.molyavin.mvvm.domain.di.component.DaggerAuthorizationComponent
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.domain.di.modules.AuthorizationModule
-import com.molyavin.mvvm.presenter.AuthorizationPresenter
+import com.molyavin.mvvm.presentation.screens.login.presenter.AuthorizationPresenter
 import com.molyavin.mvvm.utils.getTextString
 import javax.inject.Inject
 
 class AuthorizationController : Controller(),
-    com.molyavin.mvvm.presentation.View.AuthorizationViewView {
+    com.molyavin.mvvm.presentation.screens.login.presenter.View.AuthorizationViewView {
 
 
     private lateinit var component: AuthorizationComponent
+
     @Inject
     lateinit var presenter: AuthorizationPresenter
 
@@ -89,7 +89,6 @@ class AuthorizationController : Controller(),
             Toast.makeText(view?.context, "Field is not can empty!", Toast.LENGTH_SHORT).show()
         }
     }
-
 
 
 }

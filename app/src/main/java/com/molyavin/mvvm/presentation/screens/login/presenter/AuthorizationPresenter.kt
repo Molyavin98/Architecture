@@ -1,8 +1,7 @@
-package com.molyavin.mvvm.presenter
+package com.molyavin.mvvm.presentation.screens.login.presenter
 
 import com.molyavin.mvvm.domain.models.UserInfo
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
-import com.molyavin.mvvm.presentation.View
 import javax.inject.Inject
 
 class AuthorizationPresenter @Inject constructor (

@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.presentation
+package com.molyavin.mvvm.presentation.screens.login.presenter
 
 interface View {
 

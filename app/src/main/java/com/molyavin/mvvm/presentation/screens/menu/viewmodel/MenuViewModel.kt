@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.viewmodel
+package com.molyavin.mvvm.presentation.screens.menu.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

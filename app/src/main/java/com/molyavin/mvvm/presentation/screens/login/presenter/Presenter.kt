@@ -1,6 +1,4 @@
-package com.molyavin.mvvm.presenter
-
-import com.molyavin.mvvm.presentation.View
+package com.molyavin.mvvm.presentation.screens.login.presenter
 
 interface Presenter<T : View> {
 

@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.viewmodel
+package com.molyavin.mvvm.presentation.screens.menu.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

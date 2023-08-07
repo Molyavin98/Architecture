@@ -14,8 +14,8 @@ import com.molyavin.mvvm.R
 import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.data.storage.DBSharedPreference
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
-import com.molyavin.mvvm.viewmodel.MenuViewModel
-import com.molyavin.mvvm.viewmodel.MenuViewModelFactory
+import com.molyavin.mvvm.presentation.screens.menu.viewmodel.MenuViewModel
+import com.molyavin.mvvm.presentation.screens.menu.viewmodel.MenuViewModelFactory
 
 class UserInfoController : Controller() {
 

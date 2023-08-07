@@ -1,10 +1,9 @@
-package com.molyavin.mvvm.viewmodel
+package com.molyavin.mvvm.presentation.screens.registration.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.molyavin.mvvm.domain.models.UserInfo
 import com.molyavin.mvvm.domain.usecase.SaveUserInfoUseCase
-import javax.inject.Inject
 
 class RegistrationViewModel (private val saveUserInfoUseCase: SaveUserInfoUseCase) :
     ViewModel() {
