@@ -23,6 +23,6 @@ class SplashScreenController : Controller() {
 
         }, 3000)
 
-        return inflater.inflate(R.layout.activity_splash_screen, container, false)
+        return inflater.inflate(R.layout.controller_splash_screen, container, false)
     }
 }
