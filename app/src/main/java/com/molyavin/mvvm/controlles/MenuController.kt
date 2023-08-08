@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.R
 
 class MenuController : Controller() {
 
-    private lateinit var btnShowUserInfo: Button
-    private lateinit var btnSetting: Button
+    private lateinit var btnProfile: ImageButton
+    private lateinit var btnSetting: ImageButton
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -24,12 +25,12 @@ class MenuController : Controller() {
 
         val view = inflater.inflate(R.layout.controller_menu, container, false)
 
-        btnShowUserInfo = view.findViewById(R.id.btnShowUserInfo)
+        btnProfile = view.findViewById(R.id.btnProfile)
         btnSetting = view.findViewById(R.id.btnSettings)
 
 
-        btnShowUserInfo.setOnClickListener {
-            router.pushController(RouterTransaction.with(UserInfoController()))
+        btnProfile.setOnClickListener {
+            router.pushController(RouterTransaction.with(ProfileController()))
         }
 
         btnSetting.setOnClickListener { }

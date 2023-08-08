@@ -7,27 +7,35 @@ import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.controlles.SplashScreenController
 import com.molyavin.mvvm.databinding.ActivityMainBinding
+import com.molyavin.mvvm.domain.di.component.Injector
+import javax.inject.Inject
 
-class ComponentActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var router: Router
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var router: Router
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        router = Conductor.attachRouter(this, binding.controllerContainer, savedInstanceState)
-            .setPopRootControllerMode(Router.PopRootControllerMode.NEVER)
+        Injector.inject(
+            this,
+            Conductor.attachRouter(this, binding.controllerContainer, savedInstanceState)
+                .setPopRootControllerMode(Router.PopRootControllerMode.NEVER)
+        )
+
+        Injector.INSTANCE.inject(this)
 
         if (!router.hasRootController()) {
             router.setRoot(RouterTransaction.with(SplashScreenController()))
         }
-
     }
 
     override fun onBackPressed() {
-
         if (!router.handleBack()) {
             super.onBackPressed()
         }

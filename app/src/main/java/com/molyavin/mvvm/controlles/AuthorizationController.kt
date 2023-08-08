@@ -11,22 +11,15 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
 import com.google.android.material.textfield.TextInputLayout
 import com.molyavin.mvvm.R
-import com.molyavin.mvvm.domain.di.component.AuthorizationComponent
-import com.molyavin.mvvm.domain.di.component.DaggerAuthorizationComponent
 import com.molyavin.mvvm.domain.di.component.Injector
-import com.molyavin.mvvm.domain.di.modules.AuthorizationModule
-import com.molyavin.mvvm.presentation.screens.login.presenter.AuthorizationPresenter
+import com.molyavin.mvvm.presentation.screens.login.presenter.AuthorizationViewModel
 import com.molyavin.mvvm.utils.getTextString
 import javax.inject.Inject
 
-class AuthorizationController : Controller(),
-    com.molyavin.mvvm.presentation.screens.login.presenter.View.AuthorizationViewView {
-
-
-    private lateinit var component: AuthorizationComponent
+class AuthorizationController : Controller() {
 
     @Inject
-    lateinit var presenter: AuthorizationPresenter
+    lateinit var viewModel: AuthorizationViewModel
 
     private lateinit var btnLogin: Button
     private lateinit var btnRegistration: Button
@@ -40,6 +33,8 @@ class AuthorizationController : Controller(),
         savedViewState: Bundle?
     ): View {
 
+        Injector.INSTANCE.inject(this)
+
         val view = inflater.inflate(R.layout.controller_authorization, container, false)
 
         btnLogin = view.findViewById(R.id.btnLogin)
@@ -47,13 +42,7 @@ class AuthorizationController : Controller(),
         textFieldPhone = view.findViewById(R.id.textFieldPhone)
         textFieldPass = view.findViewById(R.id.textFieldPass)
 
-        component = DaggerAuthorizationComponent.builder()
-            .authorizationModule(AuthorizationModule(Injector.INSTANCE.getUserRepository()))
-            .build()
-        component.inject(this)
-
-        presenter.onAttach(this)
-        presenter.readDataUser()
+        viewModel.readDataUser()
 
         onClickListener()
 
@@ -63,32 +52,15 @@ class AuthorizationController : Controller(),
     private fun onClickListener() {
 
         btnLogin.setOnClickListener {
-
-            if (presenter.validateUserData(
-                    textFieldPhone.getTextString() ?: "",
-                    textFieldPass.getTextString() ?: "",
-                )
-            ) {
-                router.setRoot(RouterTransaction.with(MenuController()))
-            } else {
-                Toast.makeText(view?.context, "Data user is not correct!", Toast.LENGTH_SHORT)
-                    .show()
-            }
+            viewModel.login(
+                textFieldPhone.getTextString() ?: "",
+                textFieldPass.getTextString() ?: "",
+            )
         }
 
         btnRegistration.setOnClickListener {
             router.pushController(RouterTransaction.with(RegistrationController()))
         }
     }
-
-    override fun setErrorUserData() {
-
-        if (textFieldPhone.getTextString().isNullOrEmpty() ||
-            textFieldPass.getTextString().isNullOrEmpty()
-        ) {
-            Toast.makeText(view?.context, "Field is not can empty!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
 
 }

@@ -1,15 +1,18 @@
 package com.molyavin.mvvm.domain.di.component
 
-import com.molyavin.mvvm.domain.di.MyApplication
+import android.content.Context
+import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.domain.di.modules.AppModule
+import com.molyavin.mvvm.domain.di.modules.NavigationModule
 
 object Injector {
 
     lateinit var INSTANCE: AppComponent
 
-    fun inject(application: MyApplication) {
+    fun inject(context: Context, router: Router) {
         INSTANCE = DaggerAppComponent.builder()
-            .appModule(AppModule(application))
+            .appModule(AppModule(context))
+            .navigationModule(NavigationModule(router))
             .build()
     }
 
