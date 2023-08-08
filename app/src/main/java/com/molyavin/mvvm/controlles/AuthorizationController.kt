@@ -21,11 +21,6 @@ class AuthorizationController : Controller() {
     @Inject
     lateinit var viewModel: AuthorizationViewModel
 
-    private lateinit var btnLogin: Button
-    private lateinit var btnRegistration: Button
-    private lateinit var textFieldPhone: TextInputLayout
-    private lateinit var textFieldPass: TextInputLayout
-
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,19 +32,10 @@ class AuthorizationController : Controller() {
 
         val view = inflater.inflate(R.layout.controller_authorization, container, false)
 
-        btnLogin = view.findViewById(R.id.btnLogin)
-        btnRegistration = view.findViewById(R.id.btnRegistration)
-        textFieldPhone = view.findViewById(R.id.textFieldPhone)
-        textFieldPass = view.findViewById(R.id.textFieldPass)
-
-        viewModel.readDataUser()
-
-        onClickListener()
-
-        return view
-    }
-
-    private fun onClickListener() {
+        val btnLogin: Button = view.findViewById(R.id.btnLogin)
+        val btnRegistration: Button = view.findViewById(R.id.btnRegistration)
+        val textFieldPhone: TextInputLayout = view.findViewById(R.id.textFieldPhone)
+        val textFieldPass: TextInputLayout = view.findViewById(R.id.textFieldPass)
 
         btnLogin.setOnClickListener {
             viewModel.login(
@@ -59,8 +45,9 @@ class AuthorizationController : Controller() {
         }
 
         btnRegistration.setOnClickListener {
-            router.pushController(RouterTransaction.with(RegistrationController()))
+            viewModel.goToRegistrationScreen()
         }
-    }
 
+        return view
+    }
 }

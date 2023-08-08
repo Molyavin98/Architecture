@@ -39,7 +39,7 @@ class ProfileController : Controller() {
             textPassword.text = "Password ${userInfo.password}"
         }
 
-        viewModel.readUserData()
+        viewModel.onCreate()
 
         return view
     }
