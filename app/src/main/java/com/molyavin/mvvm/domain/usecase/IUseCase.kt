@@ -6,4 +6,6 @@ interface IUseCase<T, R> {
     fun execute(income: T): R
     interface IReadUserInfoUseCase : IUseCase<Any?, UserInfo>
     interface ISaveUserInfoUseCase : IUseCase<UserInfo, Unit>
+
+    interface ICheckFieldUseCase:IUseCase<UserInfo, Any?>
 }
