@@ -3,11 +3,9 @@ package com.molyavin.mvvm.domain.usecase
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.domain.models.UserInfo
 
-class CheckFieldUseCase(private val userRepository: UserRepository) {
-
-    fun execute(userInfo: UserInfo): Boolean {
+class CheckFieldUseCase(private val userRepository: UserRepository) : IUseCase.ICheckFieldUseCase {
+    override fun execute(income: UserInfo): Boolean {
         userRepository.readData()
-        return !userInfo.fullName.isNullOrEmpty() && !userInfo.phone.isNullOrEmpty() && !userInfo.password.isNullOrEmpty()
-
+        return !income.fullName.isNullOrEmpty() && !income.phone.isNullOrEmpty() && !income.password.isNullOrEmpty()
     }
 }
