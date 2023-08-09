@@ -1,23 +1,32 @@
 package com.molyavin.mvvm.presentation
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonColors
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ButtonElevation
+import androidx.compose.material.Colors
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +34,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -38,8 +52,46 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.molyavin.mvvm.R
 
+
+@Composable
+fun DefaultButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    colors: ButtonColors = ButtonDefaults.buttonColors(
+        backgroundColor = colorResource(id = R.color.default_button_color),
+        contentColor = colorResource(id = R.color.default_button_text_color),
+    ),
+    trailingIcon: (@Composable () -> Unit)? = null,
+    shape: Shape = RoundedCornerShape(16.dp),
+    border: BorderStroke? = null,
+    elevation: ButtonElevation? = null,
+    enabled: Boolean = true,
+    contentPadding: PaddingValues = PaddingValues(16.dp),
+    textStyle: TextStyle = MaterialTheme.typography.subtitle1,
+) {
+    Button(
+        modifier = modifier.defaultMinSize(minHeight = 40.dp, minWidth = 100.dp),
+        onClick = onClick,
+        enabled = enabled,
+        border = border,
+        elevation = elevation,
+        shape = shape,
+        colors = colors,
+        contentPadding = contentPadding,
+    ) {
+        Text(
+            text = text,
+            style = textStyle,
+        )
+
+        trailingIcon?.invoke()
+    }
+
+}
+
+
 @Preview
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhoneField() {
 
@@ -57,8 +109,13 @@ fun PhoneField() {
             style = TextStyle(color = Color.Gray, fontSize = 12.sp),
             modifier = Modifier.padding(3.dp)
         )
+
+        var fieldFocus by remember { mutableStateOf(false) }
+
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { fieldFocus = it.isFocused },
             placeholder = {
                 Text(
                     text = "Enter your phone number",
@@ -73,20 +130,18 @@ fun PhoneField() {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_phone_enabled_24),
                     contentDescription = null,
+                    tint = if (fieldFocus) Color(0xFF3ddc84) else Color.Gray
                 )
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Color(0xFF3ddc84),
                 unfocusedBorderColor = Color.Gray,
                 cursorColor = Color(0xFF3ddc84),
-                focusedTrailingIconColor = Color(0xFF3ddc84),
-                unfocusedTrailingIconColor = Color.Gray
             ),
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordField(textForgotPassword: String, hint: String) {
 
@@ -140,8 +195,6 @@ fun PasswordField(textForgotPassword: String, hint: String) {
                 focusedBorderColor = Color(0xFF3ddc84),
                 unfocusedBorderColor = Color.Gray,
                 cursorColor = Color(0xFF3ddc84),
-                focusedTrailingIconColor = Color(0xFF3ddc84),
-                unfocusedTrailingIconColor = Color.Gray
             ),
         )
     }
