@@ -14,6 +14,7 @@ class AuthorizationViewModel @Inject constructor(
     private val router: Router,
     private val toaster: Toaster,
 ) : ViewModel() {
+
     fun login(phoneUser: String, passwordUser: String) {
 
 

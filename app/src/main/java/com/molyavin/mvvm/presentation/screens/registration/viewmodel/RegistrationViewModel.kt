@@ -1,6 +1,5 @@
 package com.molyavin.mvvm.presentation.screens.registration.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
@@ -18,27 +17,23 @@ class RegistrationViewModel @Inject constructor(
     private val toaster: Toaster
 ) : ViewModel() {
 
-    private var fullName = MutableLiveData<String>()
-    private var phone = MutableLiveData<String>()
-    private var password = MutableLiveData<String>()
-
     fun saveData(userFullName: String?, userPhone: String?, userPassword: String?) {
-        fullName.value = userFullName
-        phone.value = userPhone
-        password.value = userPassword
-
 
         if (checkFieldUseCase.execute(
                 UserInfo(
-                    fullName.value.toString(),
-                    phone.value.toString(),
-                    password.value.toString()))
+                    fullName = userFullName!!,
+                    phone = userPhone!!,
+                    password = userPassword!!
+                )
+            )
         ) {
             saveUserInfoUseCase.execute(
                 UserInfo(
-                    fullName.value.toString(),
-                    phone.value.toString(),
-                    password.value.toString()))
+                    fullName = userFullName,
+                    phone = userPhone,
+                    password = userPassword
+                )
+            )
 
             router.pushController(RouterTransaction.with(AuthorizationController()))
         } else {
