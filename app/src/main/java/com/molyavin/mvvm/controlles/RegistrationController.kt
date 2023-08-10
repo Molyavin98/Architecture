@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<< HEAD
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,11 +23,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.bluelinelabs.conductor.Controller
-=======
-import android.widget.Button
-import com.bluelinelabs.conductor.Controller
-import com.google.android.material.textfield.TextInputLayout
->>>>>>> 7a13f7c (Bug fixes v3)
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.DefaultAccountLoginButton
@@ -76,7 +70,8 @@ class RegistrationController : Controller() {
                         verticalArrangement = Arrangement.Bottom,
                     ) {
 
-                        val password = remember { mutableStateOf(TextFieldValue()) }
+                        val passwordOne = remember { mutableStateOf(TextFieldValue()) }
+                        val passwordTwo = remember { mutableStateOf(TextFieldValue()) }
                         val phone = remember { mutableStateOf(TextFieldValue()) }
 
 
@@ -106,7 +101,7 @@ class RegistrationController : Controller() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = password,
+                            password = passwordOne,
                             label = "Password",
                             hint = "Enter your password",
                             focusColor = R.color.default_border_focus_color,
@@ -117,7 +112,7 @@ class RegistrationController : Controller() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = password,
+                            password = passwordTwo,
                             label = "Password",
                             hint = "Confirm password",
                             focusColor = R.color.default_border_focus_color,

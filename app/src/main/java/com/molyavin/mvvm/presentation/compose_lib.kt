@@ -128,9 +128,10 @@ fun DefaultTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     styleText: TextStyle = MaterialTheme.typography.h5,
-    trailingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: Int? = null,
     modifier: Modifier = Modifier,
     modifierText: Modifier = Modifier,
+    trailingIconModifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -182,9 +183,15 @@ fun DefaultTextField(
             },
             shape = RoundedCornerShape(16.dp),
             trailingIcon = {
-                trailingIcon?.invoke()
+                trailingIcon?.let {
+                    Icon(
+                        modifier = trailingIconModifier,
+                        painter = painterResource(id = it),
+                        contentDescription = null,
+                        tint = if (fieldFocus) colorResource(focusColor) else Color.Gray
+                    )
+                }
             },
-
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = colorResource(focusColor),
                 unfocusedBorderColor = colorResource(unFocusColor),
@@ -206,7 +213,6 @@ fun DefaultPhoneField(
     unFocusColor: Int
 ) {
     DefaultTextField(
-        modifierText = modifierText,
         value = phone.value,
         onValueChange = { phone.value = it },
         label = label,
@@ -215,14 +221,8 @@ fun DefaultPhoneField(
         unFocusColor = unFocusColor,
         keyboardType = KeyboardType.Phone,
         visualTransformation = VisualTransformation.None,
-
-        trailingIcon = {
-            Icon(
-                painter = painterResource(id = R.drawable.baseline_phone_enabled_24),
-                contentDescription = null,
-                tint = if (phone.value.text.isNotEmpty()) colorResource(id = R.color.default_border_color) else Color.Gray
-            )
-        }
+        trailingIcon = R.drawable.phone_24,
+        modifierText = modifierText,
     )
 }
 
@@ -249,16 +249,8 @@ fun DefaultPasswordField(
         textForgotPassword = textForgotPassword,
         keyboardType = KeyboardType.Password,
         visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-        trailingIcon = {
-            Icon(
-                painter = if (passwordVisibility) painterResource(id = R.drawable.baseline_visibility_24) else painterResource(
-                    id = R.drawable.baseline_visibility_off_24
-                ),
-                contentDescription = null,
-                tint = if (password.value.text.isNotEmpty()) colorResource(id = R.color.default_border_color) else Color.Gray,
-                modifier = Modifier.clickable { passwordVisibility = !passwordVisibility }
-            )
-        }
+        trailingIconModifier = Modifier.clickable { passwordVisibility = !passwordVisibility },
+        trailingIcon = if (passwordVisibility) R.drawable.baseline_visibility_24 else R.drawable.baseline_visibility_off_24
     )
 }
 
