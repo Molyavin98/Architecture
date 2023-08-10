@@ -22,11 +22,4 @@ class UserRepositoryImpl(private val sharedPreferences: DBSharedPreference) :
         phone = sharedPreferences.getData(KEY_PHONE) ?: DEFAULT,
         password = sharedPreferences.getData(KEY_PASSWORD) ?: DEFAULT,
     )
-
-    override fun checkData(userInfo: UserInfo): Boolean {
-        return  !userInfo.fullName.isNullOrEmpty()
-                && !userInfo.phone.isNullOrEmpty()
-                && !userInfo.password.isNullOrEmpty()
-    }
-
 }
