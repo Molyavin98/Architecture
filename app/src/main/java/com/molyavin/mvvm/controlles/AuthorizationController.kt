@@ -25,14 +25,14 @@ import androidx.compose.ui.unit.dp
 import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
-import com.molyavin.mvvm.presentation.DefaultAccountLoginButton
+import com.molyavin.mvvm.presentation.DefaultSocialAuthButton
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
-import com.molyavin.mvvm.presentation.DefaultLineAndTextOr
+import com.molyavin.mvvm.presentation.DividerOr
 import com.molyavin.mvvm.presentation.DefaultPasswordField
 import com.molyavin.mvvm.presentation.DefaultPhoneField
 import com.molyavin.mvvm.presentation.DefaultText
-import com.molyavin.mvvm.presentation.DefaultAuthFooter
+import com.molyavin.mvvm.presentation.AuthFooter
 import com.molyavin.mvvm.presentation.RememberMeCheckBox
 import com.molyavin.mvvm.presentation.screens.login.presenter.AuthorizationViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
@@ -119,12 +119,12 @@ class AuthorizationController : Controller() {
                         )
 
 
-                        DefaultLineAndTextOr()
+                        DividerOr()
 
-                        Row() {
-                            DefaultAccountLoginButton(imageId = R.drawable.google_icone)
-                            DefaultAccountLoginButton(imageId = R.drawable.apple_icon)
-                            DefaultAccountLoginButton(imageId = R.drawable.facebook_icon)
+                        Row {
+                            DefaultSocialAuthButton(imageId = R.drawable.google_icone)
+                            DefaultSocialAuthButton(imageId = R.drawable.apple_icon)
+                            DefaultSocialAuthButton(imageId = R.drawable.facebook_icon)
                         }
 
                         DefaultButton(
@@ -146,7 +146,7 @@ class AuthorizationController : Controller() {
                         )
 
 
-                        DefaultAuthFooter(
+                        AuthFooter(
                             modifier = Modifier.padding(bottom = 8.dp),
                             text = "Don`t have an account?",
                             textButton = "Sing up now.",
@@ -161,25 +161,3 @@ class AuthorizationController : Controller() {
         return view
     }
 }
-
-
-/*        val view = inflater.inflate(R.layout.controller_authorization, container, false)
-
-        val btnLogin: Button = view.findViewById(R.id.btnLogin)
-        val btnRegistration: Button = view.findViewById(R.id.btnRegistration)
-        val textFieldPhone: TextInputLayout = view.findViewById(R.id.textFieldPhone)
-        val textFieldPass: TextInputLayout = view.findViewById(R.id.textFieldPass)
-
-        btnLogin.setOnClickListener {
-            viewModel.login(
-                textFieldPhone.getTextString() ?: "",
-                textFieldPass.getTextString() ?: "",
-            )
-        }
-
-        btnRegistration.setOnClickListener {
-            viewModel.goToRegistrationScreen()
-        }
-
-        return view
-    }*/

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.Scaffold
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,14 +26,14 @@ import androidx.compose.ui.unit.dp
 import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
-import com.molyavin.mvvm.presentation.DefaultAccountLoginButton
+import com.molyavin.mvvm.presentation.DefaultSocialAuthButton
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
-import com.molyavin.mvvm.presentation.DefaultLineAndTextOr
+import com.molyavin.mvvm.presentation.DividerOr
 import com.molyavin.mvvm.presentation.DefaultPasswordField
 import com.molyavin.mvvm.presentation.DefaultPhoneField
 import com.molyavin.mvvm.presentation.DefaultText
-import com.molyavin.mvvm.presentation.DefaultAuthFooter
+import com.molyavin.mvvm.presentation.AuthFooter
 import com.molyavin.mvvm.presentation.screens.registration.viewmodel.RegistrationViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
@@ -61,7 +62,7 @@ class RegistrationController : Controller() {
 
         view.setContent {
             MVVMTheme {
-                androidx.compose.material.Scaffold {
+                Scaffold {
                     Column(
                         modifier = Modifier
                             .padding(it)
@@ -120,12 +121,12 @@ class RegistrationController : Controller() {
                         )
 
 
-                        DefaultLineAndTextOr()
+                        DividerOr()
 
-                        Row() {
-                            DefaultAccountLoginButton(imageId = R.drawable.google_icone)
-                            DefaultAccountLoginButton(imageId = R.drawable.apple_icon)
-                            DefaultAccountLoginButton(imageId = R.drawable.facebook_icon)
+                        Row {
+                            DefaultSocialAuthButton(imageId = R.drawable.google_icone)
+                            DefaultSocialAuthButton(imageId = R.drawable.apple_icon)
+                            DefaultSocialAuthButton(imageId = R.drawable.facebook_icon)
                         }
 
                         DefaultButton(
@@ -147,7 +148,7 @@ class RegistrationController : Controller() {
                         )
 
 
-                        DefaultAuthFooter(
+                        AuthFooter(
                             modifier = Modifier.padding(bottom = 8.dp),
                             text = "Already have on account?",
                             textButton = "Sing in.",
@@ -157,15 +158,6 @@ class RegistrationController : Controller() {
                 }
             }
         }
-
-
-        /* btnRegistration.setOnClickListener {
-             viewModel.saveData(
-                 textFieldFullName.getTextString(),
-                 textFieldPhone.getTextString(),
-                 textFieldPass.getTextString()
-             )
-         }*/
 
         return view
     }

@@ -112,8 +112,7 @@ fun DefaultImageLogo(
         modifier = modifier,
         bitmap = ImageBitmap.imageResource(id = idImage),
         contentDescription = null,
-
-        )
+    )
 }
 
 @Composable
@@ -125,11 +124,16 @@ fun DefaultTextField(
     focusColor: Int,
     unFocusColor: Int,
     textForgotPassword: String? = null,
-    keyboardType: KeyboardType = KeyboardType.Text,
+    fieldTextStyle: TextStyle = MaterialTheme.typography.h5,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     styleText: TextStyle = MaterialTheme.typography.h5,
+    fieldShape: Shape = RoundedCornerShape(16.dp),
+    fieldBackgroundColor: Color = colorResource(id = R.color.default_background_text_field_color),
     trailingIcon: Int? = null,
     modifier: Modifier = Modifier,
+    fieldModifier: Modifier = Modifier,
+    hintStyle: TextStyle = TextStyle(),
     modifierText: Modifier = Modifier,
     trailingIconModifier: Modifier = Modifier,
 ) {
@@ -138,50 +142,46 @@ fun DefaultTextField(
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 10.dp)
     ) {
-
         Row {
             Text(
                 text = label,
-                style = styleText,
-                color = Color.Gray,
+                style = styleText.copy(color = Color.Gray),
                 modifier = modifierText,
             )
 
-            if (textForgotPassword != null) {
+            textForgotPassword?.let {
                 Text(
-                    text = textForgotPassword,
+                    text = it,
                     textDecoration = TextDecoration.combine(listOf(TextDecoration.Underline)),
-                    style = styleText,
-                    color = Color.Gray,
+                    style = styleText.copy(color = Color.Gray),
                     modifier = modifierText,
                     textAlign = TextAlign.End,
                 )
-
             }
         }
 
         var fieldFocus by remember { mutableStateOf(false) }
 
         OutlinedTextField(
-            modifier = Modifier
+            modifier = fieldModifier
                 .fillMaxWidth()
                 .background(
-                    colorResource(id = R.color.default_background_text_field_color),
-                    shape = RoundedCornerShape(16.dp)
+                    color = fieldBackgroundColor,
+                    shape = fieldShape
                 )
                 .onFocusChanged { fieldFocus = it.isFocused },
             value = value,
             onValueChange = onValueChange,
-            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-            textStyle = TextStyle(color = Color.Black),
+            keyboardOptions = keyboardOptions,
+            textStyle = fieldTextStyle.copy(color = Color.Black),
             visualTransformation = visualTransformation,
             placeholder = {
                 Text(
                     text = hint,
-                    style = TextStyle(color = Color.Gray, fontSize = 14.sp)
+                    style = hintStyle.copy(color = Color.Gray, fontSize = 14.sp)
                 )
             },
-            shape = RoundedCornerShape(16.dp),
+            shape = fieldShape,
             trailingIcon = {
                 trailingIcon?.let {
                     Icon(
@@ -219,7 +219,7 @@ fun DefaultPhoneField(
         hint = hint,
         focusColor = focusColor,
         unFocusColor = unFocusColor,
-        keyboardType = KeyboardType.Phone,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
         visualTransformation = VisualTransformation.None,
         trailingIcon = R.drawable.phone_24,
         modifierText = modifierText,
@@ -247,7 +247,7 @@ fun DefaultPasswordField(
         focusColor = focusColor,
         unFocusColor = unFocusColor,
         textForgotPassword = textForgotPassword,
-        keyboardType = KeyboardType.Password,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIconModifier = Modifier.clickable { passwordVisibility = !passwordVisibility },
         trailingIcon = if (passwordVisibility) R.drawable.baseline_visibility_24 else R.drawable.baseline_visibility_off_24
@@ -255,7 +255,7 @@ fun DefaultPasswordField(
 }
 
 @Composable
-fun DefaultLineAndTextOr() {
+fun DividerOr() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(top = 8.dp, bottom = 12.dp)
@@ -285,7 +285,7 @@ fun DefaultLineAndTextOr() {
 
 
 @Composable
-fun DefaultAuthFooter(
+fun AuthFooter(
     modifier: Modifier,
     text: String,
     textButton: String,
@@ -346,7 +346,7 @@ fun RememberMeCheckBox(
 }
 
 @Composable
-fun DefaultAccountLoginButton(
+fun DefaultSocialAuthButton(
     modifier: Modifier = Modifier,
     colors: ButtonColors = ButtonDefaults.buttonColors(
         backgroundColor = colorResource(id = R.color.default_button_account_color)
