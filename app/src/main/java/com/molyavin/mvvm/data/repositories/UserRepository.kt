@@ -6,4 +6,6 @@ interface UserRepository {
     fun saveData(userInfo: UserInfo)
     fun readData(): UserInfo
 
+    fun checkData(userInfo: UserInfo): Boolean
+
 }

@@ -29,10 +29,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.molyavin.mvvm.R
-import com.molyavin.mvvm.presentation.AccountLoginButtons
-import com.molyavin.mvvm.presentation.PasswordField
-import com.molyavin.mvvm.presentation.PhoneField
-import com.molyavin.mvvm.presentation.TextOr
 
 class RegistrationScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +44,11 @@ class RegistrationScreen : ComponentActivity() {
                         color = Color.Black
                     ),
                 )
-                PhoneField()
-                PasswordField(textForgotPassword = "", "Enter your password")
-                PasswordField(textForgotPassword = "", "Confirm password")
-                TextOr()
-                AccountLoginButtons()
+               // PhoneField()
+              //  PasswordField(textForgotPassword = "", "Enter your password")
+              //  PasswordField(textForgotPassword = "", "Confirm password")
+                //TextOr()
+             //   AccountLoginButtons()
                 ButtonLoginAndRegistration()
 
             }

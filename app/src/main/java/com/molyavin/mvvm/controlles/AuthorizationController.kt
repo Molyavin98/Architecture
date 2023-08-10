@@ -5,18 +5,37 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import com.bluelinelabs.conductor.Controller
-import com.bluelinelabs.conductor.RouterTransaction
-import com.google.android.material.textfield.TextInputLayout
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
+import com.molyavin.mvvm.presentation.DefaultAccountLoginButton
+import com.molyavin.mvvm.presentation.DefaultButton
+import com.molyavin.mvvm.presentation.DefaultImageLogo
+import com.molyavin.mvvm.presentation.DefaultLineAndTextOr
+import com.molyavin.mvvm.presentation.DefaultPasswordField
+import com.molyavin.mvvm.presentation.DefaultPhoneField
+import com.molyavin.mvvm.presentation.DefaultText
+import com.molyavin.mvvm.presentation.DefaultAuthFooter
+import com.molyavin.mvvm.presentation.RememberMeCheckBox
 import com.molyavin.mvvm.presentation.screens.login.presenter.AuthorizationViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import com.molyavin.mvvm.utils.getTextString
 import javax.inject.Inject
 
 class AuthorizationController : Controller() {
@@ -42,28 +61,125 @@ class AuthorizationController : Controller() {
 
         view.setContent {
             MVVMTheme {
-                Scaffold {
+                androidx.compose.material.Scaffold {
+                    Column(
+                        modifier = Modifier
+                            .padding(it)
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Bottom,
+                    ) {
 
+
+                        val password = remember { mutableStateOf(TextFieldValue()) }
+                        val phone = remember { mutableStateOf(TextFieldValue()) }
+                        val checkState = remember { mutableStateOf(false) }
+
+
+                        DefaultImageLogo(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
+                            idImage = R.drawable.image_login,
+                        )
+
+                        DefaultText(text = "Welcome in Architecture App")
+
+
+                        DefaultPhoneField(
+                            modifierText = Modifier
+                                .padding(3.dp)
+                                .weight(50f),
+                            phone = phone,
+                            label = "Phone",
+                            hint = "Enter your phone",
+                            focusColor = R.color.default_border_focus_color,
+                            unFocusColor = R.color.default_border_color
+                        )
+
+                        DefaultPasswordField(
+                            modifierText = Modifier
+                                .padding(3.dp)
+                                .weight(50f),
+                            password = password,
+                            label = "Password",
+                            textForgotPassword = "Forgot password?",
+                            hint = "Enter your password",
+                            focusColor = R.color.default_border_focus_color,
+                            unFocusColor = R.color.default_border_color,
+                        )
+
+
+                        RememberMeCheckBox(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp),
+                            checkState = checkState,
+                            text = "Remember me"
+                        )
+
+
+                        DefaultLineAndTextOr()
+
+                        Row() {
+                            DefaultAccountLoginButton(imageId = R.drawable.google_icone)
+                            DefaultAccountLoginButton(imageId = R.drawable.apple_icon)
+                            DefaultAccountLoginButton(imageId = R.drawable.facebook_icon)
+                        }
+
+                        DefaultButton(
+                            modifier = Modifier
+                                .padding(start = 16.dp, end = 16.dp, bottom = 8.dp, top = 80.dp)
+                                .fillMaxWidth(),
+                            text = "Log in",
+                            trailingIcon = {
+                                Icon(
+                                    modifier = Modifier
+                                        .padding(start = 8.dp)
+                                        .size(16.dp),
+                                    painter = painterResource(id = R.drawable.arrow_right),
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                )
+                            },
+                            onClick = { viewModel.goToRegistrationScreen() },
+                        )
+
+
+                        DefaultAuthFooter(
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            text = "Don`t have an account?",
+                            textButton = "Sing up now.",
+                            onClick = { viewModel.goToRegistrationScreen() },
+                        )
+                    }
                 }
+
             }
         }
 
-        viewModel.readDataUser()
         return view
     }
-
-//    private fun onClickListener() {
-//
-//        btnLogin.setOnClickListener {
-//            viewModel.login(
-//                textFieldPhone.getTextString() ?: "",
-//                textFieldPass.getTextString() ?: "",
-//            )
-//        }
-//
-//        btnRegistration.setOnClickListener {
-//            router.pushController(RouterTransaction.with(RegistrationController()))
-//        }
-//    }
-
 }
+
+
+/*        val view = inflater.inflate(R.layout.controller_authorization, container, false)
+
+        val btnLogin: Button = view.findViewById(R.id.btnLogin)
+        val btnRegistration: Button = view.findViewById(R.id.btnRegistration)
+        val textFieldPhone: TextInputLayout = view.findViewById(R.id.textFieldPhone)
+        val textFieldPass: TextInputLayout = view.findViewById(R.id.textFieldPass)
+
+        btnLogin.setOnClickListener {
+            viewModel.login(
+                textFieldPhone.getTextString() ?: "",
+                textFieldPass.getTextString() ?: "",
+            )
+        }
+
+        btnRegistration.setOnClickListener {
+            viewModel.goToRegistrationScreen()
+        }
+
+        return view
+    }*/

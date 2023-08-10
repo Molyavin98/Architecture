@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,32 +13,34 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ButtonElevation
-import androidx.compose.material.Colors
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -47,11 +48,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.molyavin.mvvm.R
-
 
 @Composable
 fun DefaultButton(
@@ -90,119 +90,184 @@ fun DefaultButton(
 
 }
 
-
-@Preview
 @Composable
-fun PhoneField() {
+fun DefaultText(
+    text: String,
+    styleText: TextStyle = MaterialTheme.typography.h1
+) {
+    Text(
+        modifier = Modifier.padding(10.dp),
+        text = text,
+        style = styleText,
+        color = colorResource(id = R.color.black)
+    )
+}
 
-    val phone = remember {
-        mutableStateOf(TextFieldValue())
-    }
+@Composable
+fun DefaultImageLogo(
+    modifier: Modifier = Modifier,
+    idImage: Int
+) {
+    Image(
+        modifier = modifier,
+        bitmap = ImageBitmap.imageResource(id = idImage),
+        contentDescription = null,
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 15.dp, end = 15.dp, top = 50.dp)
-    ) {
-        Text(
-            text = "Phone number",
-            style = TextStyle(color = Color.Gray, fontSize = 12.sp),
-            modifier = Modifier.padding(3.dp)
         )
+}
+
+@Composable
+fun DefaultTextField(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    label: String,
+    hint: String,
+    focusColor: Int,
+    unFocusColor: Int,
+    textForgotPassword: String? = null,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    styleText: TextStyle = MaterialTheme.typography.h5,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    modifierText: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, top = 10.dp)
+    ) {
+
+        Row {
+            Text(
+                text = label,
+                style = styleText,
+                color = Color.Gray,
+                modifier = modifierText,
+            )
+
+            if (textForgotPassword != null) {
+                Text(
+                    text = textForgotPassword,
+                    textDecoration = TextDecoration.combine(listOf(TextDecoration.Underline)),
+                    style = styleText,
+                    color = Color.Gray,
+                    modifier = modifierText,
+                    textAlign = TextAlign.End,
+                )
+
+            }
+        }
 
         var fieldFocus by remember { mutableStateOf(false) }
 
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(
+                    colorResource(id = R.color.default_background_text_field_color),
+                    shape = RoundedCornerShape(16.dp)
+                )
                 .onFocusChanged { fieldFocus = it.isFocused },
-            placeholder = {
-                Text(
-                    text = "Enter your phone number",
-                    style = TextStyle(color = Color.Gray, fontSize = 14.sp)
-                )
-            },
-            value = phone.value,
-            onValueChange = { phone.value = it },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-            shape = RoundedCornerShape(10.dp),
-            trailingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_phone_enabled_24),
-                    contentDescription = null,
-                    tint = if (fieldFocus) Color(0xFF3ddc84) else Color.Gray
-                )
-            },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color(0xFF3ddc84),
-                unfocusedBorderColor = Color.Gray,
-                cursorColor = Color(0xFF3ddc84),
-            ),
-        )
-    }
-}
-
-@Composable
-fun PasswordField(textForgotPassword: String, hint: String) {
-
-    val password = remember { mutableStateOf(TextFieldValue()) }
-    var passwordVisibility: Boolean by remember { mutableStateOf(false) }
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 15.dp, end = 15.dp, top = 10.dp)
-    ) {
-        Row {
-            Text(
-                text = "Password",
-                style = TextStyle(color = Color.Gray, fontSize = 12.sp),
-                modifier = Modifier
-                    .padding(3.dp)
-                    .weight(50f)
-            )
-            Text(
-                text = textForgotPassword,
-                style = TextStyle(color = Color.Gray, fontSize = 12.sp),
-                modifier = Modifier
-                    .padding(3.dp)
-                    .weight(50f),
-                textAlign = TextAlign.End
-            )
-        }
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = password.value,
-            onValueChange = { password.value = it },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            value = value,
+            onValueChange = onValueChange,
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            textStyle = TextStyle(color = Color.Black),
+            visualTransformation = visualTransformation,
             placeholder = {
                 Text(
                     text = hint,
                     style = TextStyle(color = Color.Gray, fontSize = 14.sp)
                 )
             },
-            shape = RoundedCornerShape(10.dp),
-            visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            shape = RoundedCornerShape(16.dp),
             trailingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_visibility_24),
-                    contentDescription = null,
-                    modifier = Modifier.clickable { passwordVisibility = !passwordVisibility }
-                )
+                trailingIcon?.invoke()
             },
+
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color(0xFF3ddc84),
-                unfocusedBorderColor = Color.Gray,
-                cursorColor = Color(0xFF3ddc84),
+                focusedBorderColor = colorResource(focusColor),
+                unfocusedBorderColor = colorResource(unFocusColor),
+                focusedLabelColor = colorResource(focusColor),
+                unfocusedLabelColor = Color.Gray,
+                cursorColor = colorResource(focusColor),
             ),
         )
     }
 }
 
 @Composable
-fun TextOr() {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 15.dp)) {
+fun DefaultPhoneField(
+    modifierText: Modifier = Modifier,
+    phone: MutableState<TextFieldValue>,
+    label: String,
+    hint: String,
+    focusColor: Int,
+    unFocusColor: Int
+) {
+    DefaultTextField(
+        modifierText = modifierText,
+        value = phone.value,
+        onValueChange = { phone.value = it },
+        label = label,
+        hint = hint,
+        focusColor = focusColor,
+        unFocusColor = unFocusColor,
+        keyboardType = KeyboardType.Phone,
+        visualTransformation = VisualTransformation.None,
+
+        trailingIcon = {
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_phone_enabled_24),
+                contentDescription = null,
+                tint = if (phone.value.text.isNotEmpty()) colorResource(id = R.color.default_border_color) else Color.Gray
+            )
+        }
+    )
+}
+
+@Composable
+fun DefaultPasswordField(
+    modifierText: Modifier = Modifier,
+    password: MutableState<TextFieldValue>,
+    textForgotPassword: String? = null,
+    label: String,
+    hint: String,
+    focusColor: Int,
+    unFocusColor: Int
+) {
+    var passwordVisibility by remember { mutableStateOf(false) }
+
+    DefaultTextField(
+        modifierText = modifierText,
+        value = password.value,
+        onValueChange = { password.value = it },
+        label = label,
+        hint = hint,
+        focusColor = focusColor,
+        unFocusColor = unFocusColor,
+        textForgotPassword = textForgotPassword,
+        keyboardType = KeyboardType.Password,
+        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+        trailingIcon = {
+            Icon(
+                painter = if (passwordVisibility) painterResource(id = R.drawable.baseline_visibility_24) else painterResource(
+                    id = R.drawable.baseline_visibility_off_24
+                ),
+                contentDescription = null,
+                tint = if (password.value.text.isNotEmpty()) colorResource(id = R.color.default_border_color) else Color.Gray,
+                modifier = Modifier.clickable { passwordVisibility = !passwordVisibility }
+            )
+        }
+    )
+}
+
+@Composable
+fun DefaultLineAndTextOr() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(top = 8.dp, bottom = 12.dp)
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -226,23 +291,90 @@ fun TextOr() {
     }
 }
 
+
 @Composable
-fun AccountLoginButtons() {
+fun DefaultAuthFooter(
+    modifier: Modifier,
+    text: String,
+    textButton: String,
+    onClick: () -> Unit,
+    styleText: TextStyle = MaterialTheme.typography.h5
+) {
 
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-        IconButton(onClick = {}) {
-            Image(
-                painter = painterResource(id = R.drawable.facebook_icon),
-                contentDescription = null,
+    Row(modifier = modifier) {
+        Text(
+            text = text,
+            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+            color = Color.Black,
+            style = styleText,
+        )
+        Text(
+            text = textButton,
+            style = styleText,
+            color = Color.Blue,
+            modifier = Modifier
+                .padding(top = 8.dp, bottom = 8.dp)
+                .clickable { onClick.invoke() }
+        )
+    }
+
+}
+
+@Composable
+fun RememberMeCheckBox(
+    modifier: Modifier = Modifier,
+    checkState: MutableState<Boolean>,
+    styleText: TextStyle = MaterialTheme.typography.h5,
+    checkedColor: Color = colorResource(id = R.color.default_checkbox_color),
+    checkMarkColor: Color = colorResource(id = R.color.white),
+    text: String,
+) {
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Checkbox(
+            checked = checkState.value,
+            onCheckedChange = { checkState.value = it },
+            colors = CheckboxDefaults.colors(
+                checkedColor = checkedColor,
+                checkmarkColor = checkMarkColor,
+                uncheckedColor = Color.Gray
             )
-        }
+        )
+        Text(
+            text = text,
+            color = Color.Gray,
+            style = styleText,
+            textAlign = TextAlign.Center
+        )
+    }
+}
 
-        IconButton(onClick = {}) {
-            Image(
-                painter = painterResource(id = R.drawable.apple_icon),
-                contentDescription = null
-            )
-
-        }
+@Composable
+fun DefaultAccountLoginButton(
+    modifier: Modifier = Modifier,
+    colors: ButtonColors = ButtonDefaults.buttonColors(
+        backgroundColor = colorResource(id = R.color.default_button_account_color)
+    ),
+    imageId: Int,
+    shape: Shape = RoundedCornerShape(16.dp),
+    border: BorderStroke = BorderStroke(1.dp, colorResource(id = R.color.default_border_color))
+) {
+    Button(
+        modifier = modifier
+            .padding(5.dp)
+            .size(50.dp),
+        colors = colors,
+        shape = shape,
+        border = border,
+        onClick = {},
+    ) {
+        Image(
+            painter = painterResource(id = imageId),
+            contentDescription = null,
+        )
     }
 }
