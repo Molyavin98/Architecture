@@ -5,10 +5,19 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -43,6 +52,7 @@ class SplashScreenController : Controller() {
         view.setContent {
             MVVMTheme {
                 androidx.compose.material.Scaffold {
+
                     Column(
                         modifier = Modifier
                             .padding(it)
@@ -53,17 +63,17 @@ class SplashScreenController : Controller() {
 
 
                         DefaultImageLogo(idImage = R.drawable.jetpack_icon)
-
                         DefaultText(text = "Architecture App")
+
+
                     }
                 }
             }
         }
 
+        viewModel.checkStatus()
 
-        viewModel.checkStatusScreen()
-
-        Handler().postDelayed(Runnable {
+        Handler().postDelayed({
             viewModel.startScreen()
 
         }, 3000)
@@ -71,3 +81,4 @@ class SplashScreenController : Controller() {
         return view
     }
 }
+

@@ -106,11 +106,7 @@ class AuthorizationController : Controller() {
                             unFocusColor = R.color.default_border_color,
                         )
 
-                        val checkState = remember {
-                            mutableStateOf(false)
-                        }
-
-
+                        val checkState = remember { mutableStateOf(false) }
 
                         RememberMeCheckBox(
                             modifier = Modifier
@@ -119,7 +115,7 @@ class AuthorizationController : Controller() {
                             checkState = checkState,
                             text = "Remember me"
                         )
-
+                        viewModel.saveAuntData(checkState.value)
 
                         DividerOr()
 

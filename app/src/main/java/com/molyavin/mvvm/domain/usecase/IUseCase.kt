@@ -9,4 +9,7 @@ interface IUseCase<T, R> {
     interface ICheckFieldUseCase:IUseCase<UserInfo, Any?>
     interface ISaveStatusScreenUseCase:IUseCase<String, Unit>
     interface IReadStatusScreenUseCase:IUseCase<Any?, String>
+
+    interface ISaveStatusAuntUseCase:IUseCase<String, Unit>
+    interface IReadStatusAuntUseCase:IUseCase<Any?, String>
 }

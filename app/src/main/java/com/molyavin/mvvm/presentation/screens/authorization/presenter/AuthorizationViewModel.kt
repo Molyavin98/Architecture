@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
+import com.molyavin.mvvm.domain.usecase.SaveStatusAuntUseCase
 import com.molyavin.mvvm.domain.usecase.SaveStatusScreenUseCase
 import com.molyavin.mvvm.presentation.screens.menu.screen.MenuController
 import com.molyavin.mvvm.presentation.screens.registration.screen.RegistrationController
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class AuthorizationViewModel @Inject constructor(
     private val readUserInfoUseCase: ReadUserInfoUseCase,
     private val saveStatusScreenUseCase: SaveStatusScreenUseCase,
+    private val saveStatusAuntUseCase: SaveStatusAuntUseCase,
     private val router: Router,
     private val toaster: Toaster,
 ) : ViewModel() {
@@ -48,6 +50,15 @@ class AuthorizationViewModel @Inject constructor(
 
     fun onBoardingScreenStatus(status: String) {
         saveStatusScreenUseCase.execute(status)
+    }
+
+    fun saveAuntData(status: Boolean) {
+        if (status) {
+            saveStatusAuntUseCase.execute("On")
+        } else {
+            saveStatusAuntUseCase.execute("Off")
+        }
+
     }
 
 
