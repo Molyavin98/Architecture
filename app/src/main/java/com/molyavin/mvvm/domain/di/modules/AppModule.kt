@@ -1,7 +1,8 @@
 package com.molyavin.mvvm.domain.di.modules
 
-import android.app.Application
 import android.content.Context
+import com.molyavin.mvvm.data.repositories.OnBoardingRepository
+import com.molyavin.mvvm.data.repositories.OnBoardingRepositoryImpl
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.data.storage.DBSharedPreference
@@ -26,5 +27,10 @@ class AppModule(private val context: Context) {
     @AppScope
     fun provideUserRepository(dbSharedPreference: DBSharedPreference): UserRepository =
         UserRepositoryImpl(dbSharedPreference)
+
+    @Provides
+    @AppScope
+    fun provideOnBoardingRepository(dbSharedPreference: DBSharedPreference): OnBoardingRepository =
+        OnBoardingRepositoryImpl(dbSharedPreference)
 
 }

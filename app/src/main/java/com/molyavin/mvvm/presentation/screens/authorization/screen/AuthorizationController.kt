@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.controlles
+package com.molyavin.mvvm.presentation.screens.authorization.screen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.R
@@ -34,7 +33,7 @@ import com.molyavin.mvvm.presentation.DefaultPhoneField
 import com.molyavin.mvvm.presentation.DefaultText
 import com.molyavin.mvvm.presentation.AuthFooter
 import com.molyavin.mvvm.presentation.RememberMeCheckBox
-import com.molyavin.mvvm.presentation.screens.login.presenter.AuthorizationViewModel
+import com.molyavin.mvvm.presentation.screens.authorization.presenter.AuthorizationViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
 
@@ -59,6 +58,8 @@ class AuthorizationController : Controller() {
             )
         }
 
+        viewModel.onBoardingScreenStatus("Off")
+
         view.setContent {
             MVVMTheme {
                 androidx.compose.material.Scaffold {
@@ -69,12 +70,6 @@ class AuthorizationController : Controller() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Bottom,
                     ) {
-
-
-                        val password = remember { mutableStateOf(TextFieldValue()) }
-                        val phone = remember { mutableStateOf(TextFieldValue()) }
-                        val checkState = remember { mutableStateOf(false) }
-
 
                         DefaultImageLogo(
                             modifier = Modifier
@@ -90,7 +85,8 @@ class AuthorizationController : Controller() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            phone = phone,
+                            phone = viewModel.phone,
+                            onValueChange = { newValue -> viewModel.phone = newValue },
                             label = "Phone",
                             hint = "Enter your phone",
                             focusColor = R.color.default_border_focus_color,
@@ -101,13 +97,19 @@ class AuthorizationController : Controller() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = password,
+                            password = viewModel.password,
+                            onValueChange = { newValue -> viewModel.password = newValue },
                             label = "Password",
                             textForgotPassword = "Forgot password?",
                             hint = "Enter your password",
                             focusColor = R.color.default_border_focus_color,
                             unFocusColor = R.color.default_border_color,
                         )
+
+                        val checkState = remember {
+                            mutableStateOf(false)
+                        }
+
 
 
                         RememberMeCheckBox(
@@ -142,7 +144,12 @@ class AuthorizationController : Controller() {
                                     tint = Color.White,
                                 )
                             },
-                            onClick = { viewModel.goToRegistrationScreen() },
+                            onClick = {
+                                viewModel.login(
+                                    phoneUser = viewModel.phone.text,
+                                    passwordUser = viewModel.password.text
+                                )
+                            },
                         )
 
 
