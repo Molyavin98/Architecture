@@ -1,5 +1,7 @@
 package com.molyavin.mvvm.presentation
 
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,11 +11,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -35,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
@@ -92,21 +97,25 @@ fun DefaultButton(
 
 @Composable
 fun DefaultText(
+    modifier: Modifier = Modifier.padding(10.dp),
+    textAlign: TextAlign? = null,
     text: String,
-    styleText: TextStyle = MaterialTheme.typography.h1
+    styleText: TextStyle = MaterialTheme.typography.h1,
+    color: Color = colorResource(id = R.color.black),
 ) {
     Text(
-        modifier = Modifier.padding(10.dp),
+        modifier = modifier,
+        textAlign = textAlign,
         text = text,
         style = styleText,
-        color = colorResource(id = R.color.black)
+        color = color,
     )
 }
 
 @Composable
 fun DefaultImageLogo(
     modifier: Modifier = Modifier,
-    idImage: Int
+    idImage: Int,
 ) {
     Image(
         modifier = modifier,
@@ -206,15 +215,16 @@ fun DefaultTextField(
 @Composable
 fun DefaultPhoneField(
     modifierText: Modifier = Modifier,
-    phone: MutableState<TextFieldValue>,
+    phone: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     label: String,
     hint: String,
     focusColor: Int,
     unFocusColor: Int
 ) {
     DefaultTextField(
-        value = phone.value,
-        onValueChange = { phone.value = it },
+        value = phone,
+        onValueChange = onValueChange,
         label = label,
         hint = hint,
         focusColor = focusColor,
@@ -229,7 +239,8 @@ fun DefaultPhoneField(
 @Composable
 fun DefaultPasswordField(
     modifierText: Modifier = Modifier,
-    password: MutableState<TextFieldValue>,
+    password: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     textForgotPassword: String? = null,
     label: String,
     hint: String,
@@ -240,8 +251,8 @@ fun DefaultPasswordField(
 
     DefaultTextField(
         modifierText = modifierText,
-        value = password.value,
-        onValueChange = { password.value = it },
+        value = password,
+        onValueChange = onValueChange,
         label = label,
         hint = hint,
         focusColor = focusColor,
@@ -368,5 +379,38 @@ fun DefaultSocialAuthButton(
             painter = painterResource(id = imageId),
             contentDescription = null,
         )
+    }
+}
+
+
+@Composable
+fun DotsIndicator(
+    modifierRow: Modifier = Modifier,
+    modifier: Modifier = Modifier,
+    totalDots: Int,
+    selectedIndex: Int,
+    selectedColor: Color,
+    unSelectedColor: Color,
+) {
+
+    LazyRow(
+        modifier = modifierRow
+
+    ) {
+
+        items(totalDots) { index ->
+            if (index == selectedIndex) {
+                Box(
+                    modifier = modifier.background(selectedColor)
+                )
+            } else {
+                Box(
+                    modifier = modifier.background(unSelectedColor)
+                )
+            }
+            if (index != totalDots - 1) {
+                Spacer(modifier = Modifier.padding(horizontal = 2.dp))
+            }
+        }
     }
 }

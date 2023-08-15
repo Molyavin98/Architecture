@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.controlles
+package com.molyavin.mvvm.presentation.screens.registration.screen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -14,14 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.Icon
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.R
@@ -71,10 +68,6 @@ class RegistrationController : Controller() {
                         verticalArrangement = Arrangement.Bottom,
                     ) {
 
-                        val passwordOne = remember { mutableStateOf(TextFieldValue()) }
-                        val passwordTwo = remember { mutableStateOf(TextFieldValue()) }
-                        val phone = remember { mutableStateOf(TextFieldValue()) }
-
 
                         DefaultImageLogo(
                             modifier = Modifier
@@ -90,7 +83,8 @@ class RegistrationController : Controller() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            phone = phone,
+                            phone = viewModel.phone,
+                            onValueChange = { newValue -> viewModel.phone = newValue},
                             label = "Phone",
                             hint = "Enter your phone",
                             focusColor = R.color.default_border_focus_color,
@@ -102,7 +96,8 @@ class RegistrationController : Controller() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = passwordOne,
+                            password = viewModel.passwordOne,
+                            onValueChange = { newValue -> viewModel.passwordOne = newValue },
                             label = "Password",
                             hint = "Enter your password",
                             focusColor = R.color.default_border_focus_color,
@@ -113,7 +108,8 @@ class RegistrationController : Controller() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = passwordTwo,
+                            password = viewModel.passwordTwo,
+                            onValueChange = { newValue -> viewModel.passwordTwo = newValue },
                             label = "Password",
                             hint = "Confirm password",
                             focusColor = R.color.default_border_focus_color,
@@ -144,7 +140,13 @@ class RegistrationController : Controller() {
                                     tint = Color.White,
                                 )
                             },
-                            onClick = {},
+                            onClick = {
+                                viewModel.saveData(
+                                    viewModel.phone.text,
+                                    viewModel.passwordOne.text,
+                                    viewModel.passwordTwo.text
+                                )
+                            },
                         )
 
 

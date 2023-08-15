@@ -2,7 +2,6 @@ package com.molyavin.mvvm.data.repositories
 
 import com.molyavin.mvvm.data.storage.DBSharedPreference
 import com.molyavin.mvvm.domain.models.UserInfo
-import javax.inject.Inject
 
 private const val KEY_FULL_NAME = "FullName"
 private const val KEY_PHONE = "Phone"
