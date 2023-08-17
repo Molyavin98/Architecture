@@ -4,12 +4,12 @@ import com.molyavin.mvvm.data.repositories.SettingRepository
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.domain.di.scope.AppScope
 import com.molyavin.mvvm.domain.usecase.CheckFieldUseCase
-import com.molyavin.mvvm.domain.usecase.ReadStatusAuntUseCase
-import com.molyavin.mvvm.domain.usecase.ReadStatusScreenUseCase
+import com.molyavin.mvvm.domain.usecase.GetStatusRememberMeUseCase
+import com.molyavin.mvvm.domain.usecase.GetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
-import com.molyavin.mvvm.domain.usecase.SaveStatusAuntUseCase
-import com.molyavin.mvvm.domain.usecase.SaveStatusScreenUseCase
+import com.molyavin.mvvm.domain.usecase.SetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.SaveUserInfoUseCase
+import com.molyavin.mvvm.domain.usecase.SetStatusRememberMeUseCase
 import dagger.Module
 import dagger.Provides
 
@@ -33,23 +33,23 @@ class UseCasesModule {
 
     @Provides
     @AppScope
-    fun provideReadStatusScreen(settingRepository: SettingRepository): ReadStatusScreenUseCase =
-        ReadStatusScreenUseCase(settingRepository)
+    fun provideGetStatusOnBoardingUseCase(settingRepository: SettingRepository): GetStatusOnBoardingUseCase =
+        GetStatusOnBoardingUseCase(settingRepository)
 
     @Provides
     @AppScope
-    fun provideSaveStatusScreen(settingRepository: SettingRepository): SaveStatusScreenUseCase =
-        SaveStatusScreenUseCase(settingRepository)
+    fun provideSetStatusOnBoardingUseCase(settingRepository: SettingRepository): SetStatusOnBoardingUseCase =
+        SetStatusOnBoardingUseCase(settingRepository)
 
     @Provides
     @AppScope
-    fun provideReadStatusAuntUseCase(settingRepository: SettingRepository): ReadStatusAuntUseCase =
-        ReadStatusAuntUseCase(settingRepository)
+    fun provideGetStatusRememberMeUseCase(settingRepository: SettingRepository): GetStatusRememberMeUseCase =
+        GetStatusRememberMeUseCase(settingRepository)
 
     @Provides
     @AppScope
-    fun provideSaveStatusAuntUseCase(settingRepository: SettingRepository): SaveStatusAuntUseCase =
-        SaveStatusAuntUseCase(settingRepository)
+    fun provideSetStatusRememberMeUseCase(settingRepository: SettingRepository): SetStatusRememberMeUseCase =
+        SetStatusRememberMeUseCase(settingRepository)
 
 
 }

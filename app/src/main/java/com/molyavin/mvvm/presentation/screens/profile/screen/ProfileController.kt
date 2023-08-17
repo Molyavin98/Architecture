@@ -11,11 +11,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -80,22 +78,25 @@ class ProfileController : Controller() {
                             idImage = R.drawable.default_user_photo
                         )
 
+                        // загуглити про collectAsState
+                        val userInfo = viewModel.userInfo.value
+
                         DefaultText(
                             modifier = Modifier
                                 .padding(top = 20.dp),
-                            text = "Full name: ${viewModel.userInfoLiveData.value?.fullName}"
+                            text = "Full name: ${userInfo.fullName}"
                         )
 
 
                         DefaultText(
                             modifier = Modifier.padding(0.dp),
-                            text = "Phone: ${viewModel.userInfoLiveData.value?.phone}"
+                            text = "Phone: ${userInfo.phone}"
                         )
 
 
                         DefaultText(
                             modifier = Modifier.padding(0.dp),
-                            text = "Password: ${viewModel.userInfoLiveData.value?.password}"
+                            text = "Password: ${userInfo.password}"
                         )
 
                         DefaultButton(
@@ -105,7 +106,7 @@ class ProfileController : Controller() {
                                 .padding(16.dp)
                                 .wrapContentHeight(align = Alignment.Bottom),
                             text = "Exit from account",
-                            onClick = { viewModel.exitFromProfile() })
+                            onClick = { viewModel.logOut() })
 
                     }
                 }

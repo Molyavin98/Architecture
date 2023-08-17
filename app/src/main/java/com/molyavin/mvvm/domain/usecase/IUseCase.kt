@@ -7,9 +7,8 @@ interface IUseCase<T, R> {
     interface IReadUserInfoUseCase : IUseCase<Any?, UserInfo>
     interface ISaveUserInfoUseCase : IUseCase<UserInfo, Unit>
     interface ICheckFieldUseCase:IUseCase<UserInfo, Any?>
-    interface ISaveStatusScreenUseCase:IUseCase<String, Unit>
-    interface IReadStatusScreenUseCase:IUseCase<Any?, String>
-
-    interface ISaveStatusAuntUseCase:IUseCase<String, Unit>
-    interface IReadStatusAuntUseCase:IUseCase<Any?, String>
+    interface ISetStatusOnBoardingUseCase:IUseCase<String, Unit>
+    interface IGetStatusOnBoardingUseCase:IUseCase<Any?, String>
+    interface ISetStatusRememberMeUseCase:IUseCase<String, Unit>
+    interface IGetStatusRememberMeUseCase:IUseCase<Any?, String>
 }
