@@ -2,7 +2,6 @@ package com.molyavin.mvvm.presentation.screens.authorization.screen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,7 +57,6 @@ class AuthorizationController : Controller() {
         }
 
         viewModel.attachRoot(this)
-
         viewModel.onBoardingScreenStatus("Off")
 
         view.setContent {
@@ -110,9 +108,9 @@ class AuthorizationController : Controller() {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(start = 16.dp),
-                            checkBoxState = viewModel.statusRememberMe.value,
+                            checkBoxState = viewModel.statusCheckBox.value,
                             onValueChange = { newCheckBoxState ->
-                                viewModel.setStatusRememberMe(
+                                viewModel.setStatusCheckBox(
                                     status = newCheckBoxState
                                 )
                             },
@@ -155,7 +153,6 @@ class AuthorizationController : Controller() {
                         )
                     }
                 }
-
             }
         }
 

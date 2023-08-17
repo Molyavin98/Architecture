@@ -1,10 +1,7 @@
 package com.molyavin.mvvm.presentation.screens.authorization.presenter
 
-import android.util.Log
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import com.bluelinelabs.conductor.Router
@@ -16,7 +13,6 @@ import com.molyavin.mvvm.presentation.screens.authorization.screen.Authorization
 import com.molyavin.mvvm.presentation.screens.menu.screen.MenuController
 import com.molyavin.mvvm.presentation.screens.registration.screen.RegistrationController
 import com.molyavin.mvvm.utils.Toaster
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class AuthorizationViewModel @Inject constructor(
@@ -33,8 +29,8 @@ class AuthorizationViewModel @Inject constructor(
     private var _password = mutableStateOf(TextFieldValue())
     var password: State<TextFieldValue> = _password
 
-    private var _statusRememberMe = mutableStateOf(false)
-    var statusRememberMe: State<Boolean> = _statusRememberMe
+    private var _statusCheckBox = mutableStateOf(false)
+    var statusCheckBox: State<Boolean> = _statusCheckBox
 
     fun login() {
 
@@ -63,7 +59,7 @@ class AuthorizationViewModel @Inject constructor(
     }
 
     private fun statusRememberMe() {
-        if (statusRememberMe.value) {
+        if (statusCheckBox.value) {
             setStatusRememberMeUseCase.execute("On")
         } else {
             setStatusRememberMeUseCase.execute("Off")
@@ -78,9 +74,8 @@ class AuthorizationViewModel @Inject constructor(
         _password.value = password
     }
 
-    fun setStatusRememberMe(status: Boolean) {
-        _statusRememberMe.value = status
+    fun setStatusCheckBox(status: Boolean) {
+        _statusCheckBox.value = status
     }
-
 
 }
