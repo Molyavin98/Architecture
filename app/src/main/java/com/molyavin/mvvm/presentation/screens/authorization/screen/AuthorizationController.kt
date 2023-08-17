@@ -58,7 +58,7 @@ class AuthorizationController : Controller() {
             )
         }
 
-        viewModel.onBoardingScreenStatus("Off")
+        viewModel.onBoardingScreenStatus("On")
 
         view.setContent {
             MVVMTheme {

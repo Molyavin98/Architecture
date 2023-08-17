@@ -22,7 +22,6 @@ class ProfileViewModel @Inject constructor(
     private val _userInfoLiveData = MutableLiveData<UserInfo>()
     val userInfoLiveData: LiveData<UserInfo> = _userInfoLiveData
 
-
     fun onCreate() {
         _userInfoLiveData.value = readUserInfoUseCase.execute(null)
     }
