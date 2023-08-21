@@ -1,40 +1,45 @@
 package com.molyavin.mvvm.presentation.screens.splashscreen.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.LiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
-import com.molyavin.mvvm.domain.usecase.ReadStatusScreenUseCase
+import com.molyavin.mvvm.domain.usecase.GetStatusRememberMeUseCase
+import com.molyavin.mvvm.domain.usecase.GetStatusOnBoardingUseCase
 import com.molyavin.mvvm.presentation.screens.authorization.screen.AuthorizationController
+import com.molyavin.mvvm.presentation.screens.menu.screen.MenuController
 import com.molyavin.mvvm.presentation.screens.onboarding.screen.OnBoardingController
 import javax.inject.Inject
 
 class SplashScreenViewModel @Inject constructor(
-    private val readStatusScreenUseCase: ReadStatusScreenUseCase,
+    private val getStatusOnBoardingUseCase: GetStatusOnBoardingUseCase,
+    private val getStatusRememberMeUseCase: GetStatusRememberMeUseCase,
     val router: Router
 ) : ViewModel() {
 
-    private val _checkStatus = MutableLiveData<String>()
-    val checkStatus: LiveData<String> = _checkStatus
-
-    fun checkStatusScreen() {
-        _checkStatus.value = readStatusScreenUseCase.execute(null)
+    private val _statusRememberMe = mutableStateOf("")
+    private val _statusOnBoarding = mutableStateOf("")
+    fun checkStatus() {
+        _statusOnBoarding.value = getStatusOnBoardingUseCase.execute(null)
+        _statusRememberMe.value = getStatusRememberMeUseCase.execute(null)
     }
 
     fun startScreen() {
 
-        if (checkStatus.value.equals("On")) {
-            router.setRoot(RouterTransaction.with(OnBoardingController()))
-            router.pushController(RouterTransaction.with(OnBoardingController()))
-        } else if (checkStatus.value.equals("Off")) {
-            router.setRoot(RouterTransaction.with(AuthorizationController()))
-            router.pushController(RouterTransaction.with(AuthorizationController()))
+        when (_statusOnBoarding.value) {
+
+            "On" -> router.pushController(RouterTransaction.with(OnBoardingController()))
+
+            "Off" -> {
+                if (_statusRememberMe.value == "On") {
+                    router.pushController(RouterTransaction.with(MenuController()))
+                } else if (_statusRememberMe.value == "Off") {
+                    router.pushController(RouterTransaction.with(AuthorizationController()))
+                }
+            }
+
         }
-
-
     }
-
 
 }

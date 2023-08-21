@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,6 +56,7 @@ class AuthorizationController : Controller() {
             )
         }
 
+        viewModel.attachRoot(this)
         viewModel.onBoardingScreenStatus("Off")
 
         view.setContent {
@@ -80,13 +79,12 @@ class AuthorizationController : Controller() {
 
                         DefaultText(text = "Welcome in Architecture App")
 
-
                         DefaultPhoneField(
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            phone = viewModel.phone,
-                            onValueChange = { newValue -> viewModel.phone = newValue },
+                            phone = viewModel.phone.value,
+                            onValueChange = { newPhone -> viewModel.setPhone(newPhone) },
                             label = "Phone",
                             hint = "Enter your phone",
                             focusColor = R.color.default_border_focus_color,
@@ -97,8 +95,8 @@ class AuthorizationController : Controller() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = viewModel.password,
-                            onValueChange = { newValue -> viewModel.password = newValue },
+                            password = viewModel.password.value,
+                            onValueChange = { newPassword -> viewModel.setPassword(password = newPassword) },
                             label = "Password",
                             textForgotPassword = "Forgot password?",
                             hint = "Enter your password",
@@ -106,20 +104,18 @@ class AuthorizationController : Controller() {
                             unFocusColor = R.color.default_border_color,
                         )
 
-                        val checkState = remember {
-                            mutableStateOf(false)
-                        }
-
-
-
                         RememberMeCheckBox(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(start = 16.dp),
-                            checkState = checkState,
+                            checkBoxState = viewModel.statusCheckBox.value,
+                            onValueChange = { newCheckBoxState ->
+                                viewModel.setStatusCheckBox(
+                                    status = newCheckBoxState
+                                )
+                            },
                             text = "Remember me"
                         )
-
 
                         DividerOr()
 
@@ -145,13 +141,9 @@ class AuthorizationController : Controller() {
                                 )
                             },
                             onClick = {
-                                viewModel.login(
-                                    phoneUser = viewModel.phone.text,
-                                    passwordUser = viewModel.password.text
-                                )
+                                viewModel.login()
                             },
                         )
-
 
                         AuthFooter(
                             modifier = Modifier.padding(bottom = 8.dp),
@@ -161,7 +153,6 @@ class AuthorizationController : Controller() {
                         )
                     }
                 }
-
             }
         }
 

@@ -29,7 +29,6 @@ class RegistrationViewModel @Inject constructor(
     var passwordOne by mutableStateOf(TextFieldValue())
     var passwordTwo by mutableStateOf(TextFieldValue())
 
-
     fun saveData(userFullName: String?, userPhone: String?, userPassword: String?) {
 
         if (checkFieldUseCase.execute(
@@ -48,7 +47,7 @@ class RegistrationViewModel @Inject constructor(
                 )
             )
 
-            router.pushController(RouterTransaction.with(AuthorizationController()))
+            router.handleBack()
         } else {
             toaster.show("Fields cannot be empty!")
         }

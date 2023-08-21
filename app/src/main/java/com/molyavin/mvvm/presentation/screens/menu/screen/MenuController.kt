@@ -5,22 +5,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.dp
 import com.bluelinelabs.conductor.Controller
-import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.screens.menu.viewmodel.MenuViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
@@ -58,32 +58,24 @@ class MenuController : Controller() {
                         verticalArrangement = Arrangement.Top,
                     ) {
 
-                        Row {
-
-                            IconButton(
-                                modifier = Modifier
-                                    .size(50.dp)
-                                    .weight(1f),
-                                onClick = {viewModel.startScreenProfile()}) {
-
-                                Image(
-                                    imageVector = ImageVector.vectorResource(R.drawable.account_icon),
+                        TopAppBar(
+                            modifier = Modifier
+                        ) {
+                            IconButton(onClick = { viewModel.startScreenProfile() }) {
+                                Icon(
+                                    imageVector = Icons.Filled.AccountCircle,
+                                    tint = Color.White,
                                     contentDescription = null
                                 )
                             }
-
-                            IconButton(
-                                modifier = Modifier
-                                    .size(50.dp)
-                                    .weight(1f),
-                                onClick = {}) {
-
-                                Image(
-                                    imageVector = ImageVector.vectorResource(R.drawable.settings_icon),
+                            Spacer(Modifier.weight(1f, true))
+                            IconButton(onClick = { }) {
+                                Icon(
+                                    imageVector = Icons.Filled.Settings,
+                                    tint = Color.White,
                                     contentDescription = null
                                 )
                             }
-
                         }
                     }
                 }

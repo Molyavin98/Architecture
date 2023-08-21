@@ -43,6 +43,7 @@ class SplashScreenController : Controller() {
         view.setContent {
             MVVMTheme {
                 androidx.compose.material.Scaffold {
+
                     Column(
                         modifier = Modifier
                             .padding(it)
@@ -53,17 +54,17 @@ class SplashScreenController : Controller() {
 
 
                         DefaultImageLogo(idImage = R.drawable.jetpack_icon)
-
                         DefaultText(text = "Architecture App")
+
+
                     }
                 }
             }
         }
 
+        viewModel.checkStatus()
 
-        viewModel.checkStatusScreen()
-
-        Handler().postDelayed(Runnable {
+        Handler().postDelayed({
             viewModel.startScreen()
 
         }, 3000)
@@ -71,3 +72,4 @@ class SplashScreenController : Controller() {
         return view
     }
 }
+

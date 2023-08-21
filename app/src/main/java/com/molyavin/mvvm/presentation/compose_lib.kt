@@ -1,7 +1,5 @@
 package com.molyavin.mvvm.presentation
 
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,14 +30,12 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
@@ -326,7 +322,8 @@ fun AuthFooter(
 @Composable
 fun RememberMeCheckBox(
     modifier: Modifier = Modifier,
-    checkState: MutableState<Boolean>,
+    checkBoxState: Boolean,
+    onValueChange: (Boolean) -> Unit,
     styleText: TextStyle = MaterialTheme.typography.h5,
     checkedColor: Color = colorResource(id = R.color.default_checkbox_color),
     checkMarkColor: Color = colorResource(id = R.color.white),
@@ -339,8 +336,8 @@ fun RememberMeCheckBox(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(
-            checked = checkState.value,
-            onCheckedChange = { checkState.value = it },
+            checked = checkBoxState,
+            onCheckedChange = onValueChange,
             colors = CheckboxDefaults.colors(
                 checkedColor = checkedColor,
                 checkmarkColor = checkMarkColor,
