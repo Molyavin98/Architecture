@@ -34,9 +34,9 @@ class AuthorizationViewModel @Inject constructor(
 
     fun login() {
 
-        if (phone.value.text == readUserInfoUseCase.execute(null).phone &&
-            password.value.text == readUserInfoUseCase.execute(null).password
-        ) {
+        val readUserInfo = readUserInfoUseCase.execute(null)
+
+        if (phone.value.text == readUserInfo.phone && password.value.text == readUserInfo.password) {
             router.pushController(RouterTransaction.with(MenuController()))
         } else if (phone.value.toString().isEmpty() || password.value.toString().isEmpty()) {
             toaster.show("Field is not can empty!")
@@ -46,6 +46,7 @@ class AuthorizationViewModel @Inject constructor(
 
         statusRememberMe()
     }
+
     fun attachRoot(authorizationController: AuthorizationController) {
         router.setRoot(RouterTransaction.with(authorizationController))
     }
@@ -59,13 +60,14 @@ class AuthorizationViewModel @Inject constructor(
     }
 
     private fun statusRememberMe() {
+
         if (statusCheckBox.value) {
             setStatusRememberMeUseCase.execute("On")
         } else {
             setStatusRememberMeUseCase.execute("Off")
         }
-
     }
+
     fun setPhone(phone: TextFieldValue) {
         _phone.value = phone
     }
