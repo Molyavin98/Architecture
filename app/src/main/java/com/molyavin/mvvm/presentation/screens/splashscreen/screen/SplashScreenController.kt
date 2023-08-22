@@ -62,12 +62,7 @@ class SplashScreenController : Controller() {
             }
         }
 
-        viewModel.checkStatus()
-
-        Handler().postDelayed({
-            viewModel.startScreen()
-
-        }, 3000)
+        viewModel.startScreen()
 
         return view
     }
