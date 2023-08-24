@@ -8,12 +8,13 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.domain.models.UserInfo
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusOnBoardingUseCase
+import com.molyavin.mvvm.domain.usecase.SetStatusRememberMeUseCase
 import com.molyavin.mvvm.presentation.screens.authorization.screen.AuthorizationController
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val readUserInfoUseCase: ReadUserInfoUseCase,
-    private val setStatusOnBoardingUseCase: SetStatusOnBoardingUseCase,
+    private val setStatusRememberMeUseCase: SetStatusRememberMeUseCase,
     private val router: Router
 ) : ViewModel() {
 
@@ -23,7 +24,7 @@ class ProfileViewModel @Inject constructor(
         _userInfo.value = readUserInfoUseCase.execute(null)
     }
     fun logOut() {
-        setStatusOnBoardingUseCase.execute("Off")
+        setStatusRememberMeUseCase.execute("Off")
         router.pushController(RouterTransaction.with(AuthorizationController()))
     }
 

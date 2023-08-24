@@ -1,10 +1,5 @@
 package com.molyavin.mvvm.presentation.screens.registration.screen
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,49 +9,34 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.Icon
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
-import com.molyavin.mvvm.presentation.DefaultSocialAuthButton
+import com.molyavin.mvvm.presentation.AuthFooter
+import com.molyavin.mvvm.presentation.BaseViewController
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
-import com.molyavin.mvvm.presentation.DividerOr
 import com.molyavin.mvvm.presentation.DefaultPasswordField
 import com.molyavin.mvvm.presentation.DefaultPhoneField
+import com.molyavin.mvvm.presentation.DefaultSocialAuthButton
 import com.molyavin.mvvm.presentation.DefaultText
-import com.molyavin.mvvm.presentation.AuthFooter
+import com.molyavin.mvvm.presentation.DividerOr
 import com.molyavin.mvvm.presentation.screens.registration.viewmodel.RegistrationViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
 
-class RegistrationController : Controller() {
+class RegistrationController : BaseViewController() {
 
     @Inject
     lateinit var viewModel: RegistrationViewModel
-
-    @SuppressLint("MissingInflatedId")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
-    ): View {
+    override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)
-
-
-        val view = ComposeView(container.context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
 
         view.setContent {
             MVVMTheme {
@@ -68,12 +48,6 @@ class RegistrationController : Controller() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Bottom,
                     ) {
-
-
-                       /* remember {
-
-                        }*/
-
 
                         DefaultImageLogo(
                             modifier = Modifier
@@ -90,7 +64,7 @@ class RegistrationController : Controller() {
                                 .padding(3.dp)
                                 .weight(50f),
                             phone = viewModel.phone,
-                            onValueChange = { newValue -> viewModel.phone = newValue},
+                            onValueChange = { newValue -> viewModel.phone = newValue },
                             label = "Phone",
                             hint = "Enter your phone",
                             focusColor = R.color.default_border_focus_color,
@@ -166,7 +140,5 @@ class RegistrationController : Controller() {
                 }
             }
         }
-
-        return view
     }
 }

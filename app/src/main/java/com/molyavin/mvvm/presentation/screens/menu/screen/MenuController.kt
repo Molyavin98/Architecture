@@ -22,31 +22,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.domain.di.component.Injector
+import com.molyavin.mvvm.presentation.BaseViewController
 import com.molyavin.mvvm.presentation.screens.menu.viewmodel.MenuViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
 
-class MenuController : Controller() {
-
+class MenuController : BaseViewController() {
 
     @Inject
     lateinit var viewModel: MenuViewModel
-
-    @SuppressLint("MissingInflatedId")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
-    ): View {
+    override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)
-
-        val view = ComposeView(context = container.context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
 
         view.setContent {
             MVVMTheme {
@@ -82,7 +69,6 @@ class MenuController : Controller() {
             }
         }
 
-        return view
     }
 
 }

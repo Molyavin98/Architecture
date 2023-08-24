@@ -1,10 +1,5 @@
 package com.molyavin.mvvm.presentation.screens.authorization.screen
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,47 +14,35 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
-import com.molyavin.mvvm.presentation.DefaultSocialAuthButton
+import com.molyavin.mvvm.presentation.AuthFooter
+import com.molyavin.mvvm.presentation.BaseViewController
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
-import com.molyavin.mvvm.presentation.DividerOr
 import com.molyavin.mvvm.presentation.DefaultPasswordField
 import com.molyavin.mvvm.presentation.DefaultPhoneField
+import com.molyavin.mvvm.presentation.DefaultSocialAuthButton
 import com.molyavin.mvvm.presentation.DefaultText
-import com.molyavin.mvvm.presentation.AuthFooter
+import com.molyavin.mvvm.presentation.DividerOr
 import com.molyavin.mvvm.presentation.RememberMeCheckBox
 import com.molyavin.mvvm.presentation.screens.authorization.presenter.AuthorizationViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
 
-class AuthorizationController : Controller() {
+class AuthorizationController : BaseViewController() {
 
     @Inject
     lateinit var viewModel: AuthorizationViewModel
 
-    @SuppressLint("MissingInflatedId")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
-    ): View {
+    override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)
-
-        val view = ComposeView(container.context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
 
         viewModel.attachRoot(this)
         viewModel.onBoardingScreenStatus("Off")
 
-        view.setContent {
+        view.setContent{
             MVVMTheme {
                 androidx.compose.material.Scaffold {
                     Column(
@@ -149,13 +132,11 @@ class AuthorizationController : Controller() {
                             modifier = Modifier.padding(bottom = 8.dp),
                             text = "Don`t have an account?",
                             textButton = "Sing up now.",
-                            onClick = { viewModel.goToRegistrationScreen() },
+                            onClick = { viewModel.startScreen() },
                         )
                     }
                 }
             }
         }
-
-        return view
     }
 }

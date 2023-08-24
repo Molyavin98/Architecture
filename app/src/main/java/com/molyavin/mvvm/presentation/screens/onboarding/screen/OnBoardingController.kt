@@ -1,9 +1,5 @@
 package com.molyavin.mvvm.presentation.screens.onboarding.screen
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,9 +29,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
+import com.molyavin.mvvm.presentation.BaseViewController
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
@@ -44,26 +40,14 @@ import com.molyavin.mvvm.presentation.screens.onboarding.viewmodel.OnBoardingVie
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
 
-class OnBoardingController : Controller() {
+class OnBoardingController : BaseViewController() {
 
     @Inject
     lateinit var viewModel: OnBoardingViewModel
-
     @OptIn(ExperimentalFoundationApi::class)
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
-    ): View {
+    override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)
-
-        val view = ComposeView(container.context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
 
         view.setContent {
             MVVMTheme {
@@ -197,6 +181,5 @@ class OnBoardingController : Controller() {
             }
         }
 
-        return view
     }
 }

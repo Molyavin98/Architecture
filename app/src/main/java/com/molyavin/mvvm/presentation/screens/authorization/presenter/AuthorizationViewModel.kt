@@ -3,13 +3,13 @@ package com.molyavin.mvvm.presentation.screens.authorization.presenter
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.ViewModel
+import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
+import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusRememberMeUseCase
-import com.molyavin.mvvm.presentation.screens.authorization.screen.AuthorizationController
 import com.molyavin.mvvm.presentation.screens.menu.screen.MenuController
 import com.molyavin.mvvm.presentation.screens.registration.screen.RegistrationController
 import com.molyavin.mvvm.utils.Toaster
@@ -21,7 +21,7 @@ class AuthorizationViewModel @Inject constructor(
     private val setStatusRememberMeUseCase: SetStatusRememberMeUseCase,
     private val router: Router,
     private val toaster: Toaster,
-) : ViewModel() {
+) : BaseViewModel() {
 
     private var _phone = mutableStateOf(TextFieldValue())
     val phone: State<TextFieldValue> = _phone
@@ -47,11 +47,11 @@ class AuthorizationViewModel @Inject constructor(
         statusRememberMe()
     }
 
-    fun attachRoot(authorizationController: AuthorizationController) {
-        router.setRoot(RouterTransaction.with(authorizationController))
+    override fun attachRoot(controller: Controller) {
+        router.setRoot(RouterTransaction.with(controller))
     }
 
-    fun goToRegistrationScreen() {
+    override fun startScreen() {
         router.pushController(RouterTransaction.with(RegistrationController()))
     }
 
