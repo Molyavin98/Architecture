@@ -24,6 +24,7 @@ import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.BaseViewController
 import com.molyavin.mvvm.presentation.screens.menu.viewmodel.MenuViewModel
+import com.molyavin.mvvm.presentation.screens.profile.screen.ProfileController
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
 
@@ -48,7 +49,7 @@ class MenuController : BaseViewController() {
                         TopAppBar(
                             modifier = Modifier
                         ) {
-                            IconButton(onClick = { viewModel.startScreenProfile() }) {
+                            IconButton(onClick = { viewModel.startScreen(ProfileController()) }) {
                                 Icon(
                                     imageVector = Icons.Filled.AccountCircle,
                                     tint = Color.White,

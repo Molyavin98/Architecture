@@ -7,6 +7,7 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.domain.usecase.GetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.GetStatusRememberMeUseCase
 import com.molyavin.mvvm.domain.usecase.StartScreenUseCase
+import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.presentation.screens.authorization.screen.AuthorizationController
 import com.molyavin.mvvm.presentation.screens.menu.screen.MenuController
 import com.molyavin.mvvm.presentation.screens.onboarding.screen.OnBoardingController
@@ -17,7 +18,7 @@ class SplashScreenViewModel @Inject constructor(
     private val getStatusRememberMeUseCase: GetStatusRememberMeUseCase,
     private val startScreenUseCase: StartScreenUseCase,
     val router: Router
-) : ViewModel() {
+) : BaseViewModel(router = router, toaster = null) {
 
     private val _statusRememberMe = mutableStateOf("")
     private val _statusOnBoarding = mutableStateOf("")
@@ -29,17 +30,16 @@ class SplashScreenViewModel @Inject constructor(
         when {
 
             _statusOnBoarding.value == "On" && _statusRememberMe.value == "Off" ->
-                router.pushController(RouterTransaction.with(OnBoardingController()))
+                startScreen(OnBoardingController())
 
             _statusOnBoarding.value == "Off" && _statusRememberMe.value == "Off" ->
-                router.pushController(RouterTransaction.with(AuthorizationController()))
+                startScreen(AuthorizationController())
 
             _statusOnBoarding.value == "Off" && _statusRememberMe.value == "On" ->
-                router.pushController(RouterTransaction.with(MenuController()))
+                startScreen(MenuController())
 
         }
     }
-
     fun startScreen() {
         startScreenUseCase.execute(this)
     }

@@ -1,5 +1,6 @@
 package com.molyavin.mvvm.presentation.screens.authorization.screen
 
+import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import com.molyavin.mvvm.presentation.DefaultText
 import com.molyavin.mvvm.presentation.DividerOr
 import com.molyavin.mvvm.presentation.RememberMeCheckBox
 import com.molyavin.mvvm.presentation.screens.authorization.presenter.AuthorizationViewModel
+import com.molyavin.mvvm.presentation.screens.registration.screen.RegistrationController
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
 
@@ -42,7 +44,7 @@ class AuthorizationController : BaseViewController() {
         viewModel.attachRoot(this)
         viewModel.onBoardingScreenStatus("Off")
 
-        view.setContent{
+        view.setContent {
             MVVMTheme {
                 androidx.compose.material.Scaffold {
                     Column(
@@ -132,11 +134,12 @@ class AuthorizationController : BaseViewController() {
                             modifier = Modifier.padding(bottom = 8.dp),
                             text = "Don`t have an account?",
                             textButton = "Sing up now.",
-                            onClick = { viewModel.startScreen() },
+                            onClick = { viewModel.startScreen(RegistrationController()) },
                         )
                     }
                 }
             }
         }
     }
+
 }

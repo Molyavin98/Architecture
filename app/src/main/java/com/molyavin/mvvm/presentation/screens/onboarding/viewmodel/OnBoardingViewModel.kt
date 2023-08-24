@@ -3,21 +3,17 @@ package com.molyavin.mvvm.presentation.screens.onboarding.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.models.PagerContent
-import com.molyavin.mvvm.presentation.screens.authorization.screen.AuthorizationController
+import com.molyavin.mvvm.presentation.BaseViewModel
+import com.molyavin.mvvm.utils.Toaster
 import javax.inject.Inject
 
-class OnBoardingViewModel @Inject constructor(val router: Router) : ViewModel() {
+class OnBoardingViewModel @Inject constructor(router: Router) :
+    BaseViewModel(router = router, toaster = null) {
 
     var pageCount by mutableStateOf(0)
-
-    fun startActivity(){
-        router.pushController(RouterTransaction.with(AuthorizationController()))
-    }
 
     fun createItems() = listOf(
         PagerContent(

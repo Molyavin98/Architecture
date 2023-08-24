@@ -36,6 +36,7 @@ import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
 import com.molyavin.mvvm.presentation.DotsIndicator
+import com.molyavin.mvvm.presentation.screens.authorization.screen.AuthorizationController
 import com.molyavin.mvvm.presentation.screens.onboarding.viewmodel.OnBoardingViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
@@ -44,6 +45,7 @@ class OnBoardingController : BaseViewController() {
 
     @Inject
     lateinit var viewModel: OnBoardingViewModel
+
     @OptIn(ExperimentalFoundationApi::class)
     override fun setupView(view: ComposeView) {
 
@@ -142,7 +144,7 @@ class OnBoardingController : BaseViewController() {
                                             contentColor = colorResource(id = R.color.white),
                                         ),
                                         onClick = {
-                                            viewModel.startActivity()
+                                            viewModel.startScreen(AuthorizationController())
                                         })
 
 
@@ -170,7 +172,7 @@ class OnBoardingController : BaseViewController() {
                                         onClick = {
                                             viewModel.pageCount++
                                             if (viewModel.pageCount == 4) {
-                                                viewModel.startActivity()
+                                                viewModel.startScreen(AuthorizationController())
                                             }
                                         })
                                 }
