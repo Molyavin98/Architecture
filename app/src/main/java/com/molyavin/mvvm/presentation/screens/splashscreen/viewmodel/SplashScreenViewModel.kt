@@ -1,9 +1,7 @@
 package com.molyavin.mvvm.presentation.screens.splashscreen.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.domain.usecase.GetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.GetStatusRememberMeUseCase
 import com.molyavin.mvvm.domain.usecase.StartScreenUseCase

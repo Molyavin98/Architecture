@@ -1,10 +1,5 @@
 package com.molyavin.mvvm.presentation.screens.menu.screen
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,9 +15,9 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.BaseViewController
+import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.presentation.screens.menu.viewmodel.MenuViewModel
 import com.molyavin.mvvm.presentation.screens.profile.screen.ProfileController
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
@@ -31,7 +26,8 @@ import javax.inject.Inject
 class MenuController : BaseViewController() {
 
     @Inject
-    lateinit var viewModel: MenuViewModel
+    override lateinit var viewModel: MenuViewModel
+
     override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)

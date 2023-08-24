@@ -1,5 +1,6 @@
 package com.molyavin.mvvm.presentation.screens.registration.screen
 
+import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.AuthFooter
 import com.molyavin.mvvm.presentation.BaseViewController
+import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultPasswordField
@@ -33,7 +35,8 @@ import javax.inject.Inject
 class RegistrationController : BaseViewController() {
 
     @Inject
-    lateinit var viewModel: RegistrationViewModel
+    override lateinit var viewModel: RegistrationViewModel
+
     override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)

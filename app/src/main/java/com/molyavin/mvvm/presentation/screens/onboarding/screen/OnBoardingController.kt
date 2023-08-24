@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.BaseViewController
+import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
@@ -44,7 +45,7 @@ import javax.inject.Inject
 class OnBoardingController : BaseViewController() {
 
     @Inject
-    lateinit var viewModel: OnBoardingViewModel
+    override lateinit var viewModel: OnBoardingViewModel
 
     @OptIn(ExperimentalFoundationApi::class)
     override fun setupView(view: ComposeView) {

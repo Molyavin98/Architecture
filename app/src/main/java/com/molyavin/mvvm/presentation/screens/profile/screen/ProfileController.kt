@@ -1,5 +1,6 @@
 package com.molyavin.mvvm.presentation.screens.profile.screen
 
+import android.view.View
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.BaseViewController
+import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
@@ -29,7 +31,9 @@ import javax.inject.Inject
 class ProfileController : BaseViewController() {
 
     @Inject
-    lateinit var viewModel: ProfileViewModel
+    override lateinit var viewModel: ProfileViewModel
+
+
     override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)

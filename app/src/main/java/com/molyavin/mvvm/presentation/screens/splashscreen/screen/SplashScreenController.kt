@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.ComposeView
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.BaseViewController
+import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
 import com.molyavin.mvvm.presentation.screens.splashscreen.viewmodel.SplashScreenViewModel
@@ -19,7 +20,9 @@ import javax.inject.Inject
 class SplashScreenController : BaseViewController() {
 
     @Inject
-    lateinit var viewModel: SplashScreenViewModel
+    override lateinit var viewModel: SplashScreenViewModel
+
+
     override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)
@@ -47,5 +50,7 @@ class SplashScreenController : BaseViewController() {
         }
         viewModel.startScreen()
     }
+
+
 }
 
