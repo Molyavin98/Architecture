@@ -10,19 +10,16 @@ import androidx.compose.ui.platform.ComposeView
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.BaseViewController
-import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
 import com.molyavin.mvvm.presentation.screens.splashscreen.viewmodel.SplashScreenViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Inject
+import javax.inject.Singleton
 
 class SplashScreenController : BaseViewController() {
 
-    @Inject
-    override lateinit var viewModel: SplashScreenViewModel
-
-
+    @Singleton
+    override val viewModel: SplashScreenViewModel = Injector.INSTANCE.provideSplashScreenViewModel()
     override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)
@@ -38,19 +35,13 @@ class SplashScreenController : BaseViewController() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
-
-
                         DefaultImageLogo(idImage = R.drawable.jetpack_icon)
                         DefaultText(text = "Architecture App")
-
-
                     }
                 }
             }
         }
         viewModel.startScreen()
     }
-
-
 }
 

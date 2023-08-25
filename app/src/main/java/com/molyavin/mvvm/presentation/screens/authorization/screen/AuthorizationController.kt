@@ -18,7 +18,6 @@ import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.AuthFooter
 import com.molyavin.mvvm.presentation.BaseViewController
-import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultPasswordField
@@ -30,13 +29,14 @@ import com.molyavin.mvvm.presentation.RememberMeCheckBox
 import com.molyavin.mvvm.presentation.screens.authorization.presenter.AuthorizationViewModel
 import com.molyavin.mvvm.presentation.screens.registration.screen.RegistrationController
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Inject
+import javax.inject.Singleton
 
 class AuthorizationController : BaseViewController() {
 
-    @Inject
-    override lateinit var viewModel: AuthorizationViewModel
 
+    @Singleton
+    override var viewModel: AuthorizationViewModel =
+        Injector.INSTANCE.provideAuthorizationViewModel()
 
     override fun setupView(view: ComposeView) {
 
@@ -142,5 +142,4 @@ class AuthorizationController : BaseViewController() {
             }
         }
     }
-
 }

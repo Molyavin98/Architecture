@@ -1,6 +1,5 @@
 package com.molyavin.mvvm.presentation.screens.registration.screen
 
-import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,7 +19,6 @@ import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.AuthFooter
 import com.molyavin.mvvm.presentation.BaseViewController
-import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultPasswordField
@@ -30,13 +28,12 @@ import com.molyavin.mvvm.presentation.DefaultText
 import com.molyavin.mvvm.presentation.DividerOr
 import com.molyavin.mvvm.presentation.screens.registration.viewmodel.RegistrationViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Inject
+import javax.inject.Singleton
 
 class RegistrationController : BaseViewController() {
 
-    @Inject
-    override lateinit var viewModel: RegistrationViewModel
-
+    @Singleton
+    override val viewModel: RegistrationViewModel = Injector.INSTANCE.provideRegistrationViewModel()
     override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)
@@ -66,8 +63,10 @@ class RegistrationController : BaseViewController() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            phone = viewModel.phone,
-                            onValueChange = { newValue -> viewModel.phone = newValue },
+                            phone = this@RegistrationController.viewModel.phone,
+                            onValueChange = { newValue ->
+                                this@RegistrationController.viewModel.phone = newValue
+                            },
                             label = "Phone",
                             hint = "Enter your phone",
                             focusColor = R.color.default_border_focus_color,
@@ -79,8 +78,10 @@ class RegistrationController : BaseViewController() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = viewModel.passwordOne,
-                            onValueChange = { newValue -> viewModel.passwordOne = newValue },
+                            password = this@RegistrationController.viewModel.passwordOne,
+                            onValueChange = { newValue ->
+                                this@RegistrationController.viewModel.passwordOne = newValue
+                            },
                             label = "Password",
                             hint = "Enter your password",
                             focusColor = R.color.default_border_focus_color,
@@ -91,8 +92,10 @@ class RegistrationController : BaseViewController() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = viewModel.passwordTwo,
-                            onValueChange = { newValue -> viewModel.passwordTwo = newValue },
+                            password = this@RegistrationController.viewModel.passwordTwo,
+                            onValueChange = { newValue ->
+                                this@RegistrationController.viewModel.passwordTwo = newValue
+                            },
                             label = "Password",
                             hint = "Confirm password",
                             focusColor = R.color.default_border_focus_color,
@@ -124,10 +127,10 @@ class RegistrationController : BaseViewController() {
                                 )
                             },
                             onClick = {
-                                viewModel.saveData(
-                                    viewModel.phone.text,
-                                    viewModel.passwordOne.text,
-                                    viewModel.passwordTwo.text
+                                this@RegistrationController.viewModel.saveData(
+                                    this@RegistrationController.viewModel.phone.text,
+                                    this@RegistrationController.viewModel.passwordOne.text,
+                                    this@RegistrationController.viewModel.passwordTwo.text
                                 )
                             },
                         )

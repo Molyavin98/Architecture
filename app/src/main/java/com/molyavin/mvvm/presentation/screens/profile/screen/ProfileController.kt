@@ -1,6 +1,5 @@
 package com.molyavin.mvvm.presentation.screens.profile.screen
 
-import android.view.View
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -27,13 +26,12 @@ import com.molyavin.mvvm.presentation.DefaultText
 import com.molyavin.mvvm.presentation.screens.profile.viewmodel.ProfileViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class ProfileController : BaseViewController() {
 
-    @Inject
-    override lateinit var viewModel: ProfileViewModel
-
-
+    @Singleton
+    override val viewModel: ProfileViewModel = Injector.INSTANCE.provideProfileViewModel()
     override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)
@@ -65,7 +63,7 @@ class ProfileController : BaseViewController() {
                         )
 
                         // загуглити про collectAsState
-                        val userInfo = viewModel.userInfo.value
+                        val userInfo = this@ProfileController.viewModel.userInfo.value
 
                         DefaultText(
                             modifier = Modifier
@@ -92,13 +90,13 @@ class ProfileController : BaseViewController() {
                                 .padding(16.dp)
                                 .wrapContentHeight(align = Alignment.Bottom),
                             text = "Exit from account",
-                            onClick = { viewModel.logOut() })
+                            onClick = { this@ProfileController.viewModel.logOut() })
 
                     }
                 }
             }
         }
 
-        viewModel.onCreate()
+        this.viewModel.onCreate()
     }
 }

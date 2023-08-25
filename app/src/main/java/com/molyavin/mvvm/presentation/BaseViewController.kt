@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import com.bluelinelabs.conductor.Controller
-import javax.inject.Inject
 
 abstract class BaseViewController : Controller() {
-
 
     protected abstract val viewModel: BaseViewModel
     protected abstract fun setupView(view: ComposeView)
@@ -26,7 +24,7 @@ abstract class BaseViewController : Controller() {
             savedViewState = savedViewState
         )
 
-        setupView(view)
+        setupView(view as ComposeView)
 
         return view
     }

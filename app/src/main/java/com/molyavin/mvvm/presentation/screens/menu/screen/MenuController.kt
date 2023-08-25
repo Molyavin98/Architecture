@@ -22,15 +22,17 @@ import com.molyavin.mvvm.presentation.screens.menu.viewmodel.MenuViewModel
 import com.molyavin.mvvm.presentation.screens.profile.screen.ProfileController
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class MenuController : BaseViewController() {
 
-    @Inject
-    override lateinit var viewModel: MenuViewModel
+    @Singleton
+    override val viewModel: MenuViewModel = Injector.INSTANCE.provideMenuViewModel()
 
     override fun setupView(view: ComposeView) {
 
         Injector.INSTANCE.inject(this)
+        this.viewModel.attachRoot(this)
 
         view.setContent {
             MVVMTheme {
@@ -45,7 +47,11 @@ class MenuController : BaseViewController() {
                         TopAppBar(
                             modifier = Modifier
                         ) {
-                            IconButton(onClick = { viewModel.startScreen(ProfileController()) }) {
+                            IconButton(onClick = {
+                                this@MenuController.viewModel.startScreen(
+                                    ProfileController()
+                                )
+                            }) {
                                 Icon(
                                     imageVector = Icons.Filled.AccountCircle,
                                     tint = Color.White,

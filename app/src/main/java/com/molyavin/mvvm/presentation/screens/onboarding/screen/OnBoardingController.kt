@@ -41,12 +41,12 @@ import com.molyavin.mvvm.presentation.screens.authorization.screen.Authorization
 import com.molyavin.mvvm.presentation.screens.onboarding.viewmodel.OnBoardingViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class OnBoardingController : BaseViewController() {
 
-    @Inject
-    override lateinit var viewModel: OnBoardingViewModel
-
+    @Singleton
+    override val viewModel: OnBoardingViewModel = Injector.INSTANCE.provideOnBoardingViewModel()
     @OptIn(ExperimentalFoundationApi::class)
     override fun setupView(view: ComposeView) {
 
@@ -69,20 +69,20 @@ class OnBoardingController : BaseViewController() {
 
                             HorizontalPager(
                                 modifier = Modifier.padding(top = 24.dp),
-                                pageCount = viewModel.pageCount,
+                                pageCount = this@OnBoardingController.viewModel.pageCount,
                                 contentPadding = PaddingValues(horizontal = 64.dp),
                                 pageSpacing = 24.dp,
                                 state = pagerState
                             ) {}
 
                             DefaultImageLogo(
-                                idImage = viewModel.createItems()[viewModel.pageCount].idImage,
+                                idImage = this@OnBoardingController.viewModel.createItems()[this@OnBoardingController.viewModel.pageCount].idImage,
                                 modifier = Modifier.weight(1f)
                             )
 
                             DefaultText(
                                 modifier = Modifier.padding(32.dp),
-                                text = viewModel.createItems()[viewModel.pageCount].title,
+                                text = this@OnBoardingController.viewModel.createItems()[this@OnBoardingController.viewModel.pageCount].title,
                                 textAlign = TextAlign.Center
                             )
 
@@ -107,7 +107,7 @@ class OnBoardingController : BaseViewController() {
                                         .height(8.dp)
                                         .clip(CircleShape),
                                     totalDots = 4,
-                                    selectedIndex = viewModel.pageCount,
+                                    selectedIndex = this@OnBoardingController.viewModel.pageCount,
                                     selectedColor = Color.White,
                                     unSelectedColor = Color.Gray
                                 )
@@ -121,7 +121,7 @@ class OnBoardingController : BaseViewController() {
                                             bottom = 64.dp
                                         ),
                                     textAlign = TextAlign.Center,
-                                    text = viewModel.createItems()[viewModel.pageCount].description,
+                                    text = this@OnBoardingController.viewModel.createItems()[this@OnBoardingController.viewModel.pageCount].description,
                                     styleText = MaterialTheme.typography.h5.copy(),
                                     color = Color.Gray,
                                 )
@@ -145,7 +145,9 @@ class OnBoardingController : BaseViewController() {
                                             contentColor = colorResource(id = R.color.white),
                                         ),
                                         onClick = {
-                                            viewModel.startScreen(AuthorizationController())
+                                            this@OnBoardingController.viewModel.startScreen(
+                                                AuthorizationController()
+                                            )
                                         })
 
 
@@ -171,9 +173,11 @@ class OnBoardingController : BaseViewController() {
                                             )
                                         },
                                         onClick = {
-                                            viewModel.pageCount++
-                                            if (viewModel.pageCount == 4) {
-                                                viewModel.startScreen(AuthorizationController())
+                                            this@OnBoardingController.viewModel.pageCount++
+                                            if (this@OnBoardingController.viewModel.pageCount == 4) {
+                                                this@OnBoardingController.viewModel.startScreen(
+                                                    AuthorizationController()
+                                                )
                                             }
                                         })
                                 }

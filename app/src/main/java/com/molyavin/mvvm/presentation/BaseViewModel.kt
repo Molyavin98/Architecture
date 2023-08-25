@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 open class BaseViewModel(
     private val router: Router,
-    private val toaster: Toaster?,
+    private val toaster: Toaster?
 ) : ViewModel() {
 
     open fun navigateToBack() {
@@ -37,7 +37,7 @@ open class BaseViewModel(
         inflater: LayoutInflater?,
         container: ViewGroup,
         savedViewState: Bundle?
-    ): ComposeView {
+    ): View {
 
         val view: ComposeView = ComposeView(container.context).apply {
             layoutParams = ViewGroup.LayoutParams(
