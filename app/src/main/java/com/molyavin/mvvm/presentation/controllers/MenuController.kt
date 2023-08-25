@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.presentation.screens.menu.screen
+package com.molyavin.mvvm.presentation.controllers
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,12 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import com.molyavin.mvvm.domain.di.component.Injector
-import com.molyavin.mvvm.presentation.BaseViewController
-import com.molyavin.mvvm.presentation.BaseViewModel
-import com.molyavin.mvvm.presentation.screens.menu.viewmodel.MenuViewModel
-import com.molyavin.mvvm.presentation.screens.profile.screen.ProfileController
+import com.molyavin.mvvm.presentation.viewmodels.MenuViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Inject
 import javax.inject.Singleton
 
 class MenuController : BaseViewController() {
@@ -48,7 +44,7 @@ class MenuController : BaseViewController() {
                             modifier = Modifier
                         ) {
                             IconButton(onClick = {
-                                this@MenuController.viewModel.startScreen(
+                                viewModel.startScreen(
                                     ProfileController()
                                 )
                             }) {
@@ -59,7 +55,7 @@ class MenuController : BaseViewController() {
                                 )
                             }
                             Spacer(Modifier.weight(1f, true))
-                            IconButton(onClick = { }) {
+                            IconButton(onClick = { viewModel.startScreen(SettingController()) }) {
                                 Icon(
                                     imageVector = Icons.Filled.Settings,
                                     tint = Color.White,
@@ -71,7 +67,6 @@ class MenuController : BaseViewController() {
                 }
             }
         }
-
     }
 
 }

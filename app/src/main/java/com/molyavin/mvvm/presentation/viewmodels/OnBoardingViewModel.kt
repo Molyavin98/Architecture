@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.presentation.screens.onboarding.viewmodel
+package com.molyavin.mvvm.presentation.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,8 +6,6 @@ import androidx.compose.runtime.setValue
 import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.models.PagerContent
-import com.molyavin.mvvm.presentation.BaseViewModel
-import com.molyavin.mvvm.utils.Toaster
 import javax.inject.Inject
 
 class OnBoardingViewModel @Inject constructor(router: Router) :

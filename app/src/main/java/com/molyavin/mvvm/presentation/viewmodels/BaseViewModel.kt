@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.presentation
+package com.molyavin.mvvm.presentation.viewmodels
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,11 +10,10 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.utils.Toaster
-import javax.inject.Inject
 
 open class BaseViewModel(
     private val router: Router,
-    private val toaster: Toaster?
+    private val toaster: Toaster? = null
 ) : ViewModel() {
 
     open fun navigateToBack() {

@@ -1,14 +1,13 @@
-package com.molyavin.mvvm.presentation.screens.splashscreen.viewmodel
+package com.molyavin.mvvm.presentation.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
 import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.domain.usecase.GetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.GetStatusRememberMeUseCase
 import com.molyavin.mvvm.domain.usecase.StartScreenUseCase
-import com.molyavin.mvvm.presentation.BaseViewModel
-import com.molyavin.mvvm.presentation.screens.authorization.screen.AuthorizationController
-import com.molyavin.mvvm.presentation.screens.menu.screen.MenuController
-import com.molyavin.mvvm.presentation.screens.onboarding.screen.OnBoardingController
+import com.molyavin.mvvm.presentation.controllers.AuthorizationController
+import com.molyavin.mvvm.presentation.controllers.MenuController
+import com.molyavin.mvvm.presentation.controllers.OnBoardingController
 import javax.inject.Inject
 
 class SplashScreenViewModel @Inject constructor(

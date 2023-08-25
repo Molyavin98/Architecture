@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.presentation.screens.profile.screen
+package com.molyavin.mvvm.presentation.controllers
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -18,14 +18,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
-import com.molyavin.mvvm.presentation.BaseViewController
-import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
-import com.molyavin.mvvm.presentation.screens.profile.viewmodel.ProfileViewModel
+import com.molyavin.mvvm.presentation.viewmodels.ProfileViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Inject
 import javax.inject.Singleton
 
 class ProfileController : BaseViewController() {

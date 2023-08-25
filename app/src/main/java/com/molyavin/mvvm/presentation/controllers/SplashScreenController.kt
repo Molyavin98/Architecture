@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.presentation.screens.splashscreen.screen
+package com.molyavin.mvvm.presentation.controllers
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,10 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
-import com.molyavin.mvvm.presentation.BaseViewController
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
-import com.molyavin.mvvm.presentation.screens.splashscreen.viewmodel.SplashScreenViewModel
+import com.molyavin.mvvm.presentation.viewmodels.SplashScreenViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 import javax.inject.Singleton
 

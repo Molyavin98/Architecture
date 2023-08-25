@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.presentation.screens.registration.viewmodel
+package com.molyavin.mvvm.presentation.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,6 @@ import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.domain.models.UserInfo
 import com.molyavin.mvvm.domain.usecase.CheckFieldUseCase
 import com.molyavin.mvvm.domain.usecase.SaveUserInfoUseCase
-import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.utils.Toaster
 import javax.inject.Inject
 

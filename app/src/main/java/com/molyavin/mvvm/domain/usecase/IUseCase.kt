@@ -1,7 +1,7 @@
 package com.molyavin.mvvm.domain.usecase
 
 import com.molyavin.mvvm.domain.models.UserInfo
-import com.molyavin.mvvm.presentation.screens.splashscreen.viewmodel.SplashScreenViewModel
+import com.molyavin.mvvm.presentation.viewmodels.SplashScreenViewModel
 
 interface IUseCase<T, R> {
     fun execute(income: T): R

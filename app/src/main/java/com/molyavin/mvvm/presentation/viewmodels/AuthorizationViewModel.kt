@@ -1,14 +1,13 @@
-package com.molyavin.mvvm.presentation.screens.authorization.presenter
+package com.molyavin.mvvm.presentation.viewmodels
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import com.bluelinelabs.conductor.Router
-import com.molyavin.mvvm.presentation.BaseViewModel
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusRememberMeUseCase
-import com.molyavin.mvvm.presentation.screens.menu.screen.MenuController
+import com.molyavin.mvvm.presentation.controllers.MenuController
 import com.molyavin.mvvm.utils.Toaster
 import javax.inject.Inject
 

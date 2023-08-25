@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.presentation.screens.profile.viewmodel
+package com.molyavin.mvvm.presentation.viewmodels
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -7,8 +7,7 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.domain.models.UserInfo
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusRememberMeUseCase
-import com.molyavin.mvvm.presentation.BaseViewModel
-import com.molyavin.mvvm.presentation.screens.authorization.screen.AuthorizationController
+import com.molyavin.mvvm.presentation.controllers.AuthorizationController
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(

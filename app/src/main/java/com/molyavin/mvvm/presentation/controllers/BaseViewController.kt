@@ -1,4 +1,4 @@
-package com.molyavin.mvvm.presentation
+package com.molyavin.mvvm.presentation.controllers
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import com.bluelinelabs.conductor.Controller
+import com.molyavin.mvvm.presentation.viewmodels.BaseViewModel
 
 abstract class BaseViewController : Controller() {
 

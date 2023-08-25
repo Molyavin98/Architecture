@@ -8,7 +8,6 @@ import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.data.storage.DBSharedPreference
 import com.molyavin.mvvm.domain.di.scope.AppScope
-import com.molyavin.mvvm.presentation.BaseViewModel
 import dagger.Module
 import dagger.Provides
 
