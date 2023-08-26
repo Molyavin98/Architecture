@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Handler
 import com.molyavin.mvvm.data.repositories.SettingRepository
 import com.molyavin.mvvm.data.repositories.SettingRepositoryImpl
+import com.molyavin.mvvm.data.repositories.SlideRepository
+import com.molyavin.mvvm.data.repositories.SlideRepositoryImpl
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.data.storage.DBSharedPreference
@@ -23,6 +25,7 @@ class AppModule(private val context: Context) {
     fun provideDBSharedPreference(): DBSharedPreference {
         return DBSharedPreference(context)
     }
+
     @Provides
     @AppScope
     fun provideUserRepository(dbSharedPreference: DBSharedPreference): UserRepository =
@@ -32,6 +35,10 @@ class AppModule(private val context: Context) {
     @AppScope
     fun provideOnBoardingRepository(dbSharedPreference: DBSharedPreference): SettingRepository =
         SettingRepositoryImpl(dbSharedPreference)
+
+    @Provides
+    @AppScope
+    fun provideSlideRepository(): SlideRepository = SlideRepositoryImpl()
 
     @Provides
     @AppScope

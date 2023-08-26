@@ -22,12 +22,13 @@ import javax.inject.Singleton
 
 class MenuController : BaseViewController() {
 
-    @Singleton
-    override val viewModel: MenuViewModel = Injector.INSTANCE.provideMenuViewModel()
+    override lateinit var viewModel: MenuViewModel
 
     override fun setupView(view: ComposeView) {
 
+        viewModel = Injector.INSTANCE.provideMenuViewModel()
         Injector.INSTANCE.inject(this)
+
         this.viewModel.attachRoot(this)
 
         view.setContent {

@@ -15,11 +15,12 @@ import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 
 class SettingController : BaseViewController() {
 
-    override val viewModel: SettingViewModel = Injector.INSTANCE.provideSettingViewModel()
+    override lateinit var viewModel: SettingViewModel
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun setupView(view: ComposeView) {
 
+        viewModel = Injector.INSTANCE.provideSettingViewModel()
         Injector.INSTANCE.inject(this)
 
         view.setContent {

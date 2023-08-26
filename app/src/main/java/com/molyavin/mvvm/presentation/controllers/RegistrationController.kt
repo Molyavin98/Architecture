@@ -31,10 +31,11 @@ import javax.inject.Singleton
 
 class RegistrationController : BaseViewController() {
 
-    @Singleton
-    override val viewModel: RegistrationViewModel = Injector.INSTANCE.provideRegistrationViewModel()
+
+    override lateinit var viewModel: RegistrationViewModel
     override fun setupView(view: ComposeView) {
 
+        viewModel = Injector.INSTANCE.provideRegistrationViewModel()
         Injector.INSTANCE.inject(this)
 
         view.setContent {
@@ -139,7 +140,7 @@ class RegistrationController : BaseViewController() {
                             modifier = Modifier.padding(bottom = 8.dp),
                             text = "Already have on account?",
                             textButton = "Sing in.",
-                            onClick = { },
+                            onClick = { viewModel.navigateToBack() },
                         )
                     }
                 }

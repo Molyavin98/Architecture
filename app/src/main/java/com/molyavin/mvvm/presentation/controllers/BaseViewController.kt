@@ -12,20 +12,21 @@ abstract class BaseViewController : Controller() {
 
     protected abstract val viewModel: BaseViewModel
     protected abstract fun setupView(view: ComposeView)
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup,
         savedViewState: Bundle?
     ): View {
 
-        val view = viewModel.onCreateView(
-            inflater = inflater,
-            container = container,
-            savedViewState = savedViewState
-        )
+        val view: ComposeView = ComposeView(container.context).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        }
 
-        setupView(view as ComposeView)
+        setupView(view = view)
+
 
         return view
     }

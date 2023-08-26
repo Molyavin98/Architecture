@@ -17,10 +17,11 @@ import javax.inject.Singleton
 
 class SplashScreenController : BaseViewController() {
 
-    @Singleton
-    override val viewModel: SplashScreenViewModel = Injector.INSTANCE.provideSplashScreenViewModel()
+
+    override lateinit var viewModel: SplashScreenViewModel
     override fun setupView(view: ComposeView) {
 
+        viewModel = Injector.INSTANCE.provideSplashScreenViewModel()
         Injector.INSTANCE.inject(this)
 
         view.setContent {

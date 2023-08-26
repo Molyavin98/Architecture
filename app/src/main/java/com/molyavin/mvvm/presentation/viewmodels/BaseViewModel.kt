@@ -10,6 +10,7 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.utils.Toaster
+import javax.inject.Inject
 
 open class BaseViewModel(
     private val router: Router,
@@ -37,15 +38,7 @@ open class BaseViewModel(
         container: ViewGroup,
         savedViewState: Bundle?
     ): View {
-
-        val view: ComposeView = ComposeView(container.context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
-
-        return view
+        TODO()
     }
 
     open fun onAttach(view: View) {}

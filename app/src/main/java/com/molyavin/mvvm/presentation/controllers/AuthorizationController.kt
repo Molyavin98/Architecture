@@ -31,13 +31,11 @@ import javax.inject.Singleton
 
 class AuthorizationController : BaseViewController() {
 
-
-    @Singleton
-    override var viewModel: AuthorizationViewModel =
-        Injector.INSTANCE.provideAuthorizationViewModel()
+    override lateinit var viewModel: AuthorizationViewModel
 
     override fun setupView(view: ComposeView) {
 
+        viewModel = Injector.INSTANCE.provideAuthorizationViewModel()
         Injector.INSTANCE.inject(this)
 
         viewModel.attachRoot(this)

@@ -41,10 +41,12 @@ import javax.inject.Singleton
 
 class OnBoardingController : BaseViewController() {
 
-    @Singleton
-    override val viewModel: OnBoardingViewModel = Injector.INSTANCE.provideOnBoardingViewModel()
+    override lateinit var viewModel: OnBoardingViewModel
+
     @OptIn(ExperimentalFoundationApi::class)
     override fun setupView(view: ComposeView) {
+
+        viewModel = Injector.INSTANCE.provideOnBoardingViewModel()
 
         Injector.INSTANCE.inject(this)
 
@@ -65,20 +67,20 @@ class OnBoardingController : BaseViewController() {
 
                             HorizontalPager(
                                 modifier = Modifier.padding(top = 24.dp),
-                                pageCount = this@OnBoardingController.viewModel.pageCount,
+                                pageCount = this@OnBoardingController.viewModel.slideCount,
                                 contentPadding = PaddingValues(horizontal = 64.dp),
                                 pageSpacing = 24.dp,
                                 state = pagerState
                             ) {}
 
                             DefaultImageLogo(
-                                idImage = this@OnBoardingController.viewModel.createItems()[this@OnBoardingController.viewModel.pageCount].idImage,
+                                idImage = this@OnBoardingController.viewModel.getSlides()[this@OnBoardingController.viewModel.slideCount].idImage,
                                 modifier = Modifier.weight(1f)
                             )
 
                             DefaultText(
                                 modifier = Modifier.padding(32.dp),
-                                text = this@OnBoardingController.viewModel.createItems()[this@OnBoardingController.viewModel.pageCount].title,
+                                text = this@OnBoardingController.viewModel.getSlides()[this@OnBoardingController.viewModel.slideCount].title,
                                 textAlign = TextAlign.Center
                             )
 
@@ -103,7 +105,7 @@ class OnBoardingController : BaseViewController() {
                                         .height(8.dp)
                                         .clip(CircleShape),
                                     totalDots = 4,
-                                    selectedIndex = this@OnBoardingController.viewModel.pageCount,
+                                    selectedIndex = this@OnBoardingController.viewModel.slideCount,
                                     selectedColor = Color.White,
                                     unSelectedColor = Color.Gray
                                 )
@@ -117,7 +119,7 @@ class OnBoardingController : BaseViewController() {
                                             bottom = 64.dp
                                         ),
                                     textAlign = TextAlign.Center,
-                                    text = this@OnBoardingController.viewModel.createItems()[this@OnBoardingController.viewModel.pageCount].description,
+                                    text = this@OnBoardingController.viewModel.getSlides()[this@OnBoardingController.viewModel.slideCount].description,
                                     styleText = MaterialTheme.typography.h5.copy(),
                                     color = Color.Gray,
                                 )
@@ -169,8 +171,8 @@ class OnBoardingController : BaseViewController() {
                                             )
                                         },
                                         onClick = {
-                                            this@OnBoardingController.viewModel.pageCount++
-                                            if (this@OnBoardingController.viewModel.pageCount == 4) {
+                                            this@OnBoardingController.viewModel.slideCount++
+                                            if (this@OnBoardingController.viewModel.slideCount == 4) {
                                                 this@OnBoardingController.viewModel.startScreen(
                                                     AuthorizationController()
                                                 )
