@@ -8,6 +8,7 @@ import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusRememberMeUseCase
 import com.molyavin.mvvm.presentation.controllers.MenuController
+import com.molyavin.mvvm.presentation.controllers.RegistrationController
 import com.molyavin.mvvm.utils.Toaster
 import javax.inject.Inject
 
@@ -42,6 +43,9 @@ class AuthorizationViewModel @Inject constructor(
         }
 
         statusRememberMe()
+    }
+    fun startRegistrationController(){
+        startScreen(RegistrationController())
     }
 
     fun onBoardingScreenStatus(status: String) {

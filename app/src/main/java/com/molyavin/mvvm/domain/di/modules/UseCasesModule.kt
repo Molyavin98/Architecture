@@ -2,9 +2,11 @@ package com.molyavin.mvvm.domain.di.modules
 
 import android.os.Handler
 import com.molyavin.mvvm.data.repositories.SettingRepository
+import com.molyavin.mvvm.data.repositories.SlideRepository
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.domain.di.scope.AppScope
 import com.molyavin.mvvm.domain.usecase.CheckFieldUseCase
+import com.molyavin.mvvm.domain.usecase.GetSlideUseCase
 import com.molyavin.mvvm.domain.usecase.GetStatusRememberMeUseCase
 import com.molyavin.mvvm.domain.usecase.GetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
@@ -57,5 +59,10 @@ class UseCasesModule {
     @AppScope
     fun provideStartScreenUseCase(handler: Handler): StartScreenUseCase =
         StartScreenUseCase(handler)
+
+    @Provides
+    @AppScope
+    fun provideGetSlidesUseCase(slideRepository: SlideRepository): GetSlideUseCase =
+        GetSlideUseCase(slideRepository)
 
 }

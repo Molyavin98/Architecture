@@ -36,4 +36,19 @@ abstract class BaseViewController : Controller() {
         super.onAttach(view)
         viewModel.onAttach()
     }
+
+    override fun onDetach(view: View) {
+        super.onDetach(view)
+        viewModel.onDetach()
+    }
+
+    override fun onDestroyView(view: View) {
+        super.onDestroyView(view)
+        viewModel.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onDestroy()
+    }
 }

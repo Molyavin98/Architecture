@@ -28,10 +28,8 @@ import javax.inject.Singleton
 class ProfileController : BaseViewController() {
 
 
-    override lateinit var viewModel: ProfileViewModel
+    override val viewModel: ProfileViewModel = Injector.INSTANCE.provideProfileViewModel()
     override fun setupView(view: ComposeView) {
-
-        viewModel = Injector.INSTANCE.provideProfileViewModel()
 
         view.setContent {
             MVVMTheme {

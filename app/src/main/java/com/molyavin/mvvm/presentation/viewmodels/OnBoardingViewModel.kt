@@ -5,12 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.data.repositories.SlideRepository
 import com.molyavin.mvvm.domain.models.Slide
+import com.molyavin.mvvm.domain.usecase.GetSlideUseCase
 import com.molyavin.mvvm.presentation.controllers.AuthorizationController
 import javax.inject.Inject
 
 class OnBoardingViewModel @Inject constructor(
     router: Router,
-    private val slideRepository: SlideRepository,
+    private val getSlideUseCase: GetSlideUseCase,
 ) : BaseViewModel(router = router) {
 
     private val _currentSliderPosition = mutableStateOf(0)
@@ -18,12 +19,10 @@ class OnBoardingViewModel @Inject constructor(
 
     private val _slides = mutableStateOf(emptyList<Slide>())
     val slides: State<List<Slide>> = _slides
-
     override fun onAttach() {
         super.onAttach()
-        _slides.value = slideRepository.getSlides()
+        _slides.value = getSlideUseCase.execute(null)
     }
-
     fun nextSlide() {
         if (_currentSliderPosition.value == 3) {
             startScreen(AuthorizationController())
