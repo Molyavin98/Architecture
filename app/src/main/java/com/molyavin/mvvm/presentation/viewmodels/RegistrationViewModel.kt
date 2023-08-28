@@ -29,22 +29,21 @@ class RegistrationViewModel @Inject constructor(
     private var _passwordTwo = mutableStateOf(TextFieldValue())
     var passwordTwo:State<TextFieldValue> = _passwordTwo
 
-    fun saveData(userFullName: String?, userPhone: String?, userPassword: String?) {
+    fun saveData() {
 
         if (checkFieldUseCase.execute(
                 UserInfo(
-                    fullName = userFullName!!,
-                    phone = userPhone!!,
-                    password = userPassword!!
+                    phone = phone.value.text,
+                    passwordOne = passwordOne.value.text,
+                    passwordTwo = passwordTwo.value.text
                 )
             )
-
         ) {
             saveUserInfoUseCase.execute(
                 UserInfo(
-                    fullName = userFullName,
-                    phone = userPhone,
-                    password = userPassword
+                    phone = phone.value.text,
+                    passwordOne = passwordOne.value.text,
+                    passwordTwo = passwordTwo.value.text
                 )
             )
             navigateToBack()

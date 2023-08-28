@@ -122,11 +122,7 @@ class RegistrationController : BaseViewController() {
                                 )
                             },
                             onClick = {
-                                viewModel.saveData(
-                                    viewModel.phone.value.text,
-                                    viewModel.passwordOne.value.text,
-                                    viewModel.passwordTwo.value.text
-                                )
+                                viewModel.saveData()
                             },
                         )
 
