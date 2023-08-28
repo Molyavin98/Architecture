@@ -1,10 +1,5 @@
-package com.molyavin.mvvm.presentation.screens.registration.screen
+package com.molyavin.mvvm.presentation.controllers
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,55 +7,42 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Scaffold
 import androidx.compose.material3.Icon
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
-import com.molyavin.mvvm.presentation.DefaultSocialAuthButton
+import com.molyavin.mvvm.presentation.AuthFooter
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
-import com.molyavin.mvvm.presentation.DividerOr
 import com.molyavin.mvvm.presentation.DefaultPasswordField
 import com.molyavin.mvvm.presentation.DefaultPhoneField
+import com.molyavin.mvvm.presentation.DefaultSocialAuthButton
 import com.molyavin.mvvm.presentation.DefaultText
-import com.molyavin.mvvm.presentation.AuthFooter
-import com.molyavin.mvvm.presentation.screens.registration.viewmodel.RegistrationViewModel
+import com.molyavin.mvvm.presentation.DividerOr
+import com.molyavin.mvvm.presentation.RememberMeCheckBox
+import com.molyavin.mvvm.presentation.viewmodels.AuthorizationViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Inject
+import javax.inject.Singleton
 
-class RegistrationController : Controller() {
+class AuthorizationController : BaseViewController() {
 
-    @Inject
-    lateinit var viewModel: RegistrationViewModel
+    override lateinit var viewModel: AuthorizationViewModel
 
-    @SuppressLint("MissingInflatedId")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
-    ): View {
+    override fun setupView(view: ComposeView) {
 
-        Injector.INSTANCE.inject(this)
+        viewModel = Injector.INSTANCE.provideAuthorizationViewModel()
 
-
-        val view = ComposeView(container.context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
+        viewModel.attachRoot(this)
+        viewModel.onBoardingScreenStatus("On")
 
         view.setContent {
             MVVMTheme {
-                Scaffold {
+                androidx.compose.material.Scaffold {
                     Column(
                         modifier = Modifier
                             .padding(it)
@@ -69,59 +51,52 @@ class RegistrationController : Controller() {
                         verticalArrangement = Arrangement.Bottom,
                     ) {
 
-
-                       /* remember {
-
-                        }*/
-
-
                         DefaultImageLogo(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .weight(0.5f),
+                                .weight(1f),
                             idImage = R.drawable.image_login,
                         )
 
-                        DefaultText(text = "Registration")
-
+                        DefaultText(text = "Welcome in Architecture App")
 
                         DefaultPhoneField(
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            phone = viewModel.phone,
-                            onValueChange = { newValue -> viewModel.phone = newValue},
+                            phone = viewModel.phone.value,
+                            onValueChange = { newPhone -> viewModel.setPhone(newPhone) },
                             label = "Phone",
                             hint = "Enter your phone",
                             focusColor = R.color.default_border_focus_color,
-                            unFocusColor = R.color.default_border_color,
+                            unFocusColor = R.color.default_border_color
                         )
-
 
                         DefaultPasswordField(
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = viewModel.passwordOne,
-                            onValueChange = { newValue -> viewModel.passwordOne = newValue },
+                            password = viewModel.password.value,
+                            onValueChange = { newPassword -> viewModel.setPassword(password = newPassword) },
                             label = "Password",
+                            textForgotPassword = "Forgot password?",
                             hint = "Enter your password",
                             focusColor = R.color.default_border_focus_color,
                             unFocusColor = R.color.default_border_color,
                         )
 
-                        DefaultPasswordField(
-                            modifierText = Modifier
-                                .padding(3.dp)
-                                .weight(50f),
-                            password = viewModel.passwordTwo,
-                            onValueChange = { newValue -> viewModel.passwordTwo = newValue },
-                            label = "Password",
-                            hint = "Confirm password",
-                            focusColor = R.color.default_border_focus_color,
-                            unFocusColor = R.color.default_border_color,
+                        RememberMeCheckBox(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp),
+                            checkBoxState = viewModel.statusCheckBox.value,
+                            onValueChange = { newCheckBoxState ->
+                                viewModel.setStatusCheckBox(
+                                    status = newCheckBoxState
+                                )
+                            },
+                            text = "Remember me"
                         )
-
 
                         DividerOr()
 
@@ -135,7 +110,7 @@ class RegistrationController : Controller() {
                             modifier = Modifier
                                 .padding(start = 16.dp, end = 16.dp, bottom = 8.dp, top = 80.dp)
                                 .fillMaxWidth(),
-                            text = "Create on account",
+                            text = "Log in",
                             trailingIcon = {
                                 Icon(
                                     modifier = Modifier
@@ -147,26 +122,19 @@ class RegistrationController : Controller() {
                                 )
                             },
                             onClick = {
-                                viewModel.saveData(
-                                    viewModel.phone.text,
-                                    viewModel.passwordOne.text,
-                                    viewModel.passwordTwo.text
-                                )
+                                viewModel.login()
                             },
                         )
 
-
                         AuthFooter(
                             modifier = Modifier.padding(bottom = 8.dp),
-                            text = "Already have on account?",
-                            textButton = "Sing in.",
-                            onClick = { },
+                            text = "Don`t have an account?",
+                            textButton = "Sing up now.",
+                            onClick = { viewModel.startScreen(RegistrationController()) },
                         )
                     }
                 }
             }
         }
-
-        return view
     }
 }

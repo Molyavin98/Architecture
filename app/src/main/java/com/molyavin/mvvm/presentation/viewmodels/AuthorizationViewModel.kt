@@ -1,17 +1,13 @@
-package com.molyavin.mvvm.presentation.screens.authorization.presenter
+package com.molyavin.mvvm.presentation.viewmodels
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.ViewModel
 import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusRememberMeUseCase
-import com.molyavin.mvvm.presentation.screens.authorization.screen.AuthorizationController
-import com.molyavin.mvvm.presentation.screens.menu.screen.MenuController
-import com.molyavin.mvvm.presentation.screens.registration.screen.RegistrationController
+import com.molyavin.mvvm.presentation.controllers.MenuController
 import com.molyavin.mvvm.utils.Toaster
 import javax.inject.Inject
 
@@ -19,9 +15,9 @@ class AuthorizationViewModel @Inject constructor(
     private val readUserInfoUseCase: ReadUserInfoUseCase,
     private val setStatusOnBoardingUseCase: SetStatusOnBoardingUseCase,
     private val setStatusRememberMeUseCase: SetStatusRememberMeUseCase,
-    private val router: Router,
-    private val toaster: Toaster,
-) : ViewModel() {
+    router: Router,
+    toaster: Toaster
+) : BaseViewModel(router = router, toaster = toaster) {
 
     private var _phone = mutableStateOf(TextFieldValue())
     val phone: State<TextFieldValue> = _phone
@@ -34,25 +30,18 @@ class AuthorizationViewModel @Inject constructor(
 
     fun login() {
 
+
         val readUserInfo = readUserInfoUseCase.execute(null)
 
         if (phone.value.text == readUserInfo.phone && password.value.text == readUserInfo.password) {
-            router.pushController(RouterTransaction.with(MenuController()))
+            startScreen(MenuController())
         } else if (phone.value.toString().isEmpty() || password.value.toString().isEmpty()) {
-            toaster.show("Field is not can empty!")
+            showMessage("Field is not can empty!")
         } else {
-            toaster.show("Data user is not correct!")
+            showMessage("Data user is not correct!")
         }
 
         statusRememberMe()
-    }
-
-    fun attachRoot(authorizationController: AuthorizationController) {
-        router.setRoot(RouterTransaction.with(authorizationController))
-    }
-
-    fun goToRegistrationScreen() {
-        router.pushController(RouterTransaction.with(RegistrationController()))
     }
 
     fun onBoardingScreenStatus(status: String) {

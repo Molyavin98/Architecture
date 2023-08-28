@@ -1,10 +1,5 @@
-package com.molyavin.mvvm.presentation.screens.menu.screen
+package com.molyavin.mvvm.presentation.controllers
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,33 +15,20 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.domain.di.component.Injector
-import com.molyavin.mvvm.presentation.screens.menu.viewmodel.MenuViewModel
+import com.molyavin.mvvm.presentation.viewmodels.MenuViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Inject
+import javax.inject.Singleton
 
-class MenuController : Controller() {
+class MenuController : BaseViewController() {
 
+    override lateinit var viewModel: MenuViewModel
 
-    @Inject
-    lateinit var viewModel: MenuViewModel
+    override fun setupView(view: ComposeView) {
 
-    @SuppressLint("MissingInflatedId")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
-    ): View {
+        viewModel = Injector.INSTANCE.provideMenuViewModel()
 
-        Injector.INSTANCE.inject(this)
-
-        val view = ComposeView(context = container.context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
+        this.viewModel.attachRoot(this)
 
         view.setContent {
             MVVMTheme {
@@ -61,7 +43,11 @@ class MenuController : Controller() {
                         TopAppBar(
                             modifier = Modifier
                         ) {
-                            IconButton(onClick = { viewModel.startScreenProfile() }) {
+                            IconButton(onClick = {
+                                viewModel.startScreen(
+                                    ProfileController()
+                                )
+                            }) {
                                 Icon(
                                     imageVector = Icons.Filled.AccountCircle,
                                     tint = Color.White,
@@ -69,7 +55,7 @@ class MenuController : Controller() {
                                 )
                             }
                             Spacer(Modifier.weight(1f, true))
-                            IconButton(onClick = { }) {
+                            IconButton(onClick = { viewModel.startScreen(SettingController()) }) {
                                 Icon(
                                     imageVector = Icons.Filled.Settings,
                                     tint = Color.White,
@@ -81,8 +67,6 @@ class MenuController : Controller() {
                 }
             }
         }
-
-        return view
     }
 
 }

@@ -1,9 +1,6 @@
-package com.molyavin.mvvm.presentation.screens.onboarding.screen
+package com.molyavin.mvvm.presentation.controllers
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,37 +30,26 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
 import com.molyavin.mvvm.presentation.DotsIndicator
-import com.molyavin.mvvm.presentation.screens.onboarding.viewmodel.OnBoardingViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Inject
+import com.molyavin.mvvm.presentation.viewmodels.OnBoardingViewModel
 
-class OnBoardingController : Controller() {
+class OnBoardingController : BaseViewController() {
 
-    @Inject
-    lateinit var viewModel: OnBoardingViewModel
+    override lateinit var viewModel: OnBoardingViewModel
 
     @OptIn(ExperimentalFoundationApi::class)
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
-    ): View {
+    override fun setupView(view: ComposeView) {
 
-        Injector.INSTANCE.inject(this)
+        viewModel = Injector.INSTANCE.provideOnBoardingViewModel()
 
-        val view = ComposeView(container.context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
+        var count = 0
+
 
         view.setContent {
             MVVMTheme {
@@ -77,25 +63,26 @@ class OnBoardingController : Controller() {
                             verticalArrangement = Arrangement.Bottom
                         ) {
 
-                            val pagerState = rememberPagerState()
-
+                            val slideCount = viewModel.slideCount.value
+                            val slideState = rememberPagerState()
 
                             HorizontalPager(
                                 modifier = Modifier.padding(top = 24.dp),
-                                pageCount = viewModel.pageCount,
+                                pageCount = slideCount,
                                 contentPadding = PaddingValues(horizontal = 64.dp),
                                 pageSpacing = 24.dp,
-                                state = pagerState
+                                state = slideState
                             ) {}
 
+
                             DefaultImageLogo(
-                                idImage = viewModel.createItems()[viewModel.pageCount].idImage,
+                                idImage = viewModel.getSlides()[slideCount].idImage,
                                 modifier = Modifier.weight(1f)
                             )
 
                             DefaultText(
                                 modifier = Modifier.padding(32.dp),
-                                text = viewModel.createItems()[viewModel.pageCount].title,
+                                text = viewModel.getSlides()[slideCount].title,
                                 textAlign = TextAlign.Center
                             )
 
@@ -120,7 +107,7 @@ class OnBoardingController : Controller() {
                                         .height(8.dp)
                                         .clip(CircleShape),
                                     totalDots = 4,
-                                    selectedIndex = viewModel.pageCount,
+                                    selectedIndex = slideCount,
                                     selectedColor = Color.White,
                                     unSelectedColor = Color.Gray
                                 )
@@ -134,7 +121,7 @@ class OnBoardingController : Controller() {
                                             bottom = 64.dp
                                         ),
                                     textAlign = TextAlign.Center,
-                                    text = viewModel.createItems()[viewModel.pageCount].description,
+                                    text = viewModel.getSlides()[slideCount].description,
                                     styleText = MaterialTheme.typography.h5.copy(),
                                     color = Color.Gray,
                                 )
@@ -158,7 +145,7 @@ class OnBoardingController : Controller() {
                                             contentColor = colorResource(id = R.color.white),
                                         ),
                                         onClick = {
-                                            viewModel.startActivity()
+                                            viewModel.startScreen(AuthorizationController())
                                         })
 
 
@@ -184,19 +171,23 @@ class OnBoardingController : Controller() {
                                             )
                                         },
                                         onClick = {
-                                            viewModel.pageCount++
-                                            if (viewModel.pageCount == 4) {
-                                                viewModel.startActivity()
+                                            count++
+                                            viewModel.nextSlide(count)
+                                            if (slideCount == 3) {
+                                                this@OnBoardingController.viewModel.startScreen(
+                                                    AuthorizationController()
+                                                )
                                             }
                                         })
                                 }
+
                             }
                         }
                     }
+
                 }
             }
         }
 
-        return view
     }
 }

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
-import com.molyavin.mvvm.presentation.screens.splashscreen.screen.SplashScreenController
+import com.molyavin.mvvm.presentation.controllers.SplashScreenController
 import com.molyavin.mvvm.databinding.ActivityMainBinding
 import com.molyavin.mvvm.domain.di.component.Injector
 import javax.inject.Inject

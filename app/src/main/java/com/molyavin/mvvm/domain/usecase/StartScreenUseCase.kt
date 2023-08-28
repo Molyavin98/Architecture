@@ -1,11 +1,11 @@
 package com.molyavin.mvvm.domain.usecase
 
 import android.os.Handler
-import com.molyavin.mvvm.presentation.screens.splashscreen.viewmodel.SplashScreenViewModel
+import com.molyavin.mvvm.presentation.viewmodels.SplashScreenViewModel
 import javax.inject.Inject
 
 class StartScreenUseCase @Inject constructor(private val handler: Handler) :
-    IUseCase.IStartScreenUseCase {
+    IUseCase<SplashScreenViewModel, Unit> {
 
     override fun execute(income: SplashScreenViewModel) {
         handler.postDelayed({

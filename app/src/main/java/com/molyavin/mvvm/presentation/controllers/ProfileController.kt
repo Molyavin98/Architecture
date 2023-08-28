@@ -1,10 +1,5 @@
-package com.molyavin.mvvm.presentation.screens.profile.screen
+package com.molyavin.mvvm.presentation.controllers
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -21,36 +16,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import com.bluelinelabs.conductor.Controller
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.di.component.Injector
 import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
-import com.molyavin.mvvm.presentation.screens.profile.viewmodel.ProfileViewModel
+import com.molyavin.mvvm.presentation.viewmodels.ProfileViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Inject
+import javax.inject.Singleton
 
-class ProfileController : Controller() {
+class ProfileController : BaseViewController() {
 
-    @Inject
-    lateinit var viewModel: ProfileViewModel
 
-    @SuppressLint("SetTextI18n", "NewApi")
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
-    ): View {
+    override lateinit var viewModel: ProfileViewModel
+    override fun setupView(view: ComposeView) {
 
-        Injector.INSTANCE.inject(this)
-
-        val view = ComposeView(container.context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
+        viewModel = Injector.INSTANCE.provideProfileViewModel()
 
         view.setContent {
             MVVMTheme {
@@ -79,7 +60,7 @@ class ProfileController : Controller() {
                         )
 
                         // загуглити про collectAsState
-                        val userInfo = viewModel.userInfo.value
+                        val userInfo = this@ProfileController.viewModel.userInfo.value
 
                         DefaultText(
                             modifier = Modifier
@@ -106,15 +87,13 @@ class ProfileController : Controller() {
                                 .padding(16.dp)
                                 .wrapContentHeight(align = Alignment.Bottom),
                             text = "Exit from account",
-                            onClick = { viewModel.logOut() })
+                            onClick = { this@ProfileController.viewModel.logOut() })
 
                     }
                 }
             }
         }
 
-        viewModel.onCreate()
-
-        return view
+        this.viewModel.onCreate()
     }
 }
