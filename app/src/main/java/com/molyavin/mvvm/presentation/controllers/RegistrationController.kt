@@ -36,7 +36,6 @@ class RegistrationController : BaseViewController() {
     override fun setupView(view: ComposeView) {
 
         viewModel = Injector.INSTANCE.provideRegistrationViewModel()
-        Injector.INSTANCE.inject(this)
 
         view.setContent {
             MVVMTheme {

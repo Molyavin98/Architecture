@@ -1,5 +1,6 @@
 package com.molyavin.mvvm.presentation.controllers
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,9 +36,8 @@ import com.molyavin.mvvm.presentation.DefaultButton
 import com.molyavin.mvvm.presentation.DefaultImageLogo
 import com.molyavin.mvvm.presentation.DefaultText
 import com.molyavin.mvvm.presentation.DotsIndicator
-import com.molyavin.mvvm.presentation.viewmodels.OnBoardingViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Singleton
+import com.molyavin.mvvm.presentation.viewmodels.OnBoardingViewModel
 
 class OnBoardingController : BaseViewController() {
 
@@ -48,7 +48,8 @@ class OnBoardingController : BaseViewController() {
 
         viewModel = Injector.INSTANCE.provideOnBoardingViewModel()
 
-        Injector.INSTANCE.inject(this)
+        var count = 0
+
 
         view.setContent {
             MVVMTheme {
@@ -62,25 +63,26 @@ class OnBoardingController : BaseViewController() {
                             verticalArrangement = Arrangement.Bottom
                         ) {
 
-                            val pagerState = rememberPagerState()
-
+                            val slideCount = viewModel.slideCount.value
+                            val slideState = rememberPagerState()
 
                             HorizontalPager(
                                 modifier = Modifier.padding(top = 24.dp),
-                                pageCount = this@OnBoardingController.viewModel.slideCount,
+                                pageCount = slideCount,
                                 contentPadding = PaddingValues(horizontal = 64.dp),
                                 pageSpacing = 24.dp,
-                                state = pagerState
+                                state = slideState
                             ) {}
 
+
                             DefaultImageLogo(
-                                idImage = this@OnBoardingController.viewModel.getSlides()[this@OnBoardingController.viewModel.slideCount].idImage,
+                                idImage = viewModel.getSlides()[slideCount].idImage,
                                 modifier = Modifier.weight(1f)
                             )
 
                             DefaultText(
                                 modifier = Modifier.padding(32.dp),
-                                text = this@OnBoardingController.viewModel.getSlides()[this@OnBoardingController.viewModel.slideCount].title,
+                                text = viewModel.getSlides()[slideCount].title,
                                 textAlign = TextAlign.Center
                             )
 
@@ -105,7 +107,7 @@ class OnBoardingController : BaseViewController() {
                                         .height(8.dp)
                                         .clip(CircleShape),
                                     totalDots = 4,
-                                    selectedIndex = this@OnBoardingController.viewModel.slideCount,
+                                    selectedIndex = slideCount,
                                     selectedColor = Color.White,
                                     unSelectedColor = Color.Gray
                                 )
@@ -119,7 +121,7 @@ class OnBoardingController : BaseViewController() {
                                             bottom = 64.dp
                                         ),
                                     textAlign = TextAlign.Center,
-                                    text = this@OnBoardingController.viewModel.getSlides()[this@OnBoardingController.viewModel.slideCount].description,
+                                    text = viewModel.getSlides()[slideCount].description,
                                     styleText = MaterialTheme.typography.h5.copy(),
                                     color = Color.Gray,
                                 )
@@ -143,9 +145,7 @@ class OnBoardingController : BaseViewController() {
                                             contentColor = colorResource(id = R.color.white),
                                         ),
                                         onClick = {
-                                            this@OnBoardingController.viewModel.startScreen(
-                                                AuthorizationController()
-                                            )
+                                            viewModel.startScreen(AuthorizationController())
                                         })
 
 
@@ -171,17 +171,20 @@ class OnBoardingController : BaseViewController() {
                                             )
                                         },
                                         onClick = {
-                                            this@OnBoardingController.viewModel.slideCount++
-                                            if (this@OnBoardingController.viewModel.slideCount == 4) {
+                                            count++
+                                            viewModel.nextSlide(count)
+                                            if (slideCount == 3) {
                                                 this@OnBoardingController.viewModel.startScreen(
                                                     AuthorizationController()
                                                 )
                                             }
                                         })
                                 }
+
                             }
                         }
                     }
+
                 }
             }
         }

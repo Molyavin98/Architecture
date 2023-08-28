@@ -27,7 +27,6 @@ class MenuController : BaseViewController() {
     override fun setupView(view: ComposeView) {
 
         viewModel = Injector.INSTANCE.provideMenuViewModel()
-        Injector.INSTANCE.inject(this)
 
         this.viewModel.attachRoot(this)
 

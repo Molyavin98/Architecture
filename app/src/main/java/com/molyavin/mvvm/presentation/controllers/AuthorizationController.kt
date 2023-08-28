@@ -36,10 +36,9 @@ class AuthorizationController : BaseViewController() {
     override fun setupView(view: ComposeView) {
 
         viewModel = Injector.INSTANCE.provideAuthorizationViewModel()
-        Injector.INSTANCE.inject(this)
 
         viewModel.attachRoot(this)
-        viewModel.onBoardingScreenStatus("Off")
+        viewModel.onBoardingScreenStatus("On")
 
         view.setContent {
             MVVMTheme {

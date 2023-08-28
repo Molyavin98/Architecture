@@ -21,7 +21,6 @@ class SettingController : BaseViewController() {
     override fun setupView(view: ComposeView) {
 
         viewModel = Injector.INSTANCE.provideSettingViewModel()
-        Injector.INSTANCE.inject(this)
 
         view.setContent {
 

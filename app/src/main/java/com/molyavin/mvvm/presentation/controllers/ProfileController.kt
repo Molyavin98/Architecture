@@ -32,7 +32,6 @@ class ProfileController : BaseViewController() {
     override fun setupView(view: ComposeView) {
 
         viewModel = Injector.INSTANCE.provideProfileViewModel()
-        Injector.INSTANCE.inject(this)
 
         view.setContent {
             MVVMTheme {

@@ -22,7 +22,6 @@ class SplashScreenController : BaseViewController() {
     override fun setupView(view: ComposeView) {
 
         viewModel = Injector.INSTANCE.provideSplashScreenViewModel()
-        Injector.INSTANCE.inject(this)
 
         view.setContent {
             MVVMTheme {

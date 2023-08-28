@@ -1,8 +1,10 @@
 package com.molyavin.mvvm.presentation.viewmodels
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.TextFieldValue
 import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.data.repositories.SlideRepository
 import com.molyavin.mvvm.domain.models.Slide
@@ -14,7 +16,12 @@ class OnBoardingViewModel @Inject constructor(
 ) :
     BaseViewModel(router = router) {
 
-    var slideCount by mutableStateOf(0)
+    private var _slideCount = mutableStateOf(0)
+    val slideCount: State<Int> = _slideCount
     fun getSlides(): List<Slide> = slideRepository.getSlides()
+
+    fun nextSlide(slideCount: Int){
+        _slideCount.value = slideCount
+    }
 
 }
