@@ -1,11 +1,9 @@
 package com.molyavin.mvvm.presentation.controllers
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +19,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.Icon
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,51 +40,48 @@ import com.molyavin.mvvm.presentation.viewmodels.OnBoardingViewModel
 
 class OnBoardingController : BaseViewController() {
 
-    override lateinit var viewModel: OnBoardingViewModel
+    override val viewModel: OnBoardingViewModel = Injector.INSTANCE.provideOnBoardingViewModel()
 
     @OptIn(ExperimentalFoundationApi::class)
     override fun setupView(view: ComposeView) {
-
-        viewModel = Injector.INSTANCE.provideOnBoardingViewModel()
-
-        var count = 0
-
-
         view.setContent {
             MVVMTheme {
                 Scaffold {
-                    Column {
+
+                    val slides = viewModel.slides.value
+                    val currentSliderPosition = viewModel.currentSliderPosition.value
+                    val slideState = rememberPagerState()
+
+                    LaunchedEffect(
+                        key1 = currentSliderPosition,
+                        block = { slideState.scrollToPage(currentSliderPosition) }
+                    )
+
+                    HorizontalPager(
+                        modifier = Modifier
+                            .padding(it)
+                            .fillMaxSize(),
+                        pageCount = slides.size,
+                        state = slideState,
+                    ) { position ->
+                        val item = slides[position]
+
                         Column(
-                            modifier = Modifier
-                                .padding(it)
-                                .fillMaxSize(),
+                            modifier = Modifier.fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Bottom
+                            verticalArrangement = Arrangement.Bottom,
                         ) {
 
-                            val slideCount = viewModel.slideCount.value
-                            val slideState = rememberPagerState()
-
-                            HorizontalPager(
-                                modifier = Modifier.padding(top = 24.dp),
-                                pageCount = slideCount,
-                                contentPadding = PaddingValues(horizontal = 64.dp),
-                                pageSpacing = 24.dp,
-                                state = slideState
-                            ) {}
-
-
                             DefaultImageLogo(
-                                idImage = viewModel.getSlides()[slideCount].idImage,
+                                idImage = item.idImage,
                                 modifier = Modifier.weight(1f)
                             )
 
                             DefaultText(
                                 modifier = Modifier.padding(32.dp),
-                                text = viewModel.getSlides()[slideCount].title,
+                                text = item.title,
                                 textAlign = TextAlign.Center
                             )
-
 
                             Column(
                                 modifier = Modifier
@@ -97,7 +93,6 @@ class OnBoardingController : BaseViewController() {
                                 verticalArrangement = Arrangement.Bottom
                             ) {
 
-
                                 DotsIndicator(
                                     modifierRow = Modifier
                                         .padding(top = 32.dp)
@@ -107,7 +102,7 @@ class OnBoardingController : BaseViewController() {
                                         .height(8.dp)
                                         .clip(CircleShape),
                                     totalDots = 4,
-                                    selectedIndex = slideCount,
+                                    selectedIndex = position,
                                     selectedColor = Color.White,
                                     unSelectedColor = Color.Gray
                                 )
@@ -121,18 +116,16 @@ class OnBoardingController : BaseViewController() {
                                             bottom = 64.dp
                                         ),
                                     textAlign = TextAlign.Center,
-                                    text = viewModel.getSlides()[slideCount].description,
-                                    styleText = MaterialTheme.typography.h5.copy(),
+                                    text = slides[position].description,
+                                    styleText = MaterialTheme.typography.h5,
                                     color = Color.Gray,
                                 )
-
 
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(start = 32.dp, end = 32.dp, bottom = 24.dp),
                                 ) {
-
                                     DefaultButton(
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -144,9 +137,8 @@ class OnBoardingController : BaseViewController() {
                                             backgroundColor = colorResource(id = R.color.button_color),
                                             contentColor = colorResource(id = R.color.white),
                                         ),
-                                        onClick = {
-                                            viewModel.startScreen(AuthorizationController())
-                                        })
+                                        onClick = viewModel::startAuthController
+                                    )
 
 
                                     DefaultButton(
@@ -170,24 +162,14 @@ class OnBoardingController : BaseViewController() {
                                                 tint = Color.Black,
                                             )
                                         },
-                                        onClick = {
-                                            count++
-                                            viewModel.nextSlide(count)
-                                            if (slideCount == 3) {
-                                                this@OnBoardingController.viewModel.startScreen(
-                                                    AuthorizationController()
-                                                )
-                                            }
-                                        })
+                                        onClick = viewModel::nextSlide
+                                    )
                                 }
-
                             }
                         }
                     }
-
                 }
             }
         }
-
     }
 }

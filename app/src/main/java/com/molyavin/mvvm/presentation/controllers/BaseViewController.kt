@@ -27,7 +27,13 @@ abstract class BaseViewController : Controller() {
 
         setupView(view = view)
 
+        viewModel.onCreateView()
 
         return view
+    }
+
+    override fun onAttach(view: View) {
+        super.onAttach(view)
+        viewModel.onAttach()
     }
 }

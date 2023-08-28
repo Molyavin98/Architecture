@@ -1,20 +1,14 @@
 package com.molyavin.mvvm.presentation.viewmodels
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewModel
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.utils.Toaster
-import javax.inject.Inject
 
-open class BaseViewModel(
+abstract class BaseViewModel(
     private val router: Router,
-    private val toaster: Toaster? = null
+    private val toaster: Toaster? = null,
 ) : ViewModel() {
 
     open fun navigateToBack() {
@@ -33,16 +27,12 @@ open class BaseViewModel(
         router.setRoot(RouterTransaction.with(controller))
     }
 
-    open fun onCreateView(
-        inflater: LayoutInflater?,
-        container: ViewGroup,
-        savedViewState: Bundle?
-    ) {
+    open fun onCreateView() {
     }
 
-    open fun onAttach(view: View) {}
-    open fun onDetach(view: View) {}
-    open fun onDestroyView(view: View) {}
+    open fun onAttach() {}
+    open fun onDetach() {}
+    open fun onDestroyView() {}
     open fun onDestroy() {}
 
 }
