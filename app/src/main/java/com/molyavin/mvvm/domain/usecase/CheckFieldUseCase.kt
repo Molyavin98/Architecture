@@ -6,6 +6,6 @@ import com.molyavin.mvvm.domain.models.UserInfo
 class CheckFieldUseCase(private val userRepository: UserRepository) : IUseCase<UserInfo,Any?> {
     override fun execute(income: UserInfo): Boolean {
         userRepository.readData()
-        return !income.fullName.isNullOrEmpty() && !income.phone.isNullOrEmpty() && !income.password.isNullOrEmpty()
+        return !income.phone.isNullOrEmpty() && !income.passwordOne.isNullOrEmpty() && !income.passwordTwo.isNullOrEmpty()
     }
 }

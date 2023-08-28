@@ -11,14 +11,14 @@ private const val DEFAULT = "null"
 class UserRepositoryImpl(private val sharedPreferences: DBSharedPreference) :
     UserRepository {
     override fun saveData(userInfo: UserInfo) {
-        sharedPreferences.saveData(KEY_FULL_NAME, userInfo.fullName)
-        sharedPreferences.saveData(KEY_PHONE, userInfo.phone)
-        sharedPreferences.saveData(KEY_PASSWORD, userInfo.password)
+        sharedPreferences.saveData(KEY_FULL_NAME, userInfo.phone)
+        sharedPreferences.saveData(KEY_PHONE, userInfo.passwordOne)
+        sharedPreferences.saveData(KEY_PASSWORD, userInfo.passwordTwo)
     }
 
     override fun readData(): UserInfo = UserInfo(
-        fullName = sharedPreferences.getData(KEY_FULL_NAME) ?: DEFAULT,
-        phone = sharedPreferences.getData(KEY_PHONE) ?: DEFAULT,
-        password = sharedPreferences.getData(KEY_PASSWORD) ?: DEFAULT,
+        phone = sharedPreferences.getData(KEY_FULL_NAME) ?: DEFAULT,
+        passwordOne = sharedPreferences.getData(KEY_PHONE) ?: DEFAULT,
+        passwordTwo = sharedPreferences.getData(KEY_PASSWORD) ?: DEFAULT,
     )
 }

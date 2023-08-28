@@ -65,19 +65,19 @@ class ProfileController : BaseViewController() {
                         DefaultText(
                             modifier = Modifier
                                 .padding(top = 20.dp),
-                            text = "Full name: ${userInfo.fullName}"
-                        )
-
-
-                        DefaultText(
-                            modifier = Modifier.padding(0.dp),
                             text = "Phone: ${userInfo.phone}"
                         )
 
 
                         DefaultText(
                             modifier = Modifier.padding(0.dp),
-                            text = "Password: ${userInfo.password}"
+                            text = "Password One: ${userInfo.passwordOne}"
+                        )
+
+
+                        DefaultText(
+                            modifier = Modifier.padding(0.dp),
+                            text = "Password Two: ${userInfo.passwordTwo}"
                         )
 
                         DefaultButton(

@@ -33,7 +33,7 @@ class AuthorizationViewModel @Inject constructor(
 
         val readUserInfo = readUserInfoUseCase.execute(null)
 
-        if (phone.value.text == readUserInfo.phone && password.value.text == readUserInfo.password) {
+        if (phone.value.text == readUserInfo.phone && password.value.text == readUserInfo.passwordOne) {
             startScreen(MenuController())
         } else if (phone.value.toString().isEmpty() || password.value.toString().isEmpty()) {
             showMessage("Field is not can empty!")
