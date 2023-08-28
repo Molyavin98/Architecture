@@ -62,10 +62,8 @@ class RegistrationController : BaseViewController() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            phone = this@RegistrationController.viewModel.phone,
-                            onValueChange = { newValue ->
-                                this@RegistrationController.viewModel.phone = newValue
-                            },
+                            phone = viewModel.phone.value,
+                            onValueChange = { newValue -> viewModel.setPhone(newValue) },
                             label = "Phone",
                             hint = "Enter your phone",
                             focusColor = R.color.default_border_focus_color,
@@ -77,10 +75,8 @@ class RegistrationController : BaseViewController() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = this@RegistrationController.viewModel.passwordOne,
-                            onValueChange = { newValue ->
-                                this@RegistrationController.viewModel.passwordOne = newValue
-                            },
+                            password = viewModel.passwordOne.value,
+                            onValueChange = { newValue -> viewModel.setPasswordOne(newValue) },
                             label = "Password",
                             hint = "Enter your password",
                             focusColor = R.color.default_border_focus_color,
@@ -91,9 +87,9 @@ class RegistrationController : BaseViewController() {
                             modifierText = Modifier
                                 .padding(3.dp)
                                 .weight(50f),
-                            password = this@RegistrationController.viewModel.passwordTwo,
+                            password = viewModel.passwordTwo.value,
                             onValueChange = { newValue ->
-                                this@RegistrationController.viewModel.passwordTwo = newValue
+                                viewModel.setPasswordTwo(newValue)
                             },
                             label = "Password",
                             hint = "Confirm password",
@@ -126,10 +122,10 @@ class RegistrationController : BaseViewController() {
                                 )
                             },
                             onClick = {
-                                this@RegistrationController.viewModel.saveData(
-                                    this@RegistrationController.viewModel.phone.text,
-                                    this@RegistrationController.viewModel.passwordOne.text,
-                                    this@RegistrationController.viewModel.passwordTwo.text
+                                viewModel.saveData(
+                                    viewModel.phone.value.text,
+                                    viewModel.passwordOne.value.text,
+                                    viewModel.passwordTwo.value.text
                                 )
                             },
                         )

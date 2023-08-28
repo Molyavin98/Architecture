@@ -37,8 +37,7 @@ open class BaseViewModel(
         inflater: LayoutInflater?,
         container: ViewGroup,
         savedViewState: Bundle?
-    ): View? {
-        return null
+    ) {
     }
 
     open fun onAttach(view: View) {}

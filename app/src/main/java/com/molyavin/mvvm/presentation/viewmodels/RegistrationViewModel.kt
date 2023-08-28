@@ -1,5 +1,7 @@
 package com.molyavin.mvvm.presentation.viewmodels
 
+import android.provider.ContactsContract.CommonDataKinds.Phone
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -18,9 +20,14 @@ class RegistrationViewModel @Inject constructor(
     toaster: Toaster
 ) : BaseViewModel(router, toaster) {
 
-    var phone by mutableStateOf(TextFieldValue())
-    var passwordOne by mutableStateOf(TextFieldValue())
-    var passwordTwo by mutableStateOf(TextFieldValue())
+   private var _phone = mutableStateOf(TextFieldValue())
+    var phone: State<TextFieldValue> = _phone
+
+    private var _passwordOne = mutableStateOf(TextFieldValue())
+    var passwordOne:State<TextFieldValue> = _passwordOne
+
+    private var _passwordTwo = mutableStateOf(TextFieldValue())
+    var passwordTwo:State<TextFieldValue> = _passwordTwo
 
     fun saveData(userFullName: String?, userPhone: String?, userPassword: String?) {
 
@@ -44,5 +51,16 @@ class RegistrationViewModel @Inject constructor(
         } else {
             showMessage("Fields cannot be empty!")
         }
+    }
+
+
+    fun setPhone(phone: TextFieldValue){
+        _phone.value = phone
+    }
+    fun setPasswordOne(password: TextFieldValue){
+        _passwordOne.value = password
+    }
+    fun setPasswordTwo(password: TextFieldValue){
+        _passwordTwo.value = password
     }
 }
