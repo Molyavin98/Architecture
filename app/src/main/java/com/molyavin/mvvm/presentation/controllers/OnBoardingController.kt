@@ -3,6 +3,7 @@ package com.molyavin.mvvm.presentation.controllers
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -57,113 +59,123 @@ class OnBoardingController : BaseViewController() {
                         block = { slideState.scrollToPage(currentSliderPosition) }
                     )
 
-                    HorizontalPager(
-                        modifier = Modifier
-                            .padding(it)
-                            .fillMaxSize(),
-                        pageCount = slides.size,
-                        state = slideState,
-                    ) { position ->
-                        val item = slides[position]
-
-                        Column(
+                    if (viewModel.isLoading.value) {
+                        Box(
                             modifier = Modifier.fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Bottom,
+                            contentAlignment = Alignment.Center,
                         ) {
+                            CircularProgressIndicator(color = colorResource(id = R.color.default_button_color))
+                        }
+                    } else {
 
-                            DefaultImageLogo(
-                                idImage = item.idImage,
-                                modifier = Modifier.weight(1f)
-                            )
-
-                            DefaultText(
-                                modifier = Modifier.padding(32.dp),
-                                text = item.title,
-                                textAlign = TextAlign.Center
-                            )
+                        HorizontalPager(
+                            modifier = Modifier
+                                .padding(it)
+                                .fillMaxSize(),
+                            pageCount = slides.size,
+                            state = slideState,
+                        ) { position ->
+                            val item = slides[position]
 
                             Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(300.dp)
-                                    .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
-                                    .background(colorResource(id = R.color.default_button_color)),
+                                modifier = Modifier.fillMaxSize(),
                                 horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Bottom
+                                verticalArrangement = Arrangement.Bottom,
                             ) {
 
-                                DotsIndicator(
-                                    modifierRow = Modifier
-                                        .padding(top = 32.dp)
-                                        .weight(1f),
-                                    modifier = Modifier
-                                        .width(24.dp)
-                                        .height(8.dp)
-                                        .clip(CircleShape),
-                                    totalDots = 4,
-                                    selectedIndex = position,
-                                    selectedColor = Color.White,
-                                    unSelectedColor = Color.Gray
+                                DefaultImageLogo(
+                                    idImage = item.idImage,
+                                    modifier = Modifier.weight(1f)
                                 )
-
 
                                 DefaultText(
-                                    modifier = Modifier
-                                        .padding(
-                                            start = 32.dp,
-                                            end = 32.dp,
-                                            bottom = 64.dp
-                                        ),
-                                    textAlign = TextAlign.Center,
-                                    text = slides[position].description,
-                                    styleText = MaterialTheme.typography.h5,
-                                    color = Color.Gray,
+                                    modifier = Modifier.padding(32.dp),
+                                    text = item.title,
+                                    textAlign = TextAlign.Center
                                 )
 
-                                Row(
+                                Column(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(start = 32.dp, end = 32.dp, bottom = 24.dp),
+                                        .height(300.dp)
+                                        .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
+                                        .background(colorResource(id = R.color.default_button_color)),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Bottom
                                 ) {
-                                    DefaultButton(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(end = 6.dp)
+
+                                    DotsIndicator(
+                                        modifierRow = Modifier
+                                            .padding(top = 32.dp)
                                             .weight(1f),
-                                        text = "Skip",
-                                        colors =
-                                        ButtonDefaults.buttonColors(
-                                            backgroundColor = colorResource(id = R.color.button_color),
-                                            contentColor = colorResource(id = R.color.white),
-                                        ),
-                                        onClick = viewModel::startAuthController
+                                        modifier = Modifier
+                                            .width(24.dp)
+                                            .height(8.dp)
+                                            .clip(CircleShape),
+                                        totalDots = 4,
+                                        selectedIndex = position,
+                                        selectedColor = Color.White,
+                                        unSelectedColor = Color.Gray
                                     )
 
 
-                                    DefaultButton(
+                                    DefaultText(
+                                        modifier = Modifier
+                                            .padding(
+                                                start = 32.dp,
+                                                end = 32.dp,
+                                                bottom = 64.dp
+                                            ),
+                                        textAlign = TextAlign.Center,
+                                        text = slides[position].description,
+                                        styleText = MaterialTheme.typography.h5,
+                                        color = Color.Gray,
+                                    )
+
+                                    Row(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(start = 6.dp)
-                                            .weight(1f),
-                                        text = "Next",
-                                        colors =
-                                        ButtonDefaults.buttonColors(
-                                            backgroundColor = colorResource(id = R.color.white),
-                                            contentColor = colorResource(id = R.color.black),
-                                        ),
-                                        trailingIcon = {
-                                            Icon(
-                                                modifier = Modifier
-                                                    .padding(start = 8.dp)
-                                                    .size(16.dp),
-                                                painter = painterResource(id = R.drawable.arrow_right),
-                                                contentDescription = null,
-                                                tint = Color.Black,
-                                            )
-                                        },
-                                        onClick = viewModel::nextSlide
-                                    )
+                                            .padding(start = 32.dp, end = 32.dp, bottom = 24.dp),
+                                    ) {
+                                        DefaultButton(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(end = 6.dp)
+                                                .weight(1f),
+                                            text = "Skip",
+                                            colors =
+                                            ButtonDefaults.buttonColors(
+                                                backgroundColor = colorResource(id = R.color.button_color),
+                                                contentColor = colorResource(id = R.color.white),
+                                            ),
+                                            onClick = viewModel::startAuthController
+                                        )
+
+
+                                        DefaultButton(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(start = 6.dp)
+                                                .weight(1f),
+                                            text = "Next",
+                                            colors =
+                                            ButtonDefaults.buttonColors(
+                                                backgroundColor = colorResource(id = R.color.white),
+                                                contentColor = colorResource(id = R.color.black),
+                                            ),
+                                            trailingIcon = {
+                                                Icon(
+                                                    modifier = Modifier
+                                                        .padding(start = 8.dp)
+                                                        .size(16.dp),
+                                                    painter = painterResource(id = R.drawable.arrow_right),
+                                                    contentDescription = null,
+                                                    tint = Color.Black,
+                                                )
+                                            },
+                                            onClick = viewModel::nextSlide
+                                        )
+                                    }
                                 }
                             }
                         }

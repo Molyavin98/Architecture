@@ -8,8 +8,10 @@ import com.molyavin.mvvm.data.repositories.SlideRepository
 import com.molyavin.mvvm.data.repositories.SlideRepositoryImpl
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
+import com.molyavin.mvvm.data.storage.ApiService
 import com.molyavin.mvvm.data.storage.DBSharedPreference
 import com.molyavin.mvvm.domain.di.scope.AppScope
+import com.molyavin.mvvm.domain.usecase.SlideMapper
 import dagger.Module
 import dagger.Provides
 
@@ -38,7 +40,15 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
-    fun provideSlideRepository(): SlideRepository = SlideRepositoryImpl()
+    fun provideApiService(): ApiService = ApiService()
+
+    @Provides
+    @AppScope
+    fun provideSlideMapper(): SlideMapper = SlideMapper()
+    @Provides
+    @AppScope
+    fun provideSlideRepository(apiService: ApiService): SlideRepository =
+        SlideRepositoryImpl(apiService)
 
     @Provides
     @AppScope

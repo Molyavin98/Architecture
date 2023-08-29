@@ -22,7 +22,7 @@ class ProfileViewModel @Inject constructor(
         _userInfo.value = readUserInfoUseCase.execute(null)
     }
     fun logOut() {
-        setStatusRememberMeUseCase.execute("Off")
+        setStatusRememberMeUseCase.execute(false)
         router.pushController(RouterTransaction.with(AuthorizationController()))
     }
 

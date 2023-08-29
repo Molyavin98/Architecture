@@ -1,6 +1,6 @@
 package com.molyavin.mvvm.domain.models
 
-data class Slide(
+data class SlideVM(
     val idImage:Int,
     val title:String,
     val description:String

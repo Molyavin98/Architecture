@@ -6,13 +6,15 @@ import com.molyavin.mvvm.data.repositories.SlideRepository
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.domain.di.scope.AppScope
 import com.molyavin.mvvm.domain.usecase.CheckFieldUseCase
-import com.molyavin.mvvm.domain.usecase.GetSlideUseCase
+import com.molyavin.mvvm.domain.usecase.GetSlideAsyncUseCase
 import com.molyavin.mvvm.domain.usecase.GetStatusRememberMeUseCase
 import com.molyavin.mvvm.domain.usecase.GetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.SaveUserInfoUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusRememberMeUseCase
+import com.molyavin.mvvm.domain.usecase.SlideMapper
+import com.molyavin.mvvm.domain.usecase.SlideMapperUseCase
 import com.molyavin.mvvm.domain.usecase.StartScreenUseCase
 import dagger.Module
 import dagger.Provides
@@ -62,7 +64,15 @@ class UseCasesModule {
 
     @Provides
     @AppScope
-    fun provideGetSlidesUseCase(slideRepository: SlideRepository): GetSlideUseCase =
-        GetSlideUseCase(slideRepository)
+    fun provideGetSlidesUseCase(slideRepository: SlideRepository): GetSlideAsyncUseCase =
+        GetSlideAsyncUseCase(slideRepository)
+
+    @Provides
+    @AppScope
+    fun provideSlideMapper(
+        slideRepository: SlideRepository,
+        slideMapper: SlideMapper
+    ): SlideMapperUseCase =
+        SlideMapperUseCase(slideRepository, slideMapper)
 
 }

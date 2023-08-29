@@ -17,8 +17,8 @@ class SplashScreenViewModel @Inject constructor(
     val router: Router
 ) : BaseViewModel(router = router, toaster = null) {
 
-    private val _statusRememberMe = mutableStateOf("")
-    private val _statusOnBoarding = mutableStateOf("")
+    private val _statusRememberMe = mutableStateOf(false)
+    private val _statusOnBoarding = mutableStateOf(false)
     fun checkStatuses() {
 
         _statusOnBoarding.value = getStatusOnBoardingUseCase.execute(null)
@@ -26,17 +26,17 @@ class SplashScreenViewModel @Inject constructor(
 
         when {
 
-            _statusOnBoarding.value == "On" && _statusRememberMe.value == "Off" ->
-                startScreen(OnBoardingController())
+            _statusOnBoarding.value -> startScreen(OnBoardingController())
 
-            _statusOnBoarding.value == "Off" && _statusRememberMe.value == "Off" ->
+            !_statusOnBoarding.value && !_statusRememberMe.value ->
                 startScreen(AuthorizationController())
 
-            _statusOnBoarding.value == "Off" && _statusRememberMe.value == "On" ->
+            !_statusOnBoarding.value && _statusRememberMe.value ->
                 startScreen(MenuController())
 
         }
     }
+
     fun startScreen() {
         startScreenUseCase.execute(this)
     }
