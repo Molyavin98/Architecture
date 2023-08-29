@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.bluelinelabs.conductor.Router
+import com.molyavin.mvvm.domain.models.SlideEntity
 import com.molyavin.mvvm.domain.models.SlideVM
 import com.molyavin.mvvm.domain.usecase.GetSlideAsyncUseCase
 import com.molyavin.mvvm.presentation.controllers.AuthorizationController
@@ -18,8 +19,8 @@ class OnBoardingViewModel @Inject constructor(
     private val _currentSliderPosition = mutableStateOf(0)
     val currentSliderPosition: State<Int> = _currentSliderPosition
 
-    private val _slides = mutableStateOf(emptyList<SlideVM>())
-    val slides: State<List<SlideVM>> = _slides
+    private val _slides = mutableStateOf(emptyList<SlideEntity>())
+    val slides: State<List<SlideEntity>> = _slides
 
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading

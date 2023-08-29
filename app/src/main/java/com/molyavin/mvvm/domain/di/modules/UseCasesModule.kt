@@ -13,6 +13,8 @@ import com.molyavin.mvvm.domain.usecase.ReadUserInfoUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusOnBoardingUseCase
 import com.molyavin.mvvm.domain.usecase.SaveUserInfoUseCase
 import com.molyavin.mvvm.domain.usecase.SetStatusRememberMeUseCase
+import com.molyavin.mvvm.domain.usecase.SlideMapper
+import com.molyavin.mvvm.domain.usecase.SlideMapperUseCase
 import com.molyavin.mvvm.domain.usecase.StartScreenUseCase
 import dagger.Module
 import dagger.Provides
@@ -64,5 +66,13 @@ class UseCasesModule {
     @AppScope
     fun provideGetSlidesUseCase(slideRepository: SlideRepository): GetSlideAsyncUseCase =
         GetSlideAsyncUseCase(slideRepository)
+
+    @Provides
+    @AppScope
+    fun provideSlideMapper(
+        slideRepository: SlideRepository,
+        slideMapper: SlideMapper
+    ): SlideMapperUseCase =
+        SlideMapperUseCase(slideRepository, slideMapper)
 
 }

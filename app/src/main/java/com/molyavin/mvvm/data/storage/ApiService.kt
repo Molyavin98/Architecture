@@ -2,6 +2,7 @@ package com.molyavin.mvvm.data.storage
 
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.domain.models.SlideEntity
+import com.molyavin.mvvm.domain.models.SlideVM
 import kotlinx.coroutines.delay
 
 class ApiService {

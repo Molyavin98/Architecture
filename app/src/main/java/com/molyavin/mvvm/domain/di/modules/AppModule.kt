@@ -45,11 +45,10 @@ class AppModule(private val context: Context) {
     @Provides
     @AppScope
     fun provideSlideMapper(): SlideMapper = SlideMapper()
-
     @Provides
     @AppScope
-    fun provideSlideRepository(apiService: ApiService, slideMapper: SlideMapper): SlideRepository =
-        SlideRepositoryImpl(apiService, slideMapper)
+    fun provideSlideRepository(apiService: ApiService): SlideRepository =
+        SlideRepositoryImpl(apiService)
 
     @Provides
     @AppScope
