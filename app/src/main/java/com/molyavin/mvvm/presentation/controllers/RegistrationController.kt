@@ -32,10 +32,8 @@ import javax.inject.Singleton
 class RegistrationController : BaseViewController() {
 
 
-    override lateinit var viewModel: RegistrationViewModel
+    override val viewModel: RegistrationViewModel = Injector.INSTANCE.provideRegistrationViewModel()
     override fun setupView(view: ComposeView) {
-
-        viewModel = Injector.INSTANCE.provideRegistrationViewModel()
 
         view.setContent {
             MVVMTheme {

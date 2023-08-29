@@ -27,15 +27,14 @@ import com.molyavin.mvvm.presentation.DividerOr
 import com.molyavin.mvvm.presentation.RememberMeCheckBox
 import com.molyavin.mvvm.presentation.viewmodels.AuthorizationViewModel
 import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
-import javax.inject.Singleton
 
 class AuthorizationController : BaseViewController() {
 
-    override lateinit var viewModel: AuthorizationViewModel
+    override val viewModel: AuthorizationViewModel =
+        Injector.INSTANCE.provideAuthorizationViewModel()
 
     override fun setupView(view: ComposeView) {
 
-        viewModel = Injector.INSTANCE.provideAuthorizationViewModel()
 
         viewModel.attachRoot(this)
         viewModel.onBoardingScreenStatus("On")
@@ -130,7 +129,7 @@ class AuthorizationController : BaseViewController() {
                             modifier = Modifier.padding(bottom = 8.dp),
                             text = "Don`t have an account?",
                             textButton = "Sing up now.",
-                            onClick = { viewModel.startScreen(RegistrationController()) },
+                            onClick = { viewModel.startRegistrationController() },
                         )
                     }
                 }

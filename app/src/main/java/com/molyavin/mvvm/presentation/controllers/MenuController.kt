@@ -22,13 +22,11 @@ import javax.inject.Singleton
 
 class MenuController : BaseViewController() {
 
-    override lateinit var viewModel: MenuViewModel
+    override val viewModel: MenuViewModel = Injector.INSTANCE.provideMenuViewModel()
 
     override fun setupView(view: ComposeView) {
 
-        viewModel = Injector.INSTANCE.provideMenuViewModel()
-
-        this.viewModel.attachRoot(this)
+        viewModel.attachRoot(this)
 
         view.setContent {
             MVVMTheme {
@@ -55,7 +53,7 @@ class MenuController : BaseViewController() {
                                 )
                             }
                             Spacer(Modifier.weight(1f, true))
-                            IconButton(onClick = { viewModel.startScreen(SettingController()) }) {
+                            IconButton(onClick = { viewModel.startSettingController() }) {
                                 Icon(
                                     imageVector = Icons.Filled.Settings,
                                     tint = Color.White,
