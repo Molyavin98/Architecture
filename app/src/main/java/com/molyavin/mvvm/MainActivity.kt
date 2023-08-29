@@ -8,6 +8,7 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.presentation.controllers.SplashScreenController
 import com.molyavin.mvvm.databinding.ActivityMainBinding
 import com.molyavin.mvvm.domain.di.component.Injector
+import com.molyavin.mvvm.presentation.controllers.OnBoardingController
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {

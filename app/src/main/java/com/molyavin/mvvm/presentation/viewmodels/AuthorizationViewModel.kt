@@ -48,16 +48,16 @@ class AuthorizationViewModel @Inject constructor(
         startScreen(RegistrationController())
     }
 
-    fun onBoardingScreenStatus(status: String) {
+    fun onBoardingScreenStatus(status: Boolean) {
         setStatusOnBoardingUseCase.execute(status)
     }
 
     private fun statusRememberMe() {
 
         if (statusCheckBox.value) {
-            setStatusRememberMeUseCase.execute("On")
+            setStatusRememberMeUseCase.execute(true)
         } else {
-            setStatusRememberMeUseCase.execute("Off")
+            setStatusRememberMeUseCase.execute(false)
         }
     }
 

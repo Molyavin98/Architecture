@@ -4,9 +4,9 @@ import com.molyavin.mvvm.data.repositories.SettingRepository
 import javax.inject.Inject
 
 class SetStatusRememberMeUseCase @Inject constructor(private val settingRepository: SettingRepository) :
-    IUseCase<String,Unit> {
+    IUseCase<Boolean,Unit> {
 
-    override fun execute(income: String) {
-        settingRepository.saveSetting("RememberMeStatus", income)
+    override fun execute(income: Boolean) {
+        settingRepository.saveSetting("RememberMe", income)
     }
 }

@@ -2,6 +2,6 @@ package com.molyavin.mvvm.data.repositories
 
 interface SettingRepository {
 
-    fun saveSetting(key: String, setting: String)
-    fun readSetting(key: String): String
+    fun saveSetting(key: String, setting: Boolean)
+    fun readSetting(key: String): Boolean
 }

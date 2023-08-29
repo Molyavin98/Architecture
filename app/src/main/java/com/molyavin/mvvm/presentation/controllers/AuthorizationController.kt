@@ -37,7 +37,7 @@ class AuthorizationController : BaseViewController() {
 
 
         viewModel.attachRoot(this)
-        viewModel.onBoardingScreenStatus("On")
+        viewModel.onBoardingScreenStatus(true)
 
         view.setContent {
             MVVMTheme {
