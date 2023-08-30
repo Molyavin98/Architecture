@@ -1,0 +1,61 @@
+package com.molyavin.mvvm.di.modules
+
+import android.content.Context
+import com.google.firebase.auth.FirebaseAuth
+import com.molyavin.mvvm.data.network.ApiService
+import com.molyavin.mvvm.data.repositories.SettingRepository
+import com.molyavin.mvvm.data.repositories.SettingRepositoryImpl
+import com.molyavin.mvvm.data.repositories.SlideRepository
+import com.molyavin.mvvm.data.repositories.SlideRepositoryImpl
+import com.molyavin.mvvm.data.repositories.UserRepository
+import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
+import com.molyavin.mvvm.data.storage.DBSharedPreference
+import com.molyavin.mvvm.di.scope.AppScope
+import com.molyavin.mvvm.domain.mapper.SlideMapper
+import dagger.Module
+import dagger.Provides
+
+@Module
+class AppModule(private val context: Context) {
+
+    @Provides
+    @AppScope
+    fun provideContext() = context
+
+    @Provides
+    @AppScope
+    fun provideDBSharedPreference(): DBSharedPreference {
+        return DBSharedPreference(context)
+    }
+
+    @Provides
+    @AppScope
+    fun provideOnBoardingRepository(dbSharedPreference: DBSharedPreference): SettingRepository =
+        SettingRepositoryImpl(dbSharedPreference)
+
+    @Provides
+    @AppScope
+    fun provideApiService(): ApiService = ApiService()
+
+    @Provides
+    @AppScope
+    fun provideSlideMapper(): SlideMapper = SlideMapper()
+
+    @Provides
+    @AppScope
+    fun provideSlideRepository(apiService: ApiService): SlideRepository =
+        SlideRepositoryImpl(apiService)
+
+    @Provides
+    @AppScope
+    fun provideFirebaseAunt() = FirebaseAuth.getInstance()
+
+    @Provides
+    @AppScope
+    fun provideDataBase(
+        firebaseAuth: FirebaseAuth,
+        dbSharedPreference: DBSharedPreference
+    ): UserRepository =
+        UserRepositoryImpl(firebaseAuth, dbSharedPreference)
+
+}

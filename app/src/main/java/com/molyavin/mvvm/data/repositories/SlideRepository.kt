@@ -1,8 +1,7 @@
 package com.molyavin.mvvm.data.repositories
 
-import com.molyavin.mvvm.domain.models.SlideEntity
-import com.molyavin.mvvm.domain.models.SlideVM
+import com.molyavin.mvvm.data.model.SlideDTO
 
 interface SlideRepository {
-    suspend fun getSlides():List<SlideEntity>
+    suspend fun getSlides():List<SlideDTO>
 }
