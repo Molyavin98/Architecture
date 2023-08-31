@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,12 +50,16 @@ class RegistrationController : BaseViewController() {
 
             DefaultText(text = "Registration")
 
+            val email by viewModel.email.collectAsState()
+            val password by viewModel.password.collectAsState()
+            val passwordConfirm by viewModel.passwordConfirm.collectAsState()
+
 
             DefaultPhoneField(
                 modifierText = Modifier
                     .padding(3.dp)
                     .weight(50f),
-                email = viewModel.email.value,
+                email = email,
                 onValueChange = { newValue -> viewModel.setPhone(newValue) },
                 label = "Email",
                 hint = "Enter your email",
@@ -66,7 +72,7 @@ class RegistrationController : BaseViewController() {
                 modifierText = Modifier
                     .padding(3.dp)
                     .weight(50f),
-                password = viewModel.password.value,
+                password = password,
                 onValueChange = { newValue -> viewModel.setPasswordOne(newValue) },
                 label = "Password",
                 hint = "Enter your password",
@@ -78,7 +84,7 @@ class RegistrationController : BaseViewController() {
                 modifierText = Modifier
                     .padding(3.dp)
                     .weight(50f),
-                password = viewModel.passwordConfirm.value,
+                password = passwordConfirm,
                 onValueChange = { newValue ->
                     viewModel.setPasswordTwo(newValue)
                 },

@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,10 +27,15 @@ import androidx.compose.material.ButtonElevation
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,10 +43,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
@@ -92,6 +102,119 @@ fun DefaultButton(
 }
 
 @Composable
+fun HorizontalLine() {
+    Box(
+        modifier = Modifier
+            .padding(start = 16.dp, top = 30.dp, end = 16.dp)
+            .fillMaxWidth()
+            .height(1.dp)
+            .background(Color.LightGray)
+    )
+}
+
+@Composable
+fun ListElementItemButton(
+    iconImage: ImageVector,
+    colorTint: Color,
+    text: String,
+    textColor: Color,
+    textStyle: TextStyle,
+    onClick: () -> Unit,
+    buttonImage: ImageVector,
+    buttonColorTint: Color
+) {
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(bounded = true, color = Color.LightGray),
+                onClick = onClick
+            )
+            .padding(start = 20.dp, top = 10.dp, bottom = 10.dp, end = 20.dp),
+    ) {
+        Icon(
+            modifier = Modifier
+                .padding(end = 15.dp)
+                .size(40.dp)
+                .clip(shape = RoundedCornerShape(10.dp))
+                .background(color = colorResource(id = R.color.background_button_profile))
+                .padding(10.dp),
+            imageVector = iconImage,
+            tint = colorTint,
+            contentDescription = null
+        )
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .align(Alignment.CenterVertically),
+            text = text,
+            color = textColor,
+            style = textStyle
+        )
+
+        Icon(
+            modifier = Modifier
+                .size(16.dp)
+                .align(Alignment.CenterVertically),
+            imageVector = buttonImage,
+            tint = buttonColorTint,
+            contentDescription = null
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DefaultCenterAlignedTopAppBar(
+    modifier: Modifier,
+    textTitle: String,
+    titleContentColor: Color,
+    textStyleTitle: TextStyle,
+    navigationOnClick: () -> Unit,
+    navigationIcon: ImageVector,
+    navigationIconTint: Color,
+    actionOnClick: () -> Unit,
+    actionIcon: ImageVector,
+    actionIconTint: Color,
+    containerColor: Color
+) {
+    CenterAlignedTopAppBar(
+        modifier = modifier,
+        title = {
+            Text(
+                text = textTitle,
+                color = titleContentColor,
+                style = textStyleTitle,
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = navigationOnClick) {
+                Icon(
+                    imageVector = navigationIcon,
+                    tint = navigationIconTint,
+                    contentDescription = null,
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = actionOnClick) {
+                Icon(
+                    imageVector = actionIcon,
+                    tint = actionIconTint,
+                    contentDescription = null,
+                )
+            }
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = containerColor,
+        )
+    )
+}
+
+@Composable
 fun DefaultText(
     modifier: Modifier = Modifier.padding(10.dp),
     textAlign: TextAlign? = null,
@@ -115,7 +238,7 @@ fun DefaultImageLogo(
 ) {
     Image(
         modifier = modifier,
-        bitmap = ImageBitmap.imageResource(id = idImage),
+        painter = painterResource(id = idImage),
         contentDescription = null,
     )
 }
@@ -378,6 +501,27 @@ fun DefaultSocialAuthButton(
     }
 }
 
+@Composable
+fun HalfColoredText(
+    modifier: Modifier,
+    firstHalfText: String,
+    fisrtHalfColor: Color,
+    firstHalfTextStyle: TextStyle,
+    secondHalfText: String,
+    secondHalfColor: Color,
+    secondHalfStyle: TextStyle,
+) {
+    Row(modifier = modifier) {
+        Text(text = firstHalfText, color = fisrtHalfColor, style = firstHalfTextStyle)
+        Text(text = secondHalfText, color = secondHalfColor, style = secondHalfStyle)
+        /*DefaultText(
+            modifier = Modifier
+                .padding(start = 16.dp, bottom = 16.dp),
+            text = "Joined ",
+            styleText = MaterialTheme.typography.h5
+        )*/
+    }
+}
 
 @Composable
 fun DotsIndicator(

@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#5F5F5F</color>
 
     <color name="default_button_color">#1E1D2E</color>
     <color name="button_color">#404855</color>
@@ -10,5 +11,10 @@
     <color name="default_border_focus_color">#BCC4E5</color>
     <color name="default_border_color">#DFE4FC</color>
     <color name="default_checkbox_color">#0361F5</color>
+    <color name="border_color">#295DE1</color>
     <color name="default_background_text_field_color">#F4F7FC</color>
+    <color name="background_icon_button">#F2F5FB</color>
+    <color name="background_button_profile">#F2F5FB</color>
+    <color name="image_color_in_menu">#7795E9</color>
+
 </resources>

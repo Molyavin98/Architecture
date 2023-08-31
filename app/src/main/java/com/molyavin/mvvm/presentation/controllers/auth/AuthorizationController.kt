@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,7 +41,7 @@ class AuthorizationController : BaseViewController() {
     override fun onContextAvailable(context: Context) {
         super.onContextAvailable(context)
         viewModel.attachRoot(this)
-        viewModel.onBoardingScreenStatus(true)
+        viewModel.onBoardingScreenStatus(false)
     }
 
     @Composable
@@ -57,13 +59,18 @@ class AuthorizationController : BaseViewController() {
                 idImage = R.drawable.image_login,
             )
 
+
             DefaultText(text = "Welcome in Architecture App")
+
+            val email by viewModel.email.collectAsState()
+            val password by viewModel.password.collectAsState()
+            val statusCheckBox by viewModel.statusCheckBox.collectAsState()
 
             DefaultPhoneField(
                 modifierText = Modifier
                     .padding(3.dp)
                     .weight(50f),
-                email = viewModel.email.value,
+                email = email,
                 onValueChange = { newPhone -> viewModel.setPhone(newPhone) },
                 label = "Email",
                 hint = "Enter your email",
@@ -75,7 +82,7 @@ class AuthorizationController : BaseViewController() {
                 modifierText = Modifier
                     .padding(3.dp)
                     .weight(50f),
-                password = viewModel.password.value,
+                password = password,
                 onValueChange = { newPassword -> viewModel.setPassword(password = newPassword) },
                 label = "Password",
                 textForgotPassword = "Forgot password?",
@@ -88,7 +95,7 @@ class AuthorizationController : BaseViewController() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp),
-                checkBoxState = viewModel.statusCheckBox.value,
+                checkBoxState = statusCheckBox,
                 onValueChange = { newCheckBoxState ->
                     viewModel.setStatusCheckBox(
                         status = newCheckBoxState

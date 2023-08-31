@@ -4,22 +4,15 @@ import com.molyavin.mvvm.data.model.UserDTO
 data class UserVM(
     val id: String,
     val email: String,
-    val creationTime: Long,
-    val lastLoginTime: Long,
+    val creationTime: String? = null,
+    val lastLoginTime: String? = null,
 ) {
     companion object {
-        fun empty(): UserVM = UserVM(id = "", email = "", creationTime = 0, lastLoginTime = 0)
+        fun empty(): UserVM = UserVM(id = "", email = "")
     }
 }
-fun UserVM.toDTO(): UserDTO {
-    return UserDTO(
-        id = id,
-        email = email,
-        creationTime = creationTime,
-        lastLoginTime = lastLoginTime
-    )
-}
-fun UserDTO.toVM(): UserVM {
+
+fun UserDTO.toVM(creationTime: String, lastLoginTime: String): UserVM {
     return UserVM(
         id = id,
         email = email,

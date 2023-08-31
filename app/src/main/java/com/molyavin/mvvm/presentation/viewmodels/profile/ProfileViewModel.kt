@@ -1,14 +1,15 @@
 package com.molyavin.mvvm.presentation.viewmodels.profile
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.domain.models.UserVM
 import com.molyavin.mvvm.domain.usecase.sharedpref.GetUserVMUseCase
 import com.molyavin.mvvm.presentation.controllers.auth.AuthorizationController
+import com.molyavin.mvvm.presentation.controllers.settings.SettingController
 import com.molyavin.mvvm.presentation.viewmodels.BaseViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,8 +18,8 @@ class ProfileViewModel @Inject constructor(
     val router: Router,
 ) : BaseViewModel(router = router, toaster = null) {
 
-    private val _userInfo = mutableStateOf(UserVM.empty())
-    val userInfo: State<UserVM> = _userInfo
+    private val _userInfo = MutableStateFlow(UserVM.empty())
+    val userInfo: StateFlow<UserVM> = _userInfo
 
     override fun onCreateView() {
 
@@ -34,6 +35,10 @@ class ProfileViewModel @Inject constructor(
 
     fun logOut() {
         router.pushController(RouterTransaction.with(AuthorizationController()))
+    }
+
+    fun startSettings() {
+        startScreen(SettingController())
     }
 
 }
