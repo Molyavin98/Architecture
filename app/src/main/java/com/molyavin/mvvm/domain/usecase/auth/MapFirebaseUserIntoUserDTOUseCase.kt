@@ -7,6 +7,7 @@ import com.molyavin.mvvm.utils.MissingUserInfoException
 import javax.inject.Inject
 
 class  MapFirebaseUserIntoUserDTOUseCase @Inject constructor() : IUseCase<FirebaseUser?, UserDTO> {
+
     override fun execute(income: FirebaseUser?): UserDTO {
         return income?.let { user ->
             UserDTO(

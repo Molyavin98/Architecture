@@ -1,5 +1,6 @@
 package com.molyavin.mvvm.presentation.viewmodels
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,10 @@ abstract class BaseViewModel(
 
     open fun showMessage(message: String) {
         toaster?.show(message)
+    }
+
+    open fun showLog(tag: String, message: String) {
+        Log.d(tag, message)
     }
 
     open fun startScreen(controller: Controller) {

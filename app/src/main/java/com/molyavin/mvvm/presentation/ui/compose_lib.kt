@@ -46,12 +46,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -176,9 +173,9 @@ fun DefaultCenterAlignedTopAppBar(
     navigationOnClick: () -> Unit,
     navigationIcon: ImageVector,
     navigationIconTint: Color,
-    actionOnClick: () -> Unit,
-    actionIcon: ImageVector,
-    actionIconTint: Color,
+    actionOnClick: (() -> Unit?)? = null,
+    actionIcon: ImageVector? = null,
+    actionIconTint: Color? = null,
     containerColor: Color
 ) {
     CenterAlignedTopAppBar(
@@ -200,12 +197,14 @@ fun DefaultCenterAlignedTopAppBar(
             }
         },
         actions = {
-            IconButton(onClick = actionOnClick) {
-                Icon(
-                    imageVector = actionIcon,
-                    tint = actionIconTint,
-                    contentDescription = null,
-                )
+            IconButton(onClick = { actionOnClick }) {
+                if (actionIcon != null && actionIconTint != null) {
+                    Icon(
+                        imageVector = actionIcon,
+                        tint = actionIconTint,
+                        contentDescription = null,
+                    )
+                }
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
