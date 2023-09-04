@@ -9,13 +9,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.molyavin.mvvm.di.Injector
+import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.controllers.profile.ProfileController
 import com.molyavin.mvvm.presentation.ui.DefaultCenterAlignedTopAppBar
@@ -44,12 +44,11 @@ class MenuController : BaseViewController() {
                 textTitle = "Menu",
                 titleContentColor = Color.Black,
                 textStyleTitle = MaterialTheme.typography.h2,
-                navigationOnClick = { viewModel.startScreen(ProfileController()) },
+                navigationOnClick = viewModel::routeToUserProfile,
                 navigationIcon = Icons.Filled.AccountCircle,
                 navigationIconTint = Color.Black,
                 containerColor = Color.White
             )
-
 
         }
     }

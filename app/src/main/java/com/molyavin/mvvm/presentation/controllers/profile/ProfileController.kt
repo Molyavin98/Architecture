@@ -35,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.Glide
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.di.Injector
 import com.molyavin.mvvm.presentation.controllers.BaseViewController
@@ -60,6 +61,7 @@ class ProfileController : BaseViewController() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
+
 
             DefaultCenterAlignedTopAppBar(
                 modifier = Modifier

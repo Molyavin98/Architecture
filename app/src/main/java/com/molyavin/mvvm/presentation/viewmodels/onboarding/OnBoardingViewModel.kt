@@ -3,6 +3,7 @@ package com.molyavin.mvvm.presentation.viewmodels.onboarding
 import androidx.lifecycle.viewModelScope
 import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.data.model.SlideDTO
+import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.domain.usecase.onboarding.GetSlideAsyncUseCase
 import com.molyavin.mvvm.presentation.controllers.auth.AuthorizationController
 import com.molyavin.mvvm.presentation.viewmodels.BaseViewModel
@@ -38,14 +39,14 @@ class OnBoardingViewModel @Inject constructor(
 
     fun nextSlide() {
         if (_currentSliderPosition.value == 3) {
-            startScreen(AuthorizationController())
+            nextScreen(RouterNode(AuthorizationController::class.java))
             return
         }
         _currentSliderPosition.value += 1
     }
 
     fun startAuthController() {
-        startScreen(AuthorizationController())
+        nextScreen(RouterNode(AuthorizationController::class.java))
     }
 
 }

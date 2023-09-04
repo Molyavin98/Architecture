@@ -3,6 +3,7 @@ package com.molyavin.mvvm.presentation.viewmodels.profile
 import androidx.lifecycle.viewModelScope
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
+import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.domain.models.UserVM
 import com.molyavin.mvvm.domain.usecase.sharedpref.GetUserVMUseCase
 import com.molyavin.mvvm.presentation.controllers.auth.AuthorizationController
@@ -22,7 +23,6 @@ class ProfileViewModel @Inject constructor(
     val userInfo: StateFlow<UserVM> = _userInfo
 
     override fun onCreateView() {
-
         viewModelScope.launch {
             startCoroutine(runnable = {
                 _userInfo.value = getUserVMUseCase.execute(null)
@@ -38,7 +38,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun startSettings() {
-        startScreen(SettingController())
+        nextScreen(RouterNode(SettingController::class.java))
     }
 
 }
