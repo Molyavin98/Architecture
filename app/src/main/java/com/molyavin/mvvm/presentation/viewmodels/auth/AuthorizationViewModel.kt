@@ -1,11 +1,10 @@
 package com.molyavin.mvvm.presentation.viewmodels.auth
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.domain.models.NewUserVM
+import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.domain.usecase.auth.LoginUserUseCase
 import com.molyavin.mvvm.domain.usecase.auth.SetStatusRememberMeUseCase
 import com.molyavin.mvvm.domain.usecase.onboarding.SetStatusOnBoardingUseCase
@@ -41,7 +40,7 @@ class AuthorizationViewModel @Inject constructor(
                 if (loginUserUseCase.execute(user)) {
                     _isLoading.value = true
                     statusRememberMe()
-                    startScreen(MenuController())
+                    nextScreen(RouterNode(MenuController::class.java))
                     _isLoading.value = false
                 }
             }, onError = { exception ->
@@ -52,7 +51,7 @@ class AuthorizationViewModel @Inject constructor(
     }
 
     fun startRegistrationController() {
-        startScreen(RegistrationController())
+        nextScreen(RouterNode(RegistrationController::class.java))
     }
 
     fun onBoardingScreenStatus(status: Boolean) {

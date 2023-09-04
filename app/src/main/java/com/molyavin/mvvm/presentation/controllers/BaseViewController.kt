@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -49,7 +51,8 @@ abstract class BaseViewController : Controller() {
                             .padding(it)
                             .fillMaxSize()
                     ) {
-                        val isLoading = viewModel.isLoading.value
+                        val isLoading by viewModel.isLoading.collectAsState()
+
                         if (isLoading) {
                             CircularProgressIndicator(
                                 modifier = Modifier.align(Alignment.Center),
