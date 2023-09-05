@@ -8,17 +8,12 @@ import com.molyavin.mvvm.domain.models.UserVM
 import com.molyavin.mvvm.domain.usecase.auth.SetStatusRememberMeUseCase
 import com.molyavin.mvvm.domain.usecase.sharedpref.GetUserVMUseCase
 import com.molyavin.mvvm.presentation.controllers.auth.AuthorizationController
-import com.molyavin.mvvm.presentation.controllers.main.MenuController
 import com.molyavin.mvvm.presentation.controllers.settings.SettingController
 import com.molyavin.mvvm.presentation.viewmodels.BaseViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
 
 class ProfileViewModel @Inject constructor(
     private val getUserVMUseCase: GetUserVMUseCase,

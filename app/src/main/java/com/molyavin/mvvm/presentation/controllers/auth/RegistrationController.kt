@@ -1,6 +1,5 @@
 package com.molyavin.mvvm.presentation.controllers.auth
 
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.di.Injector
+import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.ui.AuthFooter
 import com.molyavin.mvvm.presentation.ui.DefaultButton
 import com.molyavin.mvvm.presentation.ui.DefaultImageLogo
@@ -27,7 +27,6 @@ import com.molyavin.mvvm.presentation.ui.DefaultPhoneField
 import com.molyavin.mvvm.presentation.ui.DefaultSocialAuthButton
 import com.molyavin.mvvm.presentation.ui.DefaultText
 import com.molyavin.mvvm.presentation.ui.DividerOr
-import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.viewmodels.auth.RegistrationViewModel
 
 class RegistrationController : BaseViewController() {

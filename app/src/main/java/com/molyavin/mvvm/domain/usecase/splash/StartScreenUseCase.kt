@@ -1,6 +1,5 @@
 package com.molyavin.mvvm.domain.usecase.splash
 
-import android.util.Log
 import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.domain.usecase.auth.GetStatusRememberMeUseCase
 import com.molyavin.mvvm.domain.usecase.base.IAsyncUseCase
@@ -20,11 +19,7 @@ class StartScreenUseCase @Inject constructor(
         delay(2000)
 
         val statusOnBoarding = getStatusOnBoardingUseCase.execute(null)
-
-        Log.d("OnBoardingStatus", statusOnBoarding.toString())
         val statusRememberMe = getStatusRememberMeUseCase.execute(null)
-
-        Log.d("Statussss","$statusOnBoarding     $statusRememberMe")
 
         return when {
             !statusOnBoarding && !statusRememberMe -> RouterNode(AuthorizationController::class.java)

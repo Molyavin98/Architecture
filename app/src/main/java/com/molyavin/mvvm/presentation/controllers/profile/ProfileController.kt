@@ -35,14 +35,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.Glide
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.di.Injector
 import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.ui.DefaultButton
 import com.molyavin.mvvm.presentation.ui.DefaultCenterAlignedTopAppBar
 import com.molyavin.mvvm.presentation.ui.DefaultGlideImageLogo
-import com.molyavin.mvvm.presentation.ui.DefaultImageLogo
 import com.molyavin.mvvm.presentation.ui.DefaultText
 import com.molyavin.mvvm.presentation.ui.HalfColoredText
 import com.molyavin.mvvm.presentation.ui.HorizontalLine

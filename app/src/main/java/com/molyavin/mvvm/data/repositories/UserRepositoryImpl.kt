@@ -3,7 +3,6 @@ package com.molyavin.mvvm.data.repositories
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.molyavin.mvvm.data.model.NewUserDTO
 import com.molyavin.mvvm.data.model.UserDTO
 import com.molyavin.mvvm.data.storage.DBSharedPreference

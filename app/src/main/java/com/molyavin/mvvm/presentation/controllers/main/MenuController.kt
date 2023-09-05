@@ -1,8 +1,6 @@
 package com.molyavin.mvvm.presentation.controllers.main
 
 import android.content.Context
-import android.util.Log
-import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
