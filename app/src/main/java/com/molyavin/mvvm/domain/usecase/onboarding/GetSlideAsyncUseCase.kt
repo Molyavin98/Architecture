@@ -1,7 +1,7 @@
 package com.molyavin.mvvm.domain.usecase.onboarding
 
-import com.molyavin.mvvm.data.repositories.SlideRepository
 import com.molyavin.mvvm.data.model.SlideDTO
+import com.molyavin.mvvm.data.repositories.SlideRepository
 import com.molyavin.mvvm.domain.usecase.base.IAsyncUseCase
 import javax.inject.Inject
 

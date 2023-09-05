@@ -15,9 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.molyavin.mvvm.di.Injector
-import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.presentation.controllers.BaseViewController
-import com.molyavin.mvvm.presentation.controllers.profile.ProfileController
 import com.molyavin.mvvm.presentation.ui.DefaultCenterAlignedTopAppBar
 import com.molyavin.mvvm.presentation.viewmodels.main.MenuViewModel
 
@@ -52,5 +50,4 @@ class MenuController : BaseViewController() {
 
         }
     }
-
 }

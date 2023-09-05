@@ -2,6 +2,8 @@ package com.molyavin.mvvm.di.modules
 
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.molyavin.mvvm.data.network.ApiService
 import com.molyavin.mvvm.data.repositories.SettingRepository
 import com.molyavin.mvvm.data.repositories.SettingRepositoryImpl
@@ -12,6 +14,7 @@ import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.data.storage.DBSharedPreference
 import com.molyavin.mvvm.di.scope.AppScope
 import com.molyavin.mvvm.domain.mapper.SlideMapper
+import com.molyavin.mvvm.utils.Constants
 import dagger.Module
 import dagger.Provides
 
@@ -52,10 +55,25 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
+    fun provideFirebaseRemoteConfig(): FirebaseRemoteConfig {
+        val instance = FirebaseRemoteConfig.getInstance()
+        val configSettings = FirebaseRemoteConfigSettings.Builder()
+            .setMinimumFetchIntervalInSeconds(Constants.MINIMUM_FETCH_INTERVAL_SECONDS)
+            .build()
+        instance.setConfigSettingsAsync(configSettings)
+
+        return instance
+    }
+
+    @Provides
+    @AppScope
     fun provideDataBase(
         firebaseAuth: FirebaseAuth,
         dbSharedPreference: DBSharedPreference
     ): UserRepository =
-        UserRepositoryImpl(firebaseAuth, dbSharedPreference)
+        UserRepositoryImpl(
+            fireBaseAunt = firebaseAuth,
+            dbSharedPreference = dbSharedPreference
+        )
 
 }

@@ -34,14 +34,14 @@ abstract class BaseViewController : Controller() {
         savedViewState: Bundle?
     ): View {
 
+        viewModel.onCreateView()
+
         val view: ComposeView = ComposeView(container.context).apply {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         }
-
-        viewModel.onCreateView()
 
         view.setContent {
             MVVMTheme {

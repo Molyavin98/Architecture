@@ -3,18 +3,15 @@ package com.molyavin.mvvm.presentation.controllers.splash
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.di.Injector
+import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.ui.DefaultImageLogo
 import com.molyavin.mvvm.presentation.ui.DefaultText
-import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.viewmodels.splash.SplashScreenViewModel
-import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 
 class SplashScreenController : BaseViewController() {
 

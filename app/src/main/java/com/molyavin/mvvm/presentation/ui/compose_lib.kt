@@ -48,6 +48,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -59,6 +60,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.molyavin.mvvm.R
 
 @Composable
@@ -240,6 +243,24 @@ fun DefaultImageLogo(
         painter = painterResource(id = idImage),
         contentDescription = null,
     )
+}
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun DefaultGlideImageLogo(
+    modifier: Modifier = Modifier,
+    urlImage: String,
+) {
+    GlideImage(
+        modifier = modifier,
+        model = urlImage,
+        contentScale = ContentScale.Crop,
+        contentDescription = null
+    ) {
+        it.error("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+
+    }
+
 }
 
 @Composable
