@@ -13,6 +13,7 @@ class SplashScreenViewModel @Inject constructor(
 ) : BaseViewModel(router = router, toaster = null) {
 
     override fun onCreateView() {
+        super.onCreateView()
         findNextRouterNode()
     }
 

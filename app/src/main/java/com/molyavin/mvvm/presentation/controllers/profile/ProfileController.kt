@@ -41,6 +41,7 @@ import com.molyavin.mvvm.di.Injector
 import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.ui.DefaultButton
 import com.molyavin.mvvm.presentation.ui.DefaultCenterAlignedTopAppBar
+import com.molyavin.mvvm.presentation.ui.DefaultGlideImageLogo
 import com.molyavin.mvvm.presentation.ui.DefaultImageLogo
 import com.molyavin.mvvm.presentation.ui.DefaultText
 import com.molyavin.mvvm.presentation.ui.HalfColoredText
@@ -51,6 +52,7 @@ import com.molyavin.mvvm.presentation.viewmodels.profile.ProfileViewModel
 class ProfileController : BaseViewController() {
 
     override val viewModel: ProfileViewModel = Injector.INSTANCE.provideProfileViewModel()
+
 
     @Composable
     override fun content() {
@@ -79,7 +81,10 @@ class ProfileController : BaseViewController() {
                 containerColor = Color.Transparent
             )
 
-            DefaultImageLogo(
+            val userInfo by viewModel.userInfo.collectAsState()
+
+
+            DefaultGlideImageLogo(
                 modifier = Modifier
                     .padding(top = 50.dp)
                     .size(120.dp)
@@ -99,10 +104,10 @@ class ProfileController : BaseViewController() {
                         ),
                         shape = CircleShape,
                     ),
-                idImage = R.drawable.default_user_photo
+                urlImage = userInfo.urlImage
             )
 
-            val userInfo by viewModel.userInfo.collectAsState()
+
 
             DefaultText(
                 modifier = Modifier
@@ -155,7 +160,7 @@ class ProfileController : BaseViewController() {
                 text = "Billing Details",
                 textColor = Color.Black,
                 textStyle = MaterialTheme.typography.h4,
-                onClick = { },
+                onClick = {  },
                 buttonImage = Icons.Default.KeyboardArrowRight,
                 buttonColorTint = Color.Black
             )

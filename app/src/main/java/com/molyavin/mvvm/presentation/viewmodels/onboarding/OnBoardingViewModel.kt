@@ -28,6 +28,8 @@ class OnBoardingViewModel @Inject constructor(
         loadingSlide()
     }
 
+
+
     private fun loadingSlide() {
         viewModelScope.launch {
             _isLoading.value = true

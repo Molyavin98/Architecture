@@ -13,13 +13,18 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel(
     private val router: Router,
     private val toaster: Toaster? = null,
 ) : ViewModel() {
+
+    private var isAttached = false
 
     protected val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -57,6 +62,7 @@ abstract class BaseViewModel(
 
     protected fun nextScreen(routerNode: RouterNode<*>) {
         _routerFlow.tryEmit(routerNode)
+        _routerFlow.drop(1)
     }
 
     private fun startScreen(controller: Controller) {
@@ -65,20 +71,25 @@ abstract class BaseViewModel(
 
     // Lifecycle
 
-    open fun onCreateView() {
-    }
-
     @CallSuper
-    open fun onAttach() {
+    open fun onCreateView() {
         viewModelScope.launch {
             _routerFlow
+                .takeWhile { isAttached }
                 .map { routerNode -> routerNode.controllerClass.newInstance() }
                 .catch { it.printStackTrace() }
                 .collect(this@BaseViewModel::startScreen)
         }
     }
 
-    open fun onDetach() {}
+    @CallSuper
+    open fun onAttach() {
+        isAttached = true
+    }
+    @CallSuper
+    open fun onDetach() {
+        isAttached = false
+    }
     open fun onDestroyView() {}
     open fun onDestroy() {}
 

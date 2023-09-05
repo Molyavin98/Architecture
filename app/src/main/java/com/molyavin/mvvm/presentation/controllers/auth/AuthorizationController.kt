@@ -15,11 +15,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.molyavin.mvvm.R
 import com.molyavin.mvvm.di.Injector
+import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.ui.AuthFooter
 import com.molyavin.mvvm.presentation.ui.DefaultButton
 import com.molyavin.mvvm.presentation.ui.DefaultImageLogo
@@ -29,9 +29,7 @@ import com.molyavin.mvvm.presentation.ui.DefaultSocialAuthButton
 import com.molyavin.mvvm.presentation.ui.DefaultText
 import com.molyavin.mvvm.presentation.ui.DividerOr
 import com.molyavin.mvvm.presentation.ui.RememberMeCheckBox
-import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.viewmodels.auth.AuthorizationViewModel
-import com.molyavin.mvvm.presentation.ui.theme.MVVMTheme
 
 class AuthorizationController : BaseViewController() {
 

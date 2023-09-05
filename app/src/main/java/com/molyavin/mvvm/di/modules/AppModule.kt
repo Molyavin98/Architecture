@@ -2,6 +2,9 @@ package com.molyavin.mvvm.di.modules
 
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.molyavin.mvvm.data.network.ApiService
 import com.molyavin.mvvm.data.repositories.SettingRepository
 import com.molyavin.mvvm.data.repositories.SettingRepositoryImpl
@@ -52,10 +55,17 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
+    fun provideFirebaseRemoteConfig() = FirebaseRemoteConfig.getInstance()
+
+    @Provides
+    @AppScope
     fun provideDataBase(
         firebaseAuth: FirebaseAuth,
         dbSharedPreference: DBSharedPreference
     ): UserRepository =
-        UserRepositoryImpl(firebaseAuth, dbSharedPreference)
+        UserRepositoryImpl(
+            fireBaseAunt = firebaseAuth,
+            dbSharedPreference = dbSharedPreference
+        )
 
 }
