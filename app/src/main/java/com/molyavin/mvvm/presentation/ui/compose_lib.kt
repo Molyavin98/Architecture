@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,6 +35,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -51,6 +53,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -62,7 +65,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
 import com.molyavin.mvvm.R
+import java.nio.file.WatchEvent
 
 @Composable
 fun DefaultButton(
@@ -247,16 +252,26 @@ fun DefaultImageLogo(
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun DefaultGlideImageLogo(
+fun DefaultGlideImage(
     modifier: Modifier = Modifier,
+    contentScale: ContentScale,
     urlImage: String,
 ) {
     GlideImage(
         modifier = modifier,
         model = urlImage,
-        contentScale = ContentScale.Crop,
-        contentDescription = null
+        contentScale = contentScale,
+        contentDescription = null,
+        loading = placeholder {
+            Box(modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = colorResource(id = R.color.default_button_color)
+                )
+            }
+        }
     ) {
+
         it.error("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
 
     }
@@ -532,14 +547,16 @@ fun HalfColoredText(
     secondHalfStyle: TextStyle,
 ) {
     Row(modifier = modifier) {
-        Text(text = firstHalfText, color = fisrtHalfColor, style = firstHalfTextStyle)
-        Text(text = secondHalfText, color = secondHalfColor, style = secondHalfStyle)
-        /*DefaultText(
-            modifier = Modifier
-                .padding(start = 16.dp, bottom = 16.dp),
-            text = "Joined ",
-            styleText = MaterialTheme.typography.h5
-        )*/
+        Text(
+            text = firstHalfText,
+            color = fisrtHalfColor,
+            style = firstHalfTextStyle
+        )
+        Text(
+            text = secondHalfText,
+            color = secondHalfColor,
+            style = secondHalfStyle
+        )
     }
 }
 

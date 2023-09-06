@@ -1,31 +1,30 @@
 package com.molyavin.mvvm.data.network
 
-import com.molyavin.mvvm.R
 import com.molyavin.mvvm.data.model.SlideDTO
-import kotlinx.coroutines.delay
+
 
 class ApiService {
-    suspend fun fetchSlides(): List<SlideDTO> {
-        delay(2000)
+
+    fun fetchSlides(): List<SlideDTO> {
 
         return listOf(
             SlideDTO(
-                idImage = R.drawable.jetpack_compose_icon,
+                urlImage = "https://3.bp.blogspot.com/-VVp3WvJvl84/X0Vu6EjYqDI/AAAAAAAAPjU/ZOMKiUlgfg8ok8DY8Hc-ocOvGdB0z86AgCLcBGAsYHQ/s1600/jetpack%2Bcompose%2Bicon_RGB.png",
                 title = "JetPack Compose",
                 description = "Jetpack Compose is Android's recommended modern toolkit for building native UI"
             ),
             SlideDTO(
-                idImage = R.drawable.android_icone,
+                urlImage = "https://upload.wikimedia.org/wikipedia/commons/3/3e/Android_logo_2019.png",
                 title = "Android",
                 description = "Android is a mobile operating system based on a modified version of the Linux kernel"
             ),
             SlideDTO(
-                idImage = R.drawable.architecture_image,
+                urlImage = "https://www.seekpng.com/png/full/831--or--construction-clip-art.png",
                 title = "Architecture App",
                 description = "In the past computers needed to be disconnected from their internal network if they needed to be taken or moved anywhere"
             ),
             SlideDTO(
-                idImage = R.drawable.bitcoin_image,
+                urlImage = "https://freepngimg.com/thumb/bitcoin/59783-cryptocurrency-money-blockchain-bitcoin-cash-free-transparent-image-hq.png",
                 title = "Bitcoin",
                 description = "Bitcoin is a protocol which implements a public, permanent, and decentralized ledger"
             ),

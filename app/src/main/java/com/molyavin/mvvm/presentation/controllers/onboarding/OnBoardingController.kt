@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -35,7 +36,7 @@ import com.molyavin.mvvm.R
 import com.molyavin.mvvm.di.Injector
 import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.ui.DefaultButton
-import com.molyavin.mvvm.presentation.ui.DefaultImageLogo
+import com.molyavin.mvvm.presentation.ui.DefaultGlideImage
 import com.molyavin.mvvm.presentation.ui.DefaultText
 import com.molyavin.mvvm.presentation.ui.DotsIndicator
 import com.molyavin.mvvm.presentation.viewmodels.onboarding.OnBoardingViewModel
@@ -72,10 +73,12 @@ class OnBoardingController : BaseViewController() {
                     verticalArrangement = Arrangement.Bottom,
                 ) {
 
-                    DefaultImageLogo(
-                        idImage = item.idImage,
-                        modifier = Modifier.weight(1f)
+                    DefaultGlideImage(
+                        modifier = Modifier.weight(1f),
+                        contentScale = ContentScale.Fit,
+                        urlImage = item.urlImage,
                     )
+
 
                     DefaultText(
                         modifier = Modifier.padding(32.dp),
