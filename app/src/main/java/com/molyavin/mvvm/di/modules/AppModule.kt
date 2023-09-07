@@ -14,6 +14,7 @@ import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.data.storage.DBSharedPreference
 import com.molyavin.mvvm.di.scope.AppScope
 import com.molyavin.mvvm.domain.mapper.SlideMapper
+import com.molyavin.mvvm.utils.AppDispatchers
 import com.molyavin.mvvm.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -64,6 +65,10 @@ class AppModule(private val context: Context) {
 
         return instance
     }
+
+    @Provides
+    @AppScope
+    fun provideAppDispatchers() = AppDispatchers()
 
     @Provides
     @AppScope

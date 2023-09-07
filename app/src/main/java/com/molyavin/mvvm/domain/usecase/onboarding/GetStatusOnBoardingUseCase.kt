@@ -14,12 +14,13 @@ class GetStatusOnBoardingUseCase @Inject constructor(
 
     override suspend fun execute(income: Any?): Boolean {
 
-     /*   val remoteConfigValueFlow = getRemoteConfigValueUseCase.execute(Constants.ON_BOARDING_REMOTE_KEY)
+        val remoteConfigValueFlow =
+            getRemoteConfigValueUseCase.execute(Constants.ON_BOARDING_REMOTE_KEY)
 
         if (remoteConfigValueFlow.first()) {
             return true
-        }*/
+        }
 
-        return true
+        return settingRepository.readSetting(Constants.ON_BOARDING_LOCAL_KEY)
     }
 }

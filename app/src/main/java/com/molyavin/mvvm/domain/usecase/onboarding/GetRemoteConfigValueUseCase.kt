@@ -2,6 +2,7 @@ package com.molyavin.mvvm.domain.usecase.onboarding
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.molyavin.mvvm.domain.usecase.base.IUseCase
+import com.molyavin.mvvm.utils.AppDispatchers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,6 +12,7 @@ import javax.inject.Inject
 
 class GetRemoteConfigValueUseCase @Inject constructor(
     private val firebaseRemoteConfig: FirebaseRemoteConfig,
+    private val dispatchers: AppDispatchers,
 ) : IUseCase<String, Flow<Boolean>> {
 
     override fun execute(income: String): Flow<Boolean> = flow {
@@ -28,6 +30,6 @@ class GetRemoteConfigValueUseCase @Inject constructor(
         } catch (e: Exception) {
             throw e
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatchers.io)
 
 }
