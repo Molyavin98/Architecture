@@ -3,7 +3,9 @@ package com.molyavin.mvvm.domain.usecase.onboarding
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.molyavin.mvvm.domain.usecase.base.IUseCase
 import com.molyavin.mvvm.utils.AppDispatchers
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -25,10 +27,10 @@ class GetRemoteConfigValueUseCase @Inject constructor(
                 val value = firebaseRemoteConfig.getBoolean(income)
                 emit(value)
             } else {
-                throw Exception("Fetch failed")
+                currentCoroutineContext().cancel(CancellationException("Fetch failed", null))
             }
         } catch (e: Exception) {
-            throw e
+            currentCoroutineContext().cancel(CancellationException("Fetch failed", e))
         }
     }.flowOn(dispatchers.io)
 
