@@ -1,7 +1,7 @@
 package com.molyavin.mvvm.data.model
 
 data class SlideDTO(
-    val idImage: Int,
+    val urlImage: String,
     val title: String,
     val description: String
 )

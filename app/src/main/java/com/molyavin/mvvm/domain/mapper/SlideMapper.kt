@@ -8,7 +8,7 @@ class SlideMapper @Inject constructor() {
     fun mapEntityToVM(slideEntity: SlideDTO): SlideVM {
 
         return SlideVM(
-            idImage = slideEntity.idImage,
+            urlImage = slideEntity.urlImage,
             title = slideEntity.title,
             description = slideEntity.description
         )

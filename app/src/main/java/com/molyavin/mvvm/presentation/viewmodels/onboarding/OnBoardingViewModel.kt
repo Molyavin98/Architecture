@@ -38,7 +38,6 @@ class OnBoardingViewModel @Inject constructor(
         }
 
     }
-
     fun nextSlide() {
         if (_currentSliderPosition.value == 3) {
             nextScreen(RouterNode(AuthorizationController::class.java))

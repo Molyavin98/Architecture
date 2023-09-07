@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.molyavin.mvvm.R
@@ -40,7 +41,7 @@ import com.molyavin.mvvm.di.Injector
 import com.molyavin.mvvm.presentation.controllers.BaseViewController
 import com.molyavin.mvvm.presentation.ui.DefaultButton
 import com.molyavin.mvvm.presentation.ui.DefaultCenterAlignedTopAppBar
-import com.molyavin.mvvm.presentation.ui.DefaultGlideImageLogo
+import com.molyavin.mvvm.presentation.ui.DefaultGlideImage
 import com.molyavin.mvvm.presentation.ui.DefaultText
 import com.molyavin.mvvm.presentation.ui.HalfColoredText
 import com.molyavin.mvvm.presentation.ui.HorizontalLine
@@ -82,7 +83,7 @@ class ProfileController : BaseViewController() {
             val userInfo by viewModel.userInfo.collectAsState()
 
 
-            DefaultGlideImageLogo(
+            DefaultGlideImage(
                 modifier = Modifier
                     .padding(top = 50.dp)
                     .size(120.dp)
@@ -102,6 +103,7 @@ class ProfileController : BaseViewController() {
                         ),
                         shape = CircleShape,
                     ),
+                contentScale = ContentScale.Crop,
                 urlImage = userInfo.urlImage
             )
 

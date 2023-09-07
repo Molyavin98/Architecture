@@ -5,6 +5,7 @@ import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.domain.models.NewUserVM
 import com.molyavin.mvvm.domain.usecase.base.IAsyncUseCase
 import com.molyavin.mvvm.domain.usecase.sharedpref.SaveUserVMUseCase
+import com.molyavin.mvvm.utils.AppDispatchers
 import com.molyavin.mvvm.utils.IncorrectUserInfoException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -16,9 +17,10 @@ class LoginUserUseCase @Inject constructor(
     private val validateLoginUserInfoUseCase: ValidateLoginUserInfoUseCase,
     private val fireBaseRepository: UserRepository,
     private val saveUserVMUseCase: SaveUserVMUseCase,
+    private val dispatcher: AppDispatchers,
 ) : IAsyncUseCase<NewUserVM, Boolean> {
     override suspend fun execute(income: NewUserVM): Boolean {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher.io) {
             val task = suspendCancellableCoroutine {
                 if (!validateLoginUserInfoUseCase.execute(income)) {
                     it.cancel(IncorrectUserInfoException())
