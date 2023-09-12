@@ -8,9 +8,8 @@ class SettingRepositoryImpl(private val sharedPreference: DBSharedPreference) : 
         sharedPreference.saveValue(key = key, value = setting)
     }
 
-    override fun readSetting(key: String): Boolean {
-        return sharedPreference.getValue(key = key)
+    override fun readSetting(key: String, defValue: Boolean): Boolean {
+        return sharedPreference.getValue(key = key, defValue = defValue)
     }
-
 
 }
