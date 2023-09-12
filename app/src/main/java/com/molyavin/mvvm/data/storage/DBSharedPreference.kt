@@ -13,11 +13,12 @@ class DBSharedPreference(context: Context) {
         editor = sharedPreferences.edit()
     }
 
-    fun saveData(key: String,data: String){
-        editor.putString(key,data)
+    fun saveData(key: String, data: String) {
+        editor.putString(key, data)
         editor.apply()
     }
-    fun getData(key: String) :String? {
+
+    fun getData(key: String): String? {
         return sharedPreferences.getString(key, null)
     }
 
@@ -25,7 +26,8 @@ class DBSharedPreference(context: Context) {
         editor.putBoolean(key, value)
         editor.apply()
     }
-    fun getValue(key: String): Boolean {
-        return sharedPreferences.getBoolean(key,false)
+
+    fun getValue(key: String, defValue: Boolean): Boolean {
+        return sharedPreferences.getBoolean(key, defValue)
     }
 }

@@ -137,7 +137,7 @@ class ProfileController : BaseViewController() {
                 ),
                 text = "Edit Profile",
                 contentPadding = PaddingValues(0.dp),
-                onClick = { /*TODO*/ })
+                onClick = {})
 
             HorizontalLine()
 
@@ -160,7 +160,7 @@ class ProfileController : BaseViewController() {
                 text = "Billing Details",
                 textColor = Color.Black,
                 textStyle = MaterialTheme.typography.h4,
-                onClick = {  },
+                onClick = { },
                 buttonImage = Icons.Default.KeyboardArrowRight,
                 buttonColorTint = Color.Black
             )
