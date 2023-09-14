@@ -82,7 +82,6 @@ class ProfileController : BaseViewController() {
 
             val userInfo by viewModel.userInfo.collectAsState()
 
-
             DefaultGlideImage(
                 modifier = Modifier
                     .padding(top = 50.dp)
@@ -106,8 +105,6 @@ class ProfileController : BaseViewController() {
                 contentScale = ContentScale.Crop,
                 urlImage = userInfo.urlImage
             )
-
-
 
             DefaultText(
                 modifier = Modifier

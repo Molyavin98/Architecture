@@ -8,5 +8,7 @@ object Constants {
     const val ON_BOARDING_REMOTE_KEY: String = "on_boarding"
     const val ON_BOARDING_LOCAL_KEY: String = "OnBoarding"
 
+    const val BASE_URL: String = "https://dummyjson.com"
+
 
 }

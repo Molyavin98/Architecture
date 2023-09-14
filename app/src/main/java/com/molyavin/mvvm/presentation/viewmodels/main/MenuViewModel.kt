@@ -3,6 +3,7 @@ package com.molyavin.mvvm.presentation.viewmodels.main
 import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.presentation.controllers.profile.ProfileController
+import com.molyavin.mvvm.presentation.controllers.search.SearchController
 import com.molyavin.mvvm.presentation.viewmodels.BaseViewModel
 import javax.inject.Inject
 
@@ -12,4 +13,9 @@ class MenuViewModel @Inject constructor(router: Router) :
     fun routeToUserProfile() {
         nextScreen(RouterNode(ProfileController::class.java))
     }
+
+    fun routeToSearchScreen() {
+        nextScreen(RouterNode(SearchController::class.java))
+    }
+
 }

@@ -365,7 +365,7 @@ fun DefaultTextField(
 }
 
 @Composable
-fun DefaultPhoneField(
+fun DefaultEmailField(
     modifierText: Modifier = Modifier,
     email: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
@@ -383,6 +383,29 @@ fun DefaultPhoneField(
         unFocusColor = unFocusColor,
         visualTransformation = VisualTransformation.None,
         trailingIcon = R.drawable.email_icon,
+        modifierText = modifierText,
+    )
+}
+
+@Composable
+fun SearchTextField(
+    modifierText: Modifier = Modifier,
+    text: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    label: String = "",
+    hint: String,
+    focusColor: Int,
+    unFocusColor: Int
+) {
+    DefaultTextField(
+        value = text,
+        onValueChange = onValueChange,
+        label = label,
+        hint = hint,
+        focusColor = focusColor,
+        unFocusColor = unFocusColor,
+        visualTransformation = VisualTransformation.None,
+        trailingIcon = R.drawable.icon_loupe,
         modifierText = modifierText,
     )
 }

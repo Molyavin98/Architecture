@@ -23,7 +23,7 @@ import com.molyavin.mvvm.presentation.ui.AuthFooter
 import com.molyavin.mvvm.presentation.ui.DefaultButton
 import com.molyavin.mvvm.presentation.ui.DefaultImageLogo
 import com.molyavin.mvvm.presentation.ui.DefaultPasswordField
-import com.molyavin.mvvm.presentation.ui.DefaultPhoneField
+import com.molyavin.mvvm.presentation.ui.DefaultEmailField
 import com.molyavin.mvvm.presentation.ui.DefaultSocialAuthButton
 import com.molyavin.mvvm.presentation.ui.DefaultText
 import com.molyavin.mvvm.presentation.ui.DividerOr
@@ -55,7 +55,7 @@ class RegistrationController : BaseViewController() {
             val passwordConfirm by viewModel.passwordConfirm.collectAsState()
 
 
-            DefaultPhoneField(
+            DefaultEmailField(
                 modifierText = Modifier
                     .padding(3.dp)
                     .weight(50f),

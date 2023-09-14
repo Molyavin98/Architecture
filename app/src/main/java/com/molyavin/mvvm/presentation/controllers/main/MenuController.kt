@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -16,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.molyavin.mvvm.di.Injector
 import com.molyavin.mvvm.presentation.controllers.BaseViewController
+import com.molyavin.mvvm.presentation.ui.DefaultButton
 import com.molyavin.mvvm.presentation.ui.DefaultCenterAlignedTopAppBar
 import com.molyavin.mvvm.presentation.viewmodels.main.MenuViewModel
 
@@ -46,6 +48,14 @@ class MenuController : BaseViewController() {
                 navigationIcon = Icons.Filled.AccountCircle,
                 navigationIconTint = Color.Black,
                 containerColor = Color.White
+            )
+
+            DefaultButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, top = 50.dp, end = 16.dp),
+                text = "Search screen",
+                onClick = viewModel::routeToSearchScreen,
             )
 
         }
