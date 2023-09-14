@@ -1,5 +1,6 @@
 package com.molyavin.mvvm.di.modules
 
+import com.molyavin.mvvm.data.network.ApiServiceRetrofit
 import com.molyavin.mvvm.di.scope.AppScope
 import com.molyavin.mvvm.utils.Constants
 import dagger.Module
@@ -16,6 +17,11 @@ class NetworkModule {
     fun provideRetrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create()).build()
+
+    @AppScope
+    @Provides
+    fun provideApiServiceRetrofit(retrofit: Retrofit): ApiServiceRetrofit =
+        retrofit.create(ApiServiceRetrofit::class.java)
 
     @AppScope
     @Provides

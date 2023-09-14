@@ -10,19 +10,17 @@ import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import retrofit2.Retrofit
 import java.util.concurrent.CancellationException
 import javax.inject.Inject
 
 class GetProductUseCase @Inject constructor(
-    private val retrofit: Retrofit,
+    private val apiServiceRetrofit: ApiServiceRetrofit,
     private val dispatchers: AppDispatchers
 ) : IAsyncUseCase<String, Flow<ProductVM>> {
 
     override suspend fun execute(income: String): Flow<ProductVM> = flow {
         try {
-            val productApi = retrofit.create(ApiServiceRetrofit::class.java)
-            val productDTO = productApi.getProduct(income)
+            val productDTO = apiServiceRetrofit.getProduct(income)
             emit(productDTO.toVM())
         } catch (e: Exception) {
             emit(ProductVM.empty())
