@@ -7,14 +7,17 @@ import com.molyavin.mvvm.data.model.NewUserDTO
 import com.molyavin.mvvm.data.model.UserDTO
 import com.molyavin.mvvm.data.storage.DBSharedPreference
 import com.molyavin.mvvm.utils.MissingUserInfoException
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val fireBaseAunt: FirebaseAuth,
     private val dbSharedPreference: DBSharedPreference,
+    moshi: Moshi,
 ) : UserRepository {
+
+    private val userJsonAdapter: JsonAdapter<UserDTO> = moshi.adapter(UserDTO::class.java)
 
     override fun registerUser(user: NewUserDTO): Task<AuthResult> {
         return fireBaseAunt.createUserWithEmailAndPassword(
@@ -28,13 +31,13 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun saveUserDTO(data: UserDTO) {
-        val json = Json.encodeToString(data)
+        val json = userJsonAdapter.toJson(data)
         dbSharedPreference.saveData(USER_KEY, json)
     }
 
     override suspend fun getUserDTO(): UserDTO {
         val json = dbSharedPreference.getData(USER_KEY) ?: throw MissingUserInfoException()
-        return Json.decodeFromString(json)
+        return userJsonAdapter.fromJson(json) ?: throw MissingUserInfoException()
     }
 
     override suspend fun checkUserStatus(): Boolean {

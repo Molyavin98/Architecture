@@ -16,6 +16,7 @@ import com.molyavin.mvvm.di.scope.AppScope
 import com.molyavin.mvvm.domain.mapper.SlideMapper
 import com.molyavin.mvvm.utils.AppDispatchers
 import com.molyavin.mvvm.utils.Constants
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 
@@ -56,6 +57,10 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
+    fun provideMoshi(): Moshi = Moshi.Builder().build()
+
+    @Provides
+    @AppScope
     fun provideFirebaseRemoteConfig(): FirebaseRemoteConfig {
         val instance = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
@@ -74,10 +79,12 @@ class AppModule(private val context: Context) {
     @AppScope
     fun provideDataBase(
         firebaseAuth: FirebaseAuth,
+        moshi: Moshi,
         dbSharedPreference: DBSharedPreference
     ): UserRepository =
         UserRepositoryImpl(
             fireBaseAunt = firebaseAuth,
+            moshi = moshi,
             dbSharedPreference = dbSharedPreference
         )
 
