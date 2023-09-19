@@ -4,13 +4,11 @@ import com.molyavin.mvvm.domain.models.WordVM
 import com.molyavin.mvvm.domain.usecase.base.IAsyncUseCase
 import javax.inject.Inject
 
-class GetWordUseCase @Inject constructor(
+class GetWordListUseCase @Inject constructor(
     private val mapFireBaseWordsDTOUseCase: MapFireBaseWordsDTOUseCase
-) : IAsyncUseCase<Int, WordVM> {
+) : IAsyncUseCase<Any?, List<WordVM>?> {
 
-    override suspend fun execute(incom: Int): WordVM {
-
-        val wordList = mapFireBaseWordsDTOUseCase.execute(null)
-        return wordList?.get(incom) ?: WordVM.empty()
+    override suspend fun execute(incom: Any?): List<WordVM>? {
+        return mapFireBaseWordsDTOUseCase.execute(null)
     }
 }

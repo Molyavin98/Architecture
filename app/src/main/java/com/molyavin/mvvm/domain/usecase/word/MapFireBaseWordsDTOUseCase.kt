@@ -3,6 +3,7 @@ package com.molyavin.mvvm.domain.usecase.word
 import com.molyavin.mvvm.data.network.ApiServiceRetrofit
 import com.molyavin.mvvm.domain.models.WordVM
 import com.molyavin.mvvm.domain.usecase.base.IAsyncUseCase
+import com.molyavin.mvvm.utils.WhileReceivingDataException
 import javax.inject.Inject
 
 class MapFireBaseWordsDTOUseCase @Inject constructor(private val apiServiceRetrofit: ApiServiceRetrofit) :
@@ -28,6 +29,6 @@ class MapFireBaseWordsDTOUseCase @Inject constructor(private val apiServiceRetro
                 return wordVMList
             }
         }
-        return null
+        throw WhileReceivingDataException()
     }
 }

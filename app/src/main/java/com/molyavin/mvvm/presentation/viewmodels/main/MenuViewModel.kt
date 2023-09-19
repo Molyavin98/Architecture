@@ -6,7 +6,7 @@ import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.domain.models.WordVM
 import com.molyavin.mvvm.domain.usecase.sharedpref.SaveWordVMUseCase
 import com.molyavin.mvvm.domain.usecase.word.DeleteWordUseCase
-import com.molyavin.mvvm.domain.usecase.word.GetWordUseCase
+import com.molyavin.mvvm.domain.usecase.word.GetWordListUseCase
 import com.molyavin.mvvm.presentation.controllers.main.word.AddWordController
 import com.molyavin.mvvm.presentation.controllers.main.word.EditWordController
 import com.molyavin.mvvm.presentation.controllers.profile.ProfileController
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MenuViewModel @Inject constructor(
-    private val getWordUseCase: GetWordUseCase,
+    private val getWordListUseCase: GetWordListUseCase,
     private val deleteWordUseCase: DeleteWordUseCase,
     private val saveWordVMUseCase: SaveWordVMUseCase,
     router: Router
@@ -33,22 +33,14 @@ class MenuViewModel @Inject constructor(
     }
 
     private fun download() {
-
         viewModelScope.launch {
-            startCoroutine(runnable = {
-                _isLoading.value = true
-
-                val response = getWordUseCase.execute(null)
-
-                if (response != null) {
-                    _wordsList.value = response as List<WordVM>
-                    _isLoading.value = false
-                } else {
-                    _isLoading.value = false
-                }
-            }, onError = { exception ->
-                showMessage("${exception?.message}")
-            })
+            _isLoading.value = true
+            val response = getWordListUseCase.execute(null)
+            if (response != null) {
+                _wordsList.value = response
+                _isLoading.value = false
+            }
+            _isLoading.value = false
         }
     }
 
@@ -74,6 +66,5 @@ class MenuViewModel @Inject constructor(
     fun routerToEditWords() {
         nextScreen(RouterNode(EditWordController()::class.java))
     }
-
 
 }

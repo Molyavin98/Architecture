@@ -16,7 +16,7 @@ class EditWordUseCase @Inject constructor(
     override suspend fun execute(income: WordVM) {
         try {
             val id = getWordVMUseCase.execute(null)
-            val word = getWordUseCase.execute(id) as WordVM
+            val word = getWordUseCase.execute(id)
             apiServiceRetrofit.editWord(word.id.toString(), income)
         } catch (e: Exception) {
             e.printStackTrace()
