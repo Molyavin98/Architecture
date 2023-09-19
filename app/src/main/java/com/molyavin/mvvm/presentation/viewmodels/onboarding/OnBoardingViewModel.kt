@@ -30,7 +30,6 @@ class OnBoardingViewModel @Inject constructor(
     }
 
 
-
     private fun loadingSlide() {
         viewModelScope.launch {
             _isLoading.value = true
@@ -39,6 +38,7 @@ class OnBoardingViewModel @Inject constructor(
         }
 
     }
+
     fun nextSlide() {
         if (_currentSliderPosition.value == 3) {
             nextScreen(RouterNode(AuthorizationController::class.java))

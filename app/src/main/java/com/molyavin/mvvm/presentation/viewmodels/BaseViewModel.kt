@@ -60,8 +60,9 @@ abstract class BaseViewModel(
     // Navigation
 
     protected fun nextScreen(routerNode: RouterNode<*>) {
-        _routerFlow.tryEmit(routerNode)
-        _routerFlow.drop(1)
+            _routerFlow.tryEmit(routerNode)
+            _routerFlow.drop(1)
+
     }
 
     private fun startScreen(controller: Controller) {

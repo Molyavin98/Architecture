@@ -11,12 +11,15 @@ import com.molyavin.mvvm.data.repositories.SlideRepository
 import com.molyavin.mvvm.data.repositories.SlideRepositoryImpl
 import com.molyavin.mvvm.data.repositories.UserRepository
 import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
+import com.molyavin.mvvm.data.repositories.WordRepository
+import com.molyavin.mvvm.data.repositories.WordRepositoryImpl
 import com.molyavin.mvvm.data.storage.DBSharedPreference
 import com.molyavin.mvvm.di.scope.AppScope
 import com.molyavin.mvvm.domain.mapper.SlideMapper
 import com.molyavin.mvvm.utils.AppDispatchers
 import com.molyavin.mvvm.utils.Constants
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 
@@ -40,6 +43,11 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
+    fun provideWordRepository(dbSharedPreference: DBSharedPreference): WordRepository =
+        WordRepositoryImpl(dbSharedPreference)
+
+    @Provides
+    @AppScope
     fun provideApiService(): ApiService = ApiService()
 
     @Provides
@@ -57,7 +65,9 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
-    fun provideMoshi(): Moshi = Moshi.Builder().build()
+    fun provideMoshi(): Moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
     @Provides
     @AppScope

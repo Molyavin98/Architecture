@@ -1,5 +1,6 @@
 package com.molyavin.mvvm.presentation.controllers.onboarding
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,6 +41,7 @@ import com.molyavin.mvvm.presentation.ui.DefaultGlideImage
 import com.molyavin.mvvm.presentation.ui.DefaultText
 import com.molyavin.mvvm.presentation.ui.DotsIndicator
 import com.molyavin.mvvm.presentation.viewmodels.onboarding.OnBoardingViewModel
+import kotlin.reflect.full.extensionReceiverParameter
 
 class OnBoardingController : BaseViewController() {
 

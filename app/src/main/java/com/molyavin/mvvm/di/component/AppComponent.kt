@@ -7,12 +7,13 @@ import com.molyavin.mvvm.di.modules.NavigationModule
 import com.molyavin.mvvm.di.modules.NetworkModule
 import com.molyavin.mvvm.di.modules.ToasterModule
 import com.molyavin.mvvm.di.scope.AppScope
+import com.molyavin.mvvm.presentation.viewmodels.main.word.AddWordViewModel
+import com.molyavin.mvvm.presentation.viewmodels.main.word.EditWordViewModel
 import com.molyavin.mvvm.presentation.viewmodels.auth.AuthorizationViewModel
 import com.molyavin.mvvm.presentation.viewmodels.auth.RegistrationViewModel
 import com.molyavin.mvvm.presentation.viewmodels.main.MenuViewModel
 import com.molyavin.mvvm.presentation.viewmodels.onboarding.OnBoardingViewModel
 import com.molyavin.mvvm.presentation.viewmodels.profile.ProfileViewModel
-import com.molyavin.mvvm.presentation.viewmodels.search.SearchViewModel
 import com.molyavin.mvvm.presentation.viewmodels.settings.SettingViewModel
 import com.molyavin.mvvm.presentation.viewmodels.splash.SplashScreenViewModel
 import dagger.Component
@@ -31,5 +32,6 @@ interface AppComponent {
     fun provideOnBoardingViewModel(): OnBoardingViewModel
     fun provideProfileViewModel(): ProfileViewModel
     fun provideSettingViewModel(): SettingViewModel
-    fun provideSearchViewModel(): SearchViewModel
+    fun provideAddWordsViewModel(): AddWordViewModel
+    fun provideEditWordViewModel(): EditWordViewModel
 }

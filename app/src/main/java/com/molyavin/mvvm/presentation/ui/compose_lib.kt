@@ -1,9 +1,11 @@
 package com.molyavin.mvvm.presentation.ui
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +20,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -34,6 +41,8 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -66,6 +75,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import com.molyavin.mvvm.R
+import com.molyavin.mvvm.domain.models.WordVM
 
 @Composable
 fun DefaultButton(
@@ -179,7 +189,7 @@ fun DefaultCenterAlignedTopAppBar(
     navigationOnClick: () -> Unit,
     navigationIcon: ImageVector,
     navigationIconTint: Color,
-    actionOnClick: (() -> Unit?)? = null,
+    actionOnClick: () -> Unit,
     actionIcon: ImageVector? = null,
     actionIconTint: Color? = null,
     containerColor: Color
@@ -203,7 +213,7 @@ fun DefaultCenterAlignedTopAppBar(
             }
         },
         actions = {
-            IconButton(onClick = { actionOnClick }) {
+            IconButton(onClick = actionOnClick) {
                 if (actionIcon != null && actionIconTint != null) {
                     Icon(
                         imageVector = actionIcon,
@@ -277,7 +287,7 @@ fun DefaultGlideImage(
 }
 
 @Composable
-fun DefaultTextField(
+private fun DefaultTextField(
     value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
     label: String,
@@ -388,9 +398,9 @@ fun DefaultEmailField(
 }
 
 @Composable
-fun SearchTextField(
+fun DefaultTextField(
     modifierText: Modifier = Modifier,
-    text: TextFieldValue,
+    value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
     label: String = "",
     hint: String,
@@ -398,14 +408,13 @@ fun SearchTextField(
     unFocusColor: Int
 ) {
     DefaultTextField(
-        value = text,
+        value = value,
         onValueChange = onValueChange,
         label = label,
         hint = hint,
         focusColor = focusColor,
         unFocusColor = unFocusColor,
         visualTransformation = VisualTransformation.None,
-        trailingIcon = R.drawable.icon_loupe,
         modifierText = modifierText,
     )
 }
@@ -438,6 +447,75 @@ fun DefaultPasswordField(
         trailingIcon = if (passwordVisibility) R.drawable.baseline_visibility_24 else R.drawable.baseline_visibility_off_24
     )
 }
+
+@Composable
+fun LazyList(
+    modifier: Modifier,
+    words: List<WordVM>,
+    modifierItem: Modifier,
+    containerColor: Int,
+    textStyle: TextStyle = MaterialTheme.typography.h4,
+    buttonModifier: Modifier,
+    btnDeleteText: String,
+    btnDeleteClick: (Int) -> Unit,
+    btnEditText: String,
+    btnEditClick: (Int) -> Unit
+
+) {
+    val selectedItem = remember { mutableStateOf<WordVM?>(null) }
+
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        itemsIndexed(words) { index, word ->
+
+            val isItemSelected = word == selectedItem.value
+
+            Card(
+                modifier = modifierItem
+                    .clickable {
+                        if (isItemSelected) {
+                            selectedItem.value = null
+                        } else {
+                            selectedItem.value = word
+                        }
+                    },
+                colors = CardDefaults.cardColors(containerColor = colorResource(id = containerColor)),
+            ) {
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = word.eng.toString(),
+                    style = textStyle
+                )
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = word.ua.toString(),
+                    style = textStyle
+                )
+
+                if (isItemSelected) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+
+                        DefaultButton(
+                            modifier = buttonModifier,
+                            text = btnDeleteText,
+                            onClick = { btnDeleteClick(index) })
+
+                        DefaultButton(
+                            modifier = buttonModifier,
+                            text = btnEditText,
+                            onClick = { btnEditClick(index) })
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 @Composable
 fun DividerOr() {
