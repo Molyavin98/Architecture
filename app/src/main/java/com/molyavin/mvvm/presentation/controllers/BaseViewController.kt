@@ -51,6 +51,7 @@ abstract class BaseViewController : Controller() {
                             .padding(it)
                             .fillMaxSize()
                     ) {
+
                         val isLoading by viewModel.isLoading.collectAsState()
 
                         if (isLoading) {

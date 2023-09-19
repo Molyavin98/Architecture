@@ -67,10 +67,10 @@ class ProfileController : BaseViewController() {
             DefaultCenterAlignedTopAppBar(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp),
+                    .height(60.dp),
                 textTitle = "Profile",
                 titleContentColor = Color.Black,
-                textStyleTitle = MaterialTheme.typography.h2,
+                textStyleTitle = MaterialTheme.typography.h3,
                 navigationOnClick = { viewModel.navigateToBack() },
                 navigationIcon = Icons.Default.KeyboardArrowLeft,
                 navigationIconTint = Color.Black,
@@ -81,7 +81,6 @@ class ProfileController : BaseViewController() {
             )
 
             val userInfo by viewModel.userInfo.collectAsState()
-
 
             DefaultGlideImage(
                 modifier = Modifier
@@ -106,8 +105,6 @@ class ProfileController : BaseViewController() {
                 contentScale = ContentScale.Crop,
                 urlImage = userInfo.urlImage
             )
-
-
 
             DefaultText(
                 modifier = Modifier

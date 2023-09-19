@@ -19,6 +19,7 @@ class LoginUserUseCase @Inject constructor(
     private val saveUserVMUseCase: SaveUserVMUseCase,
     private val dispatcher: AppDispatchers,
 ) : IAsyncUseCase<NewUserVM, Boolean> {
+
     override suspend fun execute(income: NewUserVM): Boolean {
         return withContext(dispatcher.io) {
             val task = suspendCancellableCoroutine {

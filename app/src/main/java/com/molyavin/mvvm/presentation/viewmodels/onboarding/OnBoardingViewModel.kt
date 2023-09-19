@@ -2,6 +2,7 @@ package com.molyavin.mvvm.presentation.viewmodels.onboarding
 
 import androidx.lifecycle.viewModelScope
 import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
 import com.molyavin.mvvm.data.model.SlideDTO
 import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.domain.usecase.onboarding.GetSlideAsyncUseCase
@@ -29,7 +30,6 @@ class OnBoardingViewModel @Inject constructor(
     }
 
 
-
     private fun loadingSlide() {
         viewModelScope.launch {
             _isLoading.value = true
@@ -38,6 +38,7 @@ class OnBoardingViewModel @Inject constructor(
         }
 
     }
+
     fun nextSlide() {
         if (_currentSliderPosition.value == 3) {
             nextScreen(RouterNode(AuthorizationController::class.java))
