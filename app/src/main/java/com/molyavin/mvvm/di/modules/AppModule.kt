@@ -14,6 +14,7 @@ import com.molyavin.mvvm.data.repositories.UserRepositoryImpl
 import com.molyavin.mvvm.data.repositories.WordRepository
 import com.molyavin.mvvm.data.repositories.WordRepositoryImpl
 import com.molyavin.mvvm.data.storage.DBSharedPreference
+import com.molyavin.mvvm.data.storage.DataStorePreference
 import com.molyavin.mvvm.di.scope.AppScope
 import com.molyavin.mvvm.domain.mapper.SlideMapper
 import com.molyavin.mvvm.utils.AppDispatchers
@@ -32,9 +33,12 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
-    fun provideDBSharedPreference(): DBSharedPreference {
-        return DBSharedPreference(context)
-    }
+    fun provideDBSharedPreference(): DBSharedPreference =
+        DBSharedPreference(context)
+
+    @Provides
+    @AppScope
+    fun provideDataStorePreference(): DataStorePreference = DataStorePreference(context)
 
     @Provides
     @AppScope
@@ -71,6 +75,10 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
+    fun provideAppDispatchers() = AppDispatchers()
+
+    @Provides
+    @AppScope
     fun provideFirebaseRemoteConfig(): FirebaseRemoteConfig {
         val instance = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
@@ -83,19 +91,13 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
-    fun provideAppDispatchers() = AppDispatchers()
-
-    @Provides
-    @AppScope
     fun provideDataBase(
         firebaseAuth: FirebaseAuth,
-        moshi: Moshi,
-        dbSharedPreference: DBSharedPreference
+        dataStorePreference: DataStorePreference
     ): UserRepository =
         UserRepositoryImpl(
             fireBaseAunt = firebaseAuth,
-            moshi = moshi,
-            dbSharedPreference = dbSharedPreference
+            dataStorePreference = dataStorePreference
         )
 
 }
