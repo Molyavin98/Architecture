@@ -6,30 +6,37 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.molyavin.mvvm.data.model.DataStoreItemDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("data_store")
 
 class DataStorePreference(private val context: Context) {
 
-    suspend fun saveData(data: HashMap<String, Any>) {
+    suspend fun saveData(itemDto: DataStoreItemDTO) {
         context.dataStore.edit { pref ->
-            data.forEach { (key, value) ->
-                pref[stringPreferencesKey(key)] = value.toString()
+            itemDto.getItemInfo().forEach { (key, value) ->
+                pref[stringPreferencesKey(key)] = value
             }
         }
     }
 
-    fun getData(keys: List<String>): Flow<HashMap<String, String>> {
-        return context.dataStore.data.map { pref ->
-            val info = HashMap<String, String>()
-            keys.forEach { key ->
-                info[key] = pref[stringPreferencesKey(key)] ?: ""
+    suspend fun <T : DataStoreItemDTO> insertData(itemDto: T): T {
+        val parameters = context
+            .dataStore
+            .data
+            .map {
+                it.asMap()
+                    .mapKeys { entry -> entry.key.name }
+                    .filterValues { value -> value is String }
+                    .mapValues { value -> value.value as String }
             }
-            info
-        }
+            .single()
+
+        return itemDto.copyDTO(parameters) as T
     }
 
 
