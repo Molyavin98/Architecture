@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.FloatingActionButton
@@ -72,11 +74,18 @@ class MenuController : BaseViewController() {
                     .padding(16.dp),
                 words = words,
                 modifierItem = Modifier
+                    .sizeIn(maxHeight = 150.dp)
                     .fillMaxWidth(),
-                containerColor = R.color.image_color_in_menu,
+                containerColor = R.color.background_item,
                 buttonModifier = Modifier
                     .weight(1f)
                     .padding(8.dp),
+                modifierText = Modifier.padding(
+                    start = 8.dp,
+                    end = 8.dp,
+                    top = 4.dp,
+                    bottom = 8.dp
+                ),
                 btnDeleteText = "Delete",
                 btnDeleteClick = { index -> viewModel.deleteWord(words[index].id.toString()) },
                 btnEditText = "Edit",

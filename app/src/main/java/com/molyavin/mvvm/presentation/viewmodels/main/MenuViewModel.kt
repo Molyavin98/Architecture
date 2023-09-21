@@ -11,6 +11,7 @@ import com.molyavin.mvvm.presentation.controllers.main.word.AddWordController
 import com.molyavin.mvvm.presentation.controllers.main.word.EditWordController
 import com.molyavin.mvvm.presentation.controllers.profile.ProfileController
 import com.molyavin.mvvm.presentation.viewmodels.BaseViewModel
+import com.molyavin.mvvm.utils.Toaster
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -20,9 +21,10 @@ class MenuViewModel @Inject constructor(
     private val getWordListUseCase: GetWordListUseCase,
     private val deleteWordUseCase: DeleteWordUseCase,
     private val saveWordVMUseCase: SaveWordVMUseCase,
-    router: Router
+    router: Router,
+    toaster: Toaster,
 ) :
-    BaseViewModel(router = router, toaster = null) {
+    BaseViewModel(router = router, toaster = toaster) {
 
     private var _wordsList = MutableStateFlow<List<WordVM>>(emptyList())
     val wordsList: StateFlow<List<WordVM>> = _wordsList

@@ -17,5 +17,6 @@
     <color name="background_icon_button">#F2F5FB</color>
     <color name="background_button_profile">#F2F5FB</color>
     <color name="image_color_in_menu">#7795E9</color>
+    <color name="background_item">#383535</color>
 
 </resources>

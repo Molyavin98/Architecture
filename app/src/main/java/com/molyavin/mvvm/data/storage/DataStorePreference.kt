@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.molyavin.mvvm.data.model.DataStoreItemDTO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 
@@ -34,7 +35,7 @@ class DataStorePreference(private val context: Context) {
                     .filterValues { value -> value is String }
                     .mapValues { value -> value.value as String }
             }
-            .single()
+            .first()
 
         return itemDto.copyDTO(parameters) as T
     }

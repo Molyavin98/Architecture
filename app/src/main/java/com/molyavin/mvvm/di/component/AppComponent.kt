@@ -14,7 +14,6 @@ import com.molyavin.mvvm.presentation.viewmodels.auth.RegistrationViewModel
 import com.molyavin.mvvm.presentation.viewmodels.main.MenuViewModel
 import com.molyavin.mvvm.presentation.viewmodels.onboarding.OnBoardingViewModel
 import com.molyavin.mvvm.presentation.viewmodels.profile.ProfileViewModel
-import com.molyavin.mvvm.presentation.viewmodels.settings.SettingViewModel
 import com.molyavin.mvvm.presentation.viewmodels.splash.SplashScreenViewModel
 import dagger.Component
 
@@ -31,7 +30,6 @@ interface AppComponent {
     fun provideMenuViewModel(): MenuViewModel
     fun provideOnBoardingViewModel(): OnBoardingViewModel
     fun provideProfileViewModel(): ProfileViewModel
-    fun provideSettingViewModel(): SettingViewModel
     fun provideAddWordsViewModel(): AddWordViewModel
     fun provideEditWordViewModel(): EditWordViewModel
 }

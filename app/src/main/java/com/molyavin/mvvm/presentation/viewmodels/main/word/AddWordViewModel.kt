@@ -15,8 +15,8 @@ import javax.inject.Inject
 class AddWordViewModel @Inject constructor(
     private val postAddWordUseCase: PostAddWordUseCase,
     private val toaster: Toaster,
-    router: Router
-) : BaseViewModel(router) {
+    router: Router,
+) : BaseViewModel(router, toaster) {
 
     private var _englishWord = MutableStateFlow(TextFieldValue())
     val englishWord: StateFlow<TextFieldValue> = _englishWord
