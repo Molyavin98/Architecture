@@ -1,11 +1,9 @@
 package com.molyavin.mvvm.presentation.ui
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,11 +18,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -40,6 +35,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -454,8 +452,10 @@ fun LazyList(
     words: List<WordVM>,
     modifierItem: Modifier,
     containerColor: Int,
-    textStyle: TextStyle = MaterialTheme.typography.h4,
+    textStyleEngWord: TextStyle = MaterialTheme.typography.h3,
+    textStyleUAWord: TextStyle = MaterialTheme.typography.h4,
     buttonModifier: Modifier,
+    modifierText: Modifier,
     btnDeleteText: String,
     btnDeleteClick: (Int) -> Unit,
     btnEditText: String,
@@ -483,16 +483,36 @@ fun LazyList(
                     },
                 colors = CardDefaults.cardColors(containerColor = colorResource(id = containerColor)),
             ) {
-                Text(
-                    modifier = Modifier.padding(start = 8.dp),
-                    text = word.eng.toString(),
-                    style = textStyle
-                )
-                Text(
-                    modifier = Modifier.padding(start = 8.dp),
-                    text = word.ua.toString(),
-                    style = textStyle
-                )
+                Row() {
+
+                    Column(modifier = Modifier.weight(1f)) {
+
+                        Text(
+                            modifier = modifierText,
+                            text = "\uD83C\uDDEC\uD83C\uDDE7 ${word.eng}",
+                            style = textStyleEngWord
+                        )
+                        Text(
+                            modifier = modifier,
+                            text = "\uD83C\uDDFA\uD83C\uDDE6 ${word.ua}",
+                            style = textStyleUAWord
+                        )
+
+                    }
+
+                    val isFavorite = remember { mutableStateOf(false) }
+
+                    IconButton(modifier = Modifier.align(Alignment.CenterVertically),
+                        onClick = {
+                            isFavorite.value = !isFavorite.value
+                        }
+                    ) {
+                        Icon(
+                            imageVector = if (isFavorite.value) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                            contentDescription = null
+                        )
+                    }
+                }
 
                 if (isItemSelected) {
                     Row(
@@ -502,11 +522,21 @@ fun LazyList(
 
                         DefaultButton(
                             modifier = buttonModifier,
+                            border = BorderStroke(1.dp, Color.White),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.Transparent,
+                                contentColor = colorResource(id = R.color.default_button_text_color)
+                            ),
                             text = btnDeleteText,
                             onClick = { btnDeleteClick(index) })
 
                         DefaultButton(
                             modifier = buttonModifier,
+                            border = BorderStroke(1.dp, Color.White),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.Transparent,
+                                contentColor = colorResource(id = R.color.default_button_text_color)
+                            ),
                             text = btnEditText,
                             onClick = { btnEditClick(index) })
                     }

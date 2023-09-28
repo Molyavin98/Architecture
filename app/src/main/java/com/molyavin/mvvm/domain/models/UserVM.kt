@@ -17,7 +17,7 @@ data class UserVM(
 fun UserDTO.toVM(creationTime: String, lastLoginTime: String): UserVM {
     return UserVM(
         id = id,
-        urlImage = "https://ichef.bbci.co.uk/news/800/cpsprodpb/11097/production/_109238796_gettyimages-450997371.jpg",
+        urlImage = id,
         email = email,
         creationTime = creationTime,
         lastLoginTime = lastLoginTime

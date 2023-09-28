@@ -145,7 +145,7 @@ class ProfileController : BaseViewController() {
                 text = "Settings",
                 textColor = Color.Black,
                 textStyle = MaterialTheme.typography.h4,
-                onClick = { viewModel.startSettings() },
+                onClick = { },
                 buttonImage = Icons.Default.KeyboardArrowRight,
                 buttonColorTint = Color.Black
             )

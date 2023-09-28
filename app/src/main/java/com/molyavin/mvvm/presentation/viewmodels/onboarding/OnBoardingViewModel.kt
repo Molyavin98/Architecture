@@ -8,15 +8,17 @@ import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.domain.usecase.onboarding.GetSlideAsyncUseCase
 import com.molyavin.mvvm.presentation.controllers.auth.AuthorizationController
 import com.molyavin.mvvm.presentation.viewmodels.BaseViewModel
+import com.molyavin.mvvm.utils.Toaster
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class OnBoardingViewModel @Inject constructor(
-    router: Router,
     private val getSlideUseCase: GetSlideAsyncUseCase,
-) : BaseViewModel(router = router) {
+    toaster: Toaster,
+    router: Router,
+) : BaseViewModel(router, toaster) {
 
     private val _currentSliderPosition = MutableStateFlow(0)
     val currentSliderPosition: StateFlow<Int> = _currentSliderPosition

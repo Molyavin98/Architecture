@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 abstract class BaseViewModel(
     private val router: Router,
-    private val toaster: Toaster? = null,
+    private val toaster: Toaster,
 ) : ViewModel() {
 
     private var isAttached = false
@@ -31,7 +31,7 @@ abstract class BaseViewModel(
     private val _routerFlow = MutableSharedFlow<RouterNode<*>>(replay = 1)
 
     fun showMessage(message: String) {
-        toaster?.show(message)
+        toaster.show(message)
     }
 
     fun showLog(tag: String, message: String) {

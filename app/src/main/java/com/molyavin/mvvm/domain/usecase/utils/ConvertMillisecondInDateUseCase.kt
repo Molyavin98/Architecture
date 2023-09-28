@@ -9,7 +9,7 @@ import javax.inject.Inject
 class ConvertMillisecondInDateUseCase @Inject constructor() :
     IAsyncUseCase<Long, String> {
 
-    override suspend fun execute(income: Long): String {
+    override suspend fun execute(income: Long): String{
         val date = Date(income)
         val format = SimpleDateFormat("dd MMM yyyy", Locale.UK)
         return format.format(date)

@@ -15,6 +15,7 @@ class  MapFirebaseUserIntoUserDTOUseCase @Inject constructor() : IUseCase<Fireba
                 email = user.email!!,
                 creationTime = user.metadata!!.creationTimestamp,
                 lastLoginTime = user.metadata!!.lastSignInTimestamp,
+                urlImage = "https://ichef.bbci.co.uk/news/800/cpsprodpb/11097/production/_109238796_gettyimages-450997371.jpg"
             )
         } ?: throw MissingUserInfoException()
     }
