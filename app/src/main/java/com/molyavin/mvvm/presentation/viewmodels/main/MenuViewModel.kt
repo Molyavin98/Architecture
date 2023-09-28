@@ -1,6 +1,8 @@
 package com.molyavin.mvvm.presentation.viewmodels.main
 
+import android.view.View
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.domain.models.RouterNode
 import com.molyavin.mvvm.domain.models.WordVM
@@ -28,6 +30,12 @@ class MenuViewModel @Inject constructor(
 
     private var _wordsList = MutableStateFlow<List<WordVM>>(emptyList())
     val wordsList: StateFlow<List<WordVM>> = _wordsList
+
+
+    private val _wordState: MutableStateFlow<PagingData<WordVM>> =
+        MutableStateFlow(PagingData.empty())
+    val wordState: StateFlow<PagingData<WordVM>> = _wordState
+
 
     override fun onCreateView() {
         super.onCreateView()

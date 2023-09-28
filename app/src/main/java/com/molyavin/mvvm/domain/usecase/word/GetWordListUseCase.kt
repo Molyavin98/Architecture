@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 class GetWordListUseCase @Inject constructor(
     private val mapFireBaseWordsDTOUseCase: MapFireBaseWordsDTOUseCase
-) : IAsyncUseCase<Any?, List<WordVM>?> {
+) : IAsyncUseCase<Any?, List<WordVM>> {
 
-    override suspend fun execute(incom: Any?): List<WordVM>? {
+    override suspend fun execute(incom: Any?): List<WordVM> {
         return mapFireBaseWordsDTOUseCase.execute(null)
     }
 }

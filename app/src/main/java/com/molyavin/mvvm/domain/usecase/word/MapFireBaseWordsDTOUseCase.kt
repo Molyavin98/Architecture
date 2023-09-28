@@ -9,7 +9,7 @@ import javax.inject.Inject
 class MapFireBaseWordsDTOUseCase @Inject constructor(private val apiServiceRetrofit: ApiServiceRetrofit) :
     IAsyncUseCase<Any?, List<WordVM>?> {
 
-    override suspend fun execute(income: Any?): List<WordVM>? {
+    override suspend fun execute(income: Any?): List<WordVM> {
 
         val response = apiServiceRetrofit.getWord()
 
