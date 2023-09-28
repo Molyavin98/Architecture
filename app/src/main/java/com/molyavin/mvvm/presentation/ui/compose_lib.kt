@@ -527,6 +527,7 @@ fun LazyList(
                                 backgroundColor = Color.Transparent,
                                 contentColor = colorResource(id = R.color.default_button_text_color)
                             ),
+                            contentPadding = PaddingValues(0.dp),
                             text = btnDeleteText,
                             onClick = { btnDeleteClick(index) })
 
@@ -537,6 +538,7 @@ fun LazyList(
                                 backgroundColor = Color.Transparent,
                                 contentColor = colorResource(id = R.color.default_button_text_color)
                             ),
+                            contentPadding = PaddingValues(0.dp),
                             text = btnEditText,
                             onClick = { btnEditClick(index) })
                     }
@@ -720,3 +722,7 @@ fun DotsIndicator(
         }
     }
 }
+
+
+
+
