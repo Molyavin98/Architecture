@@ -1,5 +1,6 @@
 package com.molyavin.mvvm.presentation.viewmodels.splash
 
+import android.view.View
 import com.bluelinelabs.conductor.Router
 import com.molyavin.mvvm.domain.usecase.splash.StartScreenUseCase
 import com.molyavin.mvvm.presentation.viewmodels.BaseViewModel

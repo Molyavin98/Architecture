@@ -66,6 +66,7 @@ class MenuController : BaseViewController() {
 
             val words = viewModel.wordsList.collectAsState().value
 
+
             LazyList(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -86,6 +87,7 @@ class MenuController : BaseViewController() {
                 }
             )
         }
+
 
         FloatingActionButton(
             modifier = Modifier

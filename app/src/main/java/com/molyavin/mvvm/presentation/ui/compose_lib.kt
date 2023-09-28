@@ -502,11 +502,29 @@ fun LazyList(
 
                         DefaultButton(
                             modifier = buttonModifier,
+<<<<<<< HEAD
+=======
+                            border = BorderStroke(1.dp, Color.White),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.Transparent,
+                                contentColor = colorResource(id = R.color.default_button_text_color)
+                            ),
+                            contentPadding = PaddingValues(0.dp),
+>>>>>>> 0858822 (Implementation epoxy lib in project)
                             text = btnDeleteText,
                             onClick = { btnDeleteClick(index) })
 
                         DefaultButton(
                             modifier = buttonModifier,
+<<<<<<< HEAD
+=======
+                            border = BorderStroke(1.dp, Color.White),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.Transparent,
+                                contentColor = colorResource(id = R.color.default_button_text_color)
+                            ),
+                            contentPadding = PaddingValues(0.dp),
+>>>>>>> 0858822 (Implementation epoxy lib in project)
                             text = btnEditText,
                             onClick = { btnEditClick(index) })
                     }
@@ -690,3 +708,7 @@ fun DotsIndicator(
         }
     }
 }
+
+
+
+

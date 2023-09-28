@@ -1,5 +1,6 @@
 package com.molyavin.mvvm.presentation.viewmodels.profile
 
+import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
@@ -8,7 +9,12 @@ import com.molyavin.mvvm.domain.models.UserVM
 import com.molyavin.mvvm.domain.usecase.auth.SetStatusRememberMeUseCase
 import com.molyavin.mvvm.domain.usecase.sharedpref.GetUserVMUseCase
 import com.molyavin.mvvm.presentation.controllers.auth.AuthorizationController
+<<<<<<< HEAD
 import com.molyavin.mvvm.presentation.controllers.settings.SettingController
+=======
+import com.molyavin.mvvm.presentation.controllers.info.InformationController
+import com.molyavin.mvvm.presentation.controllers.profile.ProfileController
+>>>>>>> 0858822 (Implementation epoxy lib in project)
 import com.molyavin.mvvm.presentation.viewmodels.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,6 +39,10 @@ class ProfileViewModel @Inject constructor(
                 showMessage("${exception?.message}")
             })
         }
+    }
+
+    fun nextScreenInfo() {
+        router.pushController(RouterTransaction.with(InformationController()))
     }
 
     fun logOut() {

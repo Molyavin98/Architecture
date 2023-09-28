@@ -1,6 +1,7 @@
 package com.molyavin.mvvm.presentation.viewmodels
 
 import android.util.Log
+import android.view.View
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -60,8 +61,8 @@ abstract class BaseViewModel(
     // Navigation
 
     protected fun nextScreen(routerNode: RouterNode<*>) {
-            _routerFlow.tryEmit(routerNode)
-            _routerFlow.drop(1)
+        _routerFlow.tryEmit(routerNode)
+        _routerFlow.drop(1)
 
     }
 
@@ -82,14 +83,18 @@ abstract class BaseViewModel(
         }
     }
 
+    open fun onBindView(view: View) {}
+
     @CallSuper
     open fun onAttach() {
         isAttached = true
     }
+
     @CallSuper
     open fun onDetach() {
         isAttached = false
     }
+
     open fun onDestroyView() {}
     open fun onDestroy() {}
 
