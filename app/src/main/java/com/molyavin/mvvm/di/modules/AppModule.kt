@@ -5,6 +5,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.molyavin.mvvm.data.network.ApiService
+import com.molyavin.mvvm.data.network.ApiServiceInfoApp
+import com.molyavin.mvvm.data.repositories.InfoAppRepository
+import com.molyavin.mvvm.data.repositories.InfoAppRepositoryImpl
 import com.molyavin.mvvm.data.repositories.SettingRepository
 import com.molyavin.mvvm.data.repositories.SettingRepositoryImpl
 import com.molyavin.mvvm.data.repositories.SlideRepository
@@ -52,16 +55,26 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
+    fun provideSlideRepository(apiService: ApiService): SlideRepository =
+        SlideRepositoryImpl(apiService)
+
+    @Provides
+    @AppScope
+    fun provideAppDispatchers() = AppDispatchers()
+
+    @Provides
+    @AppScope
     fun provideApiService(): ApiService = ApiService()
 
     @Provides
     @AppScope
-    fun provideSlideMapper(): SlideMapper = SlideMapper()
+    fun provideApiServiceInfoApp(): ApiServiceInfoApp = ApiServiceInfoApp()
+
 
     @Provides
     @AppScope
-    fun provideSlideRepository(apiService: ApiService): SlideRepository =
-        SlideRepositoryImpl(apiService)
+    fun provideInfoRepository(apiServiceInfoApp: ApiServiceInfoApp):
+            InfoAppRepository = InfoAppRepositoryImpl(apiServiceInfoApp)
 
     @Provides
     @AppScope
@@ -75,7 +88,7 @@ class AppModule(private val context: Context) {
 
     @Provides
     @AppScope
-    fun provideAppDispatchers() = AppDispatchers()
+    fun provideSlideMapper(): SlideMapper = SlideMapper()
 
     @Provides
     @AppScope

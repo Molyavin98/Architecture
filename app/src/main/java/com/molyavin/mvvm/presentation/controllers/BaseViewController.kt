@@ -28,6 +28,7 @@ abstract class BaseViewController : Controller() {
     @Composable
     protected abstract fun content()
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup,
@@ -42,6 +43,14 @@ abstract class BaseViewController : Controller() {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         }
+
+        val viewXml = inflater.inflate(R.layout.info, container, false).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        }
+        viewModel.onBindView(viewXml)
 
         view.setContent {
             MVVMTheme {
@@ -69,6 +78,7 @@ abstract class BaseViewController : Controller() {
 
         return view
     }
+
 
     override fun onAttach(view: View) {
         super.onAttach(view)

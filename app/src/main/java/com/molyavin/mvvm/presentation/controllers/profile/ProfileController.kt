@@ -157,7 +157,7 @@ class ProfileController : BaseViewController() {
                 text = "Billing Details",
                 textColor = Color.Black,
                 textStyle = MaterialTheme.typography.h4,
-                onClick = { },
+                onClick = {},
                 buttonImage = Icons.Default.KeyboardArrowRight,
                 buttonColorTint = Color.Black
             )
@@ -183,7 +183,7 @@ class ProfileController : BaseViewController() {
                 text = "Information",
                 textColor = Color.Black,
                 textStyle = MaterialTheme.typography.h4,
-                onClick = { },
+                onClick = { viewModel.nextScreenInfo() },
                 buttonImage = Icons.Default.KeyboardArrowRight,
                 buttonColorTint = Color.Black
             )

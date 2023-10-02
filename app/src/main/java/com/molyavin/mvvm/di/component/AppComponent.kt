@@ -11,6 +11,7 @@ import com.molyavin.mvvm.presentation.viewmodels.main.word.AddWordViewModel
 import com.molyavin.mvvm.presentation.viewmodels.main.word.EditWordViewModel
 import com.molyavin.mvvm.presentation.viewmodels.auth.AuthorizationViewModel
 import com.molyavin.mvvm.presentation.viewmodels.auth.RegistrationViewModel
+import com.molyavin.mvvm.presentation.viewmodels.info.InformationViewModel
 import com.molyavin.mvvm.presentation.viewmodels.main.MenuViewModel
 import com.molyavin.mvvm.presentation.viewmodels.onboarding.OnBoardingViewModel
 import com.molyavin.mvvm.presentation.viewmodels.profile.ProfileViewModel
@@ -32,4 +33,5 @@ interface AppComponent {
     fun provideProfileViewModel(): ProfileViewModel
     fun provideAddWordsViewModel(): AddWordViewModel
     fun provideEditWordViewModel(): EditWordViewModel
+    fun provideInformationViewModel(): InformationViewModel
 }
