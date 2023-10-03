@@ -14,7 +14,7 @@ class GetIndexWordUseCase @Inject constructor(
     override suspend fun execute(income: Any?): WordVM {
 
         val id = getWordVMUseCase.execute(null)
-        val word: WordVM = getWordUseCase.execute(id) as WordVM
+        val word: WordVM = getWordUseCase.execute(id)
 
         return WordVM(id = word.id, eng = word.eng, ua = word.ua)
 

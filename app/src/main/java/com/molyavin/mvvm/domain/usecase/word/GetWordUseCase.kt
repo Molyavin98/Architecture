@@ -8,9 +8,9 @@ class GetWordUseCase @Inject constructor(
     private val mapFireBaseWordsDTOUseCase: MapFireBaseWordsDTOUseCase
 ) : IAsyncUseCase<Int, WordVM> {
 
-    override suspend fun execute(incom: Int): WordVM {
+    override suspend fun execute(income: Int): WordVM {
 
         val wordList = mapFireBaseWordsDTOUseCase.execute(null)
-        return wordList?.get(incom) ?: WordVM.empty()
+        return wordList?.get(income) ?: WordVM.empty()
     }
 }

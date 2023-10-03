@@ -34,7 +34,7 @@ class AuthorizationViewModel @Inject constructor(
     private var _statusCheckBox = MutableStateFlow(false)
     var statusCheckBox: StateFlow<Boolean> = _statusCheckBox
 
-    fun login() {
+     fun login() {
         val user = NewUserVM(email = email.value.text, password = password.value.text)
         viewModelScope.launch {
             startCoroutine(runnable = {
